@@ -429,7 +429,7 @@ async function handleApi(method, pathname, req, res) {
 
   if (method === "GET" && pathname === "/api/holidays") {
     try {
-      const r = await db.query("SELECT * FROM public.holidays ORDER BY date");
+      const r = await db.query("SELECT id, date::text, name FROM public.holidays ORDER BY date");
       return json(res, 200, r.rows);
     } catch (e) { return json(res, 500, { error: e.message }); }
   }

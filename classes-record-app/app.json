@@ -36,6 +36,12 @@
       "eas": {
         "projectId": "77aa2e53-3c43-41e1-afec-a092d7677438"
       }
-    }
+    },
+    "fonts": [
+      "./assets/fonts/Feather.ttf",
+      "./assets/fonts/MaterialIcons.ttf",
+      "./assets/fonts/AntDesign.ttf",
+      "./assets/fonts/FontAwesome.ttf"
+    ]
   }
 }

@@ -996,8 +996,15 @@ async function handleApi(method, pathname, req, res) {
     } catch (e) { return json(res, 500, { error: e.message }); }
   }
 
-  // ── IMPORT SAMPLE ENDPOINTS (return empty except schedule) ──────────────
-  if (pathname.includes("/sample") && pathname !== "/api/import/sample/schedule") {
+  // GET /api/import/sample/schedule — CSV template
+  if (method === "GET" && pathname === "/api/import/sample/schedule") {
+    const csv = "Faculty,Subject,Class,Deptt,Day,Time,End Time,Location,Lec/Lab,Elective,Email of User\nDr. Example,Linear Algebra,2K24-BEE-14A,ECE,Mon,09:00 AM,10:00 AM,CR-01,Lec,,user@seecs.edu.pk\n";
+    res.writeHead(200, { "Content-Type": "text/csv", "Content-Disposition": "attachment; filename=SampleWeeklySchedule.csv" });
+    res.end(csv);
+    return;
+  }
+  // ── IMPORT SAMPLE ENDPOINTS (return empty) ────────────────────────────────
+  if (pathname.includes("/sample")) {
     return json(res, 200, []);
   }
 

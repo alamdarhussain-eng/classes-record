@@ -359,8 +359,8 @@ async function handleApi(method, pathname, req, res) {
     try {
       const sidInt = scheduleId && scheduleId !== "undefined" && !isNaN(parseInt(scheduleId)) ? parseInt(scheduleId) : null;
       const q = sidInt
-        ? await db.query("SELECT * FROM public.weekly_schedule WHERE schedule_id = $1", [sidInt])
-        : await db.query("SELECT * FROM public.weekly_schedule WHERE schedule_id IS NULL");
+        ? await db.query("SELECT *, to_char(entry_date, 'YYYY-MM-DD') as entry_date_str FROM public.weekly_schedule WHERE schedule_id = $1", [sidInt])
+        : await db.query("SELECT *, to_char(entry_date, 'YYYY-MM-DD') as entry_date_str FROM public.weekly_schedule WHERE schedule_id IS NULL");
       const rows = q.rows;
 
       const filterStart = start ? new Date(start + "T00:00:00") : new Date("2026-01-19T00:00:00");
@@ -416,14 +416,16 @@ async function handleApi(method, pathname, req, res) {
       for (const r of rows) {
         if (!r.type || r.type.trim()==="") continue;
         if (!r.entry_date) continue;
-        const ed = new Date(r.entry_date+"T00:00:00");
+        const edRaw = r.entry_date_str || (r.entry_date ? r.entry_date.toString().split("T")[0] : "");
+        const ed = edRaw ? new Date(edRaw+"T00:00:00") : null;
+        if (!ed) continue;
         if (ed < filterStart || ed > filterEnd) continue;
         const isElective = (r.elective||"").toLowerCase()==="elective";
         const clsBase = normalizeClass(r.class_name, isElective).toUpperCase();
         const subKey = r.faculty+"|||"+r.subject+"|||"+clsBase;
         const rec = result[r.dept] && result[r.dept][subKey];
         if (!rec) continue;
-        const dtStr = r.entry_date;
+        const dtStr = r.entry_date_str || (r.entry_date ? r.entry_date.toString().split("T")[0] : "");
         const typeLow = (r.type||"").toLowerCase();
         const isLab = (r.lec_lab||"").toLowerCase().includes("lab")||(r.lec_lab||"").toLowerCase().includes("prac");
         if (isLab) {

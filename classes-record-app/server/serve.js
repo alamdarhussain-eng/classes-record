@@ -227,7 +227,7 @@ async function handleApi(method, pathname, req, res) {
     if (!username || !name) return json(res, 400, { success: false, message: "username and name required" });
     try {
       const r = await db.query(
-        "INSERT INTO public.schedules (user_id, name, start_date, end_date) VALUES ($1, $2, $3, $4) RETURNING *",
+        "INSERT INTO public.schedules (id, user_id, name, start_date, end_date) VALUES (nextval('public.schedules_id_seq'), $1, $2, $3, $4) RETURNING *",
         [username, name, startDate ?? null, endDate ?? null]
       );
       const s = r.rows[0];

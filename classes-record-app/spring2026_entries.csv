@@ -1,0 +1,1021 @@
+id,Faculty,Subject,Class,Deptt,Day,Location,Time,EndTime,SortKey,LecLab,Type,EntryDate,Elective
+2044,Dr. Zafar Ali,Linear Algebra,2K25-BSCS-15C,H&S,Thu,Lecture Hall-PG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-05T00:00:00.000Z,
+2090,Mr. Muhammad Usman Ghani,Understanding of Quran II,2K25-BSCS-15E,H&S,Tue,CR-08,12:00 AM,01:00 AM,0,Lab,Late,2026-02-03T00:00:00.000Z,
+1761,Dr. Saira Zainab,Linear Algebra and ODEs,2K25-BESE-16A,H&S,Mon,CR-09-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-16T00:00:00.000Z,
+1762,Dr. Saira Zainab,Linear Algebra & ODEs,2K25-BCE-1A,H&S,Mon,CR-13-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-16T00:00:00.000Z,
+2089,Dr. Nauman Anwar Baig,Digital Signal Processing,2k23-BEE-15C,ECE,Mon,CR-08,12:00 AM,01:00 AM,0,Lec,Late,2026-02-02T00:00:00.000Z,
+2088,Ms. Naema Asif,Mobile Application Development,2k22-BESE-13B,FoC,Mon,CR-08,12:00 AM,01:00 AM,0,Lec,Late,2026-02-02T00:00:00.000Z,Elective
+1763,Dr. Tauseef ur Rehman,Digital Signal Processing,2K23-BEE-15A,ECE,Mon,CR-19-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-16T00:00:00.000Z,
+2087,Ms. Naema Asif,Mobile Application Development,2k22-BESE-13A,FoC,Mon,CR-08,12:00 AM,01:00 AM,0,Lec,Late,2026-02-02T00:00:00.000Z,Elective
+2086,Ms. Hina Yousaf,Expository Writing,2k24-BSCS-14B,H&S,Wed,CR-08,12:00 AM,01:00 AM,0,Lec,Late,2026-01-28T00:00:00.000Z,
+1764,Dr. Tauseef ur Rehman,Digital Signal Processing,2K23-BEE-15B,ECE,Mon,CR-20-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-16T00:00:00.000Z,
+2011,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14C,ECE,Mon,Embedded Systems Lab,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-02T00:00:00.000Z,Elective
+1765,Dr. Ayesha Hakim,Advanced Database Management Systems,2K24-BSCS-14D,FoC,Mon,CR-22-SMRIMMS,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-16T00:00:00.000Z,
+2012,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14D,ECE,Mon,Embedded Systems Lab,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-02T00:00:00.000Z,Elective
+2085,Dr. Muhammad Jameel Nawaz,Microprocessor Systems,2k24-BEE-16C,ECE,Wed,CR-08,12:00 AM,01:00 AM,0,Lec,Late,2026-01-28T00:00:00.000Z,
+1766,Dr. Ayesha Hakim,Advanced Database Management Systems,2K24-BSCS-14D,FoC,Mon,CR-22-SMRIMMS,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-16T00:00:00.000Z,
+2084,Mr. Huzaifa Abbas,Computer Programming,2k25-BEE-17C,ECE,Tue,CR-08,12:00 AM,01:00 AM,0,Lec,Late,2026-01-27T00:00:00.000Z,
+2083,Dr. Neelma Riaz,Expository Writing,2k24-BEE-16D,H&S,Tue,CR-08,12:00 AM,01:00 AM,0,Lec,Late,2026-01-27T00:00:00.000Z,
+2082,Dr. Neelma Riaz,Functional English,2k25-BESE-16A,H&S,Mon,CR-08,12:00 AM,01:00 AM,0,Lec,Late,2026-01-26T00:00:00.000Z,
+2081,Ms. Sahar Arshad,Object Oriented Programming,2K25-BSDS-3A,FoC,Mon,Computing Lab-01,12:00 AM,01:00 AM,0,Lab,Late,2026-01-19T00:00:00.000Z,
+1768,Dr. Imran Shahzad,Linear Algebra,2K24-BEE-16A,H&S,Tue,CR-05-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-17T00:00:00.000Z,
+1769,Dr. Imran Shahzad,Linear Algebra,2K24-BEE-16B,H&S,Tue,CR-06-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-17T00:00:00.000Z,
+2080,Dr. Sara Shakil,Computer Organization & Assembly Language,2K24-BSCS-14D,ECE,Wed,CR-07,12:00 AM,01:00 AM,0,Lec,Late,2026-01-21T00:00:00.000Z,
+1770,Dr. Sobia Jamil,Ideology and Constitution of Pakistan,2K25-BEE-17A,H&S,Wed,CR-14-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-18T00:00:00.000Z,
+2013,Ms. Sahar Arshad,Object Oriented Programming,2K25-BSDS-3A,FoC,Mon,Computing Lab-02,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-02T00:00:00.000Z,
+2079,Dr. Mehvish Rashid,Software Design and Architecture,2K24-BESE-15B,FoC,Wed,CR-07,12:00 AM,01:00 AM,0,Lec,Late,2026-01-21T00:00:00.000Z,
+1771,Dr. Sobia Jamil,Ideology and Constitution of Pakistan,2K25-BEE-17A,H&S,Wed,CR-14-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-18T00:00:00.000Z,
+2014,Ms. Sara Tariq Sheikh,Database Systems,2K25-BSCS-15D,FoC,Mon,Computing Lab-05,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-02T00:00:00.000Z,
+1772,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13B,FoC,Wed,CR-24-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-18T00:00:00.000Z,
+2015,Dr. Sana Qadir,Computer Forensics,2K22-BESE-13A,FoC,Mon,Computing Lab-01,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-02T00:00:00.000Z,Elective
+2078,Mr. Saif Ullah,Understanding of Quran II,2k25-BESE-16A,H&S,Wed,CR-07-UG Block,12:00 AM,01:00 AM,0,Lab,Late,2026-01-21T00:00:00.000Z,
+1773,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13B,FoC,Wed,CR-24-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-18T00:00:00.000Z,
+2016,Dr. Sana Qadir,Computer Forensics,2K22-BESE-13B,FoC,Mon,Computing Lab-01,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-02T00:00:00.000Z,Elective
+2077,Dr. Ayesha Hakim,Advanced Database Management Systems,2K24-BSCS-14D,FoC,Mon,CR-07,12:00 AM,01:00 AM,0,Lec,Late,2026-01-19T00:00:00.000Z,
+2076,Mr. Ahsan Azhar,Electrical Network Analysis,2k25-BEE-17A,ECE,Mon,CR-07,12:00 AM,01:00 AM,0,Lec,Late,2026-01-19T00:00:00.000Z,
+1913,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14D,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+2017,Dr. Usman Khan,Electronic Circuit Design,2K24-BEE-16A,ECE,Mon,CR-01-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-02T00:00:00.000Z,
+2075,Dr. Neelma Riaz,Functional English,2k25-BESE-16A,H&S,Mon,CR-07,12:00 AM,01:00 AM,0,Lec,Late,2026-01-19T00:00:00.000Z,
+1914,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14A,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+2074,Mr. Salman Mushtaq,Understanding of Quran II,2K25-BSCS-15D,H&S,Mon,CR-07,12:00 AM,01:00 AM,0,Lab,Late,2026-01-19T00:00:00.000Z,
+2073,Dr. Muhammad Yousaf,Engineering Economics,2K22-BSCS-12C,H&S,Fri,CR-08-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-03-06T00:00:00.000Z,
+1776,Dr. Gibrail Islam,Software Engineering,2K23-BSCS-13A,FoC,Wed,CR-25-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-18T00:00:00.000Z,
+2018,Dr. Madiha Khalid,Cyber Security (Gp-01),2K23-BSCS-13A,FoC,Tue,Computing Lab-12,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-03T00:00:00.000Z,Elective
+1777,Dr. Gibrail Islam,Software Engineering,2K23-BSCS-13A,FoC,Wed,CR-25-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-18T00:00:00.000Z,
+1778,Dr. Gibrail Islam,Software Engineering,2K23-BSCS-13B,FoC,Thu,CR-25-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-19T00:00:00.000Z,
+2072,Dr. Muhammad Yousaf,Engineering Economics,2K22-BSCS-12B,H&S,Fri,Lecture Hall-PG,12:00 AM,01:00 AM,0,Lec,Missed,2026-03-06T00:00:00.000Z,
+2071,Dr. Samia Tahir,Expository Writing,2K24-BSCS-14D,H&S,Thu,CR-18-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-03-05T00:00:00.000Z,
+1779,Dr. Gibrail Islam,Software Engineering,2K23-BSCS-13B,FoC,Thu,CR-25-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-19T00:00:00.000Z,
+2019,Dr. Madiha Khalid,Cyber Security (Gp-01),2K23-BSCS-13A,FoC,Tue,Computing Lab-12,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-03T00:00:00.000Z,Elective
+2070,Dr. Muhammad Jameel Nawaz,Microprocessor Systems,2K24-BEE-16D,ECE,Thu,CR-08-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-03-05T00:00:00.000Z,
+1780,Ms. Hina Yousaf,Expository Writing,2K24-BSCS-14A,H&S,Fri,CR-21-SMRIMMS,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-20T00:00:00.000Z,
+2020,Dr. Madiha Khalid,Cyber Security (Gp-01),2K23-BSCS-13B,FoC,Tue,Computing Lab-12,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-03T00:00:00.000Z,Elective
+2069,Dr. Muhammad Jameel Nawaz,Microprocessor Systems,2K24-BEE-16C,ECE,Thu,CR-07-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-03-05T00:00:00.000Z,
+1781,Ms. Hina Yousaf,Expository Writing,2K24-BSCS-14B,H&S,Fri,CR-21-SMRIMMS,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-20T00:00:00.000Z,
+2068,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14D,ECE,Wed,CR-05-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-03-04T00:00:00.000Z,Elective
+1782,Ms. Hina Yousaf,Expository Writing,2K24-BSCS-14C,H&S,Fri,CR-21-SMRIMMS,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-20T00:00:00.000Z,
+2021,Dr. Madiha Khalid,Cyber Security (Gp-01),2K23-BSCS-13B,FoC,Tue,Computing Lab-12,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-03T00:00:00.000Z,Elective
+2067,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14C,ECE,Wed,CR-05-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-03-04T00:00:00.000Z,Elective
+2066,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14B,ECE,Wed,CR-05-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-03-04T00:00:00.000Z,Elective
+1783,Dr. Gibrail Islam,Software Engineering,2K23-BSCS-13A,FoC,Fri,CR-25-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-20T00:00:00.000Z,
+1784,Dr. Gibrail Islam,Software Engineering,2K23-BSCS-13B,FoC,Fri,CR-25-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-20T00:00:00.000Z,
+2022,Dr. Madiha Khalid,Cyber Security (Gp-01),2K23-BSCS-13C,FoC,Tue,Computing Lab-12,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-03T00:00:00.000Z,Elective
+2065,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14A,ECE,Wed,CR-05-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-03-04T00:00:00.000Z,Elective
+2064,Mr. Salman Mushtaq,Understanding of Quran II,2K25-BSCS-15A,H&S,Wed,CR-02-UG Block,12:00 AM,01:00 AM,0,Lab,Missed,2026-03-04T00:00:00.000Z,
+2063,Mr. Salman Mushtaq,Understanding of Quran II,2K25-BSCS-15A,H&S,Wed,CR-02-UG Block,12:00 AM,01:00 AM,0,Lab,Missed,2026-03-04T00:00:00.000Z,
+2023,Dr. Madiha Khalid,Cyber Security (Gp-01),2K23-BSCS-13C,FoC,Tue,Computing Lab-12,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-03T00:00:00.000Z,Elective
+2062,Mr. Salman Mushtaq,Understanding of Quran II,2K25-BSCS-15A,H&S,Wed,CR-02-UG Block,12:00 AM,01:00 AM,0,Lab,Missed,2026-03-04T00:00:00.000Z,
+2061,Dr. Qaiser Riaz,Web Technologies,2K24-BSCS-14A,FoC,Tue,CR-21-SMRIMMS,12:00 AM,01:00 AM,0,Lec,Missed,2026-03-03T00:00:00.000Z,
+2024,Dr. Madiha Khalid,Cyber Security (Gp-01),2K23-BSCS-13D,FoC,Tue,Computing Lab-12,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-03T00:00:00.000Z,Elective
+2060,Dr. Qaiser Riaz,Web Technologies,2K24-BSCS-14A,FoC,Tue,CR-21-SMRIMMS,12:00 AM,01:00 AM,0,Lec,Missed,2026-03-03T00:00:00.000Z,
+2059,Mr. Muhammad Nashit Shah,Computer Architecture & Logic Design,2K25-BESE-16B,FoC,Mon,CR-10-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-03-02T00:00:00.000Z,
+2058,Mr. Salman Mushtaq,Understanding of Quran II,2K25-BSCS-15D,H&S,Mon,CR-03-UG Block,12:00 AM,01:00 AM,0,Lab,Missed,2026-03-02T00:00:00.000Z,
+2057,Mr. Salman Mushtaq,Understanding of Quran II,2K25-BSCS-15D,H&S,Mon,CR-03-UG Block,12:00 AM,01:00 AM,0,Lab,Missed,2026-03-02T00:00:00.000Z,
+2025,Dr. Madiha Khalid,Cyber Security (Gp-01),2K23-BSCS-13D,FoC,Tue,Computing Lab-12,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-03T00:00:00.000Z,Elective
+2056,Mr. Salman Mushtaq,Understanding of Quran II,2K25-BSCS-15D,H&S,Mon,CR-03-UG Block,12:00 AM,01:00 AM,0,Lab,Missed,2026-03-02T00:00:00.000Z,
+2055,Mr. Salman Mushtaq,Understanding of Quran II,2K25-BSCS-15C,H&S,Mon,CR-03-UG Block,12:00 AM,01:00 AM,0,Lab,Missed,2026-03-02T00:00:00.000Z,
+1915,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14B,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+2054,Mr. Salman Mushtaq,Understanding of Quran II,2K25-BSCS-15C,H&S,Mon,CR-03-UG Block,12:00 AM,01:00 AM,0,Lab,Missed,2026-03-02T00:00:00.000Z,
+2053,Mr. Salman Mushtaq,Understanding of Quran II,2K25-BSCS-15C,H&S,Mon,CR-03-UG Block,12:00 AM,01:00 AM,0,Lab,Missed,2026-03-02T00:00:00.000Z,
+2052,Dr. Zafar Ali,Linear Algebra,2K25-BSCS-15B,H&S,Fri,Lecture Hall-PG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,
+2026,Dr. Madiha Khalid,Cyber Security (Gp-01),2K23-BSCS-13E,FoC,Tue,Computing Lab-12,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-03T00:00:00.000Z,Elective
+2051,Dr. Zafar Ali,Linear Algebra,2K25-BSCS-15B,H&S,Fri,Lecture Hall-PG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,
+2050,Dr. Samia Tahir,Expository Writing,2K24-BSDS-2A,H&S,Fri,CR-01-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,
+2027,Dr. Madiha Khalid,Cyber Security (Gp-01),2K23-BSCS-13E,FoC,Tue,Computing Lab-12,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-03T00:00:00.000Z,Elective
+2049,Dr. Samia Tahir,Expository Writing,2K24-BSAi-1A,H&S,Fri,CR-01-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,
+2048,Dr. Muhammad Yousaf,Engineering Economics,2K22-BSCS-12C,H&S,Thu,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-05T00:00:00.000Z,
+1916,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14C,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+2028,Dr. Muhammad Bilal Ali,Advanced Database Management Systems,2K24-BSCS-14A,FoC,Tue,CR-21-SMRIMMS,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-03T00:00:00.000Z,
+1917,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14D,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+2047,Dr. Muhammad Yousaf,Engineering Economics,2K22-BSCS-12B,H&S,Thu,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-05T00:00:00.000Z,
+2046,Ms. Sara Tariq Sheikh,Database Systems,2K25-BSAi-2A,FoC,Thu,Computing Lab-01,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-05T00:00:00.000Z,
+2029,Dr. Muhammad Daud Abdullah Asif,Machine Learning,2K23-BESE-14B,FoC,Tue,CR-24-Acad Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-03T00:00:00.000Z,
+1918,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14A,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+2045,Dr. Zafar Ali,Linear Algebra,2K25-BSCS-15C,H&S,Thu,Lecture Hall-PG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-05T00:00:00.000Z,
+2010,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14B,ECE,Mon,Embedded Systems Lab,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-02T00:00:00.000Z,Elective
+2043,Mr. Ahsan Azhar,Electrical Network Analysis,2K25-BEE-17B,ECE,Thu,CR-10-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-05T00:00:00.000Z,
+2042,Mr. Ahsan Azhar,Electrical Network Analysis,2K25-BEE-17A,ECE,Thu,CR-12-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-05T00:00:00.000Z,
+2041,Dr. Seemab Latif,Machine Learning,2K24-BSAi-1A,FoC,Thu,Computing Lab-04,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-05T00:00:00.000Z,
+2030,Dr. Muhammad Bilal Ali,Database Systems,2K25-BSCS-15C,FoC,Tue,Computing Lab-01,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-03T00:00:00.000Z,
+2040,Dr. Junaid Younas,Deep Learning,2K23-BSCS-13A,FoC,Thu,Computing Lab-02,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-05T00:00:00.000Z,
+2039,Dr. Junaid Younas,Deep Learning,2K23-BSCS-13A,FoC,Thu,Computing Lab-02,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-05T00:00:00.000Z,
+2038,Mr. Abdul Mateen,Electronic Circuit Design,2K24-BEE-16D,ECE,Wed,CR-02-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-04T00:00:00.000Z,
+2037,Mr. Abdul Mateen,Electronic Circuit Design,2K24-BEE-16B,ECE,Wed,CR-08-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-04T00:00:00.000Z,
+2031,Dr. Hina Munir Dutt,Differential Equations,2K25-BEE-17D,H&S,Tue,CR-19-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-03T00:00:00.000Z,
+2032,Mr. Muhammad Usman Ghani,Understanding of Quran II,2K25-BCE-1A,H&S,Tue,CR-13-UG Block,12:00 AM,01:00 AM,0,Lab,Makeup,2026-03-03T00:00:00.000Z,
+1919,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14B,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+2033,Dr. Muhammad Daud Abdullah Asif,Object Oriented Programming,2K25-BESE-16B,FoC,Wed,CR-10-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-04T00:00:00.000Z,
+2034,Dr. Muhammad Imran Malik,Deep Learning,2K23-BSCS-13B,FoC,Wed,CR-05-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-04T00:00:00.000Z,
+2036,Dr. Muhammad Bilal Ali,Database Systems,2K25-BSCS-15C,FoC,Wed,CR-24-Acad Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-04T00:00:00.000Z,
+2035,Mr. Habeel Ahmad,Digital Logic Design,2K25-BSCS-15D,ECE,Wed,CR-13-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-04T00:00:00.000Z,
+1920,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14C,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+1921,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14D,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+1922,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14A,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+1923,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14B,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+1924,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14C,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+1925,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14D,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+1926,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14A,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+1901,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14D,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1927,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14B,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+1898,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14A,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1928,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14C,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+1929,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14D,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+1899,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14B,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1902,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14A,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1930,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14A,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+1897,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14D,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1931,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14B,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+1896,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14C,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1903,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14B,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1904,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14C,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1481,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Fri,Basic Electronics Lab,12:00 AM,01:00 AM,0,Lab,Makeup,2026-01-30T00:00:00.000Z,
+1900,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14C,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1905,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14D,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1932,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14C,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+1933,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14D,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+1934,Mr. Ahsan Azhar,Electrical Network Analysis,2K25-BEE-17A,ECE,Tue,EMS Lab,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-24T00:00:00.000Z,
+1935,Mr. Ahsan Azhar,Electrical Network Analysis,2K25-BEE-17A,ECE,Thu,CR-12-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-26T00:00:00.000Z,
+1936,Mr. Ahsan Azhar,Electrical Network Analysis,2K25-BEE-17B,ECE,Tue,EMS Lab,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-24T00:00:00.000Z,
+1937,Mr. Ahsan Azhar,Electrical Network Analysis,2K25-BEE-17B,ECE,Thu,CR-10-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-26T00:00:00.000Z,
+1938,Dr. Farzana Jabeen,Web Technologies,2K24-BSCS-14C,FoC,Tue,Computing Lab-06,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-24T00:00:00.000Z,
+1939,Dr. Farzana Jabeen,Web Technologies,2K24-BSCS-14C,FoC,Tue,Computing Lab-06,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-03T00:00:00.000Z,
+1895,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14B,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1894,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14A,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1893,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14D,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1892,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14C,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1940,Dr. Sohail Iqbal,Theory of Automata,2K24-BSCS-14D,FoC,Wed,CR-12-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-25T00:00:00.000Z,
+1941,Dr. Sohail Iqbal,Theory of Automata,2K24-BSCS-14D,FoC,Wed,CR-12-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-25T00:00:00.000Z,
+1942,Dr. Ayesha Hakim,Advanced Database Management Systems,2K24-BSCS-14D,FoC,Thu,Computing Lab-06,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-26T00:00:00.000Z,
+1943,Dr. Ayesha Hakim,Advanced Database Management Systems,2K24-BSCS-14D,FoC,Thu,Computing Lab-06,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-05T00:00:00.000Z,
+1944,Dr. Seemab Latif,Machine Learning,2K24-BSAi-1A,FoC,Wed,Computing Lab-04,12:00 AM,01:00 AM,0,Lec,Makeup,2026-01-28T00:00:00.000Z,
+1945,Dr. Farzana Jabeen,Web Technologies,2K24-BSCS-14C,FoC,Mon,CR-18-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-23T00:00:00.000Z,
+1946,Dr. Farzana Jabeen,Web Technologies,2K24-BSCS-14C,FoC,Mon,CR-18-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-23T00:00:00.000Z,
+1891,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14B,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1890,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14A,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1889,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14D,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1888,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14C,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1887,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14B,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1947,Dr. Hina Munir Dutt,Differential Equations,2K25-BEE-17D,H&S,Wed,CR-15-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-25T00:00:00.000Z,
+1948,Dr. Syed Imran Ali,Big Data Analytics (Gp-02),2K23-BSCS-13A,FoC,Wed,CR-25-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-25T00:00:00.000Z,Elective
+1949,Dr. Syed Imran Ali,Big Data Analytics (Gp-02),2K23-BSCS-13A,FoC,Wed,CR-25-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-25T00:00:00.000Z,Elective
+1950,Dr. Syed Imran Ali,Big Data Analytics (Gp-02),2K23-BSCS-13B,FoC,Wed,CR-25-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-25T00:00:00.000Z,Elective
+1886,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14A,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1951,Dr. Syed Imran Ali,Big Data Analytics (Gp-02),2K23-BSCS-13B,FoC,Wed,CR-25-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-25T00:00:00.000Z,Elective
+1952,Dr. Syed Imran Ali,Big Data Analytics (Gp-02),2K23-BSCS-13C,FoC,Wed,CR-25-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-25T00:00:00.000Z,Elective
+1885,Dr. Tauseef ur Rehman,Digital Signal Processing,2K23-BEE-15B,ECE,Fri,CR-20-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,
+1884,Dr. Tauseef ur Rehman,Digital Signal Processing,2K23-BEE-15B,ECE,Fri,CR-20-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,
+1883,Dr. Tauseef ur Rehman,Digital Signal Processing,2K23-BEE-15A,ECE,Fri,CR-02-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,
+1953,Dr. Syed Imran Ali,Big Data Analytics (Gp-02),2K23-BSCS-13C,FoC,Wed,CR-25-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-25T00:00:00.000Z,Elective
+1954,Dr. Syed Imran Ali,Big Data Analytics (Gp-02),2K23-BSCS-13D,FoC,Wed,CR-25-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-25T00:00:00.000Z,Elective
+1882,Dr. Tauseef ur Rehman,Digital Signal Processing,2K23-BEE-15A,ECE,Fri,CR-02-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,
+1955,Dr. Syed Imran Ali,Big Data Analytics (Gp-02),2K23-BSCS-13D,FoC,Wed,CR-25-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-25T00:00:00.000Z,Elective
+1881,Dr. Naima Iltaaf,Web Technologies,2K24-BSCS-14D,FoC,Tue,Computing Lab-06,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-17T00:00:00.000Z,
+1956,Dr. Syed Imran Ali,Big Data Analytics (Gp-02),2K23-BSCS-13E,FoC,Wed,CR-25-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-25T00:00:00.000Z,Elective
+1957,Dr. Syed Imran Ali,Big Data Analytics (Gp-02),2K23-BSCS-13E,FoC,Wed,CR-25-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-25T00:00:00.000Z,Elective
+1880,Dr. Naima Iltaaf,Web Technologies,2K24-BSCS-14D,FoC,Tue,Computing Lab-06,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-17T00:00:00.000Z,
+1958,Ms. Hadia Tahir,Computer Vision,2k23-BSDS-1A,FoC,Thu,Computing Lab-12,12:00 AM,01:00 AM,0,Lab,Missed,2026-02-26T00:00:00.000Z,
+1906,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14A,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1959,Dr. Muhammad Yousaf,Engineering Economics,2k22-BSCS-12B,H&S,Fri,Lec Hall-PG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-27T00:00:00.000Z,
+1960,Dr. Muhammad Yousaf,Engineering Economics,2k22-BSCS-12C,H&S,Fri,CR-08-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-27T00:00:00.000Z,
+1961,Dr. Muhammad Yousaf,Engineering Economics,2K22-BSCS-12B,H&S,Thu,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-26T00:00:00.000Z,
+1907,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14B,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1962,Dr. Muhammad Yousaf,Engineering Economics,2K22-BSCS-12C,H&S,Thu,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-26T00:00:00.000Z,
+1963,Dr. Samia Tahir,Expository Writing,2K24-BSCS-14D,H&S,Thu,CR-18-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-26T00:00:00.000Z,
+1908,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14C,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1964,Dr. Samia Tahir,Expository Writing,2K24-BSAi-1A,H&S,Fri,CR-06-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,
+1965,Dr. Samia Tahir,Expository Writing,2K24-BSAi-1A,H&S,Fri,CR-06-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,
+1966,Dr. Samia Tahir,Expository Writing,2K24-BSDS-2A,H&S,Fri,CR-06-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,
+1967,Dr. Samia Tahir,Expository Writing,2K24-BSDS-2A,H&S,Fri,CR-06-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,
+1968,Dr. Tassawar Kazmi,Power Systems Protection,2K22-BEE-14A,ECE,Wed,CR-05-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-25T00:00:00.000Z,Elective
+1909,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14D,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1910,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14A,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+1969,Dr. Tassawar Kazmi,Power Systems Protection,2K22-BEE-14A,ECE,Wed,CR-11-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-25T00:00:00.000Z,Elective
+1970,Dr. Tassawar Kazmi,Power Systems Protection,2K22-BEE-14A,ECE,Wed,CR-11-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-25T00:00:00.000Z,Elective
+1911,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14B,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+1879,Dr. Farzana Jabeen,Web Technologies,2K24-BSCS-14B,FoC,Tue,CR-18-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-17T00:00:00.000Z,
+1971,Dr. Tassawar Kazmi,Power Systems Protection,2K22-BEE-14B,ECE,Wed,CR-05-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-25T00:00:00.000Z,Elective
+1972,Dr. Tassawar Kazmi,Power Systems Protection,2K22-BEE-14B,ECE,Wed,CR-11-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-25T00:00:00.000Z,Elective
+1912,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14C,H&S,Fri,Lecture Hall-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-06T00:00:00.000Z,Elective
+1973,Dr. Tassawar Kazmi,Power Systems Protection,2K22-BEE-14B,ECE,Wed,CR-11-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-25T00:00:00.000Z,Elective
+1974,Dr. Tassawar Kazmi,Power Systems Protection,2K22-BEE-14C,ECE,Wed,CR-05-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-25T00:00:00.000Z,Elective
+1878,Ms. Maria Jamshaid,Ideology and Constitution of Pakistan,2K23-BSDS-1A,H&S,Tue,CR-25-Acad Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-17T00:00:00.000Z,
+1975,Dr. Tassawar Kazmi,Power Systems Protection,2K22-BEE-14C,ECE,Wed,CR-11-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-25T00:00:00.000Z,Elective
+1976,Dr. Tassawar Kazmi,Power Systems Protection,2K22-BEE-14C,ECE,Wed,CR-11-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-25T00:00:00.000Z,Elective
+1692,Dr. Tassawar Kazmi,Power Systems Protection,2K22-BEE-14A,ECE,Wed,CR-05-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-04T00:00:00.000Z,Elective
+1693,Dr. Tassawar Kazmi,Power Systems Protection,2K22-BEE-14B,ECE,Wed,CR-05-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-04T00:00:00.000Z,Elective
+1694,Dr. Tassawar Kazmi,Power Systems Protection,2K22-BEE-14C,ECE,Wed,CR-05-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-04T00:00:00.000Z,Elective
+1695,Dr. Tassawar Kazmi,Power Systems Protection,2K22-BEE-14D,ECE,Wed,CR-05-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-04T00:00:00.000Z,Elective
+1977,Dr. Tassawar Kazmi,Power Systems Protection,2K22-BEE-14D,ECE,Wed,CR-05-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-25T00:00:00.000Z,Elective
+1978,Dr. Tassawar Kazmi,Power Systems Protection,2K22-BEE-14D,ECE,Wed,CR-11-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-25T00:00:00.000Z,Elective
+1979,Dr. Tassawar Kazmi,Power Systems Protection,2K22-BEE-14D,ECE,Wed,CR-11-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-25T00:00:00.000Z,Elective
+1980,Dr. Saira Zainab,Linear Algebra and ODEs,2K25-BESE-16A,H&S,Thu,CR-04-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-26T00:00:00.000Z,
+1696,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14A,ECE,Wed,CR-11-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-04T00:00:00.000Z,Elective
+1981,Dr. Saira Zainab,Linear Algebra and ODEs,2K25-BESE-16B,H&S,Wed,CR-03-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-25T00:00:00.000Z,
+1982,Dr. Saira Zainab,Linear Algebra & ODEs,2K25-BCE-1A,H&S,Fri,CR-13-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,
+1697,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14B,ECE,Wed,CR-11-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-04T00:00:00.000Z,Elective
+1698,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14C,ECE,Wed,CR-11-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-04T00:00:00.000Z,Elective
+1983,Dr. Imran Shahzad,Linear Algebra,2K24-BEE-16A,H&S,Fri,CR-01-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,
+1699,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14D,ECE,Wed,CR-11-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-04T00:00:00.000Z,Elective
+1984,Dr. Imran Shahzad,Linear Algebra,2K24-BEE-16A,H&S,Fri,CR-01-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,
+1985,Dr. Imran Shahzad,Linear Algebra,2K24-BEE-16B,H&S,Fri,CR-01-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,
+1700,Dr. Rizwan Ahmad,Communication Systems,2K23-BEE-15D,ECE,Wed,CR-18-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-04T00:00:00.000Z,
+1701,Dr. Rizwan Ahmad,Communication Systems,2K23-BEE-15D,ECE,Wed,CR-18-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-04T00:00:00.000Z,
+1702,Dr. Farid Gul,Linear Control Systems,2K23-BEE-15A,ECE,Wed,CR-19-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-04T00:00:00.000Z,
+1986,Dr. Imran Shahzad,Linear Algebra,2K24-BEE-16B,H&S,Fri,CR-01-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,
+1703,Dr. Farid Gul,Linear Control Systems,2K23-BEE-15B,ECE,Wed,CR-20-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-04T00:00:00.000Z,
+1704,Dr. Farid Gul,Linear Control Systems,2K23-BEE-15C,ECE,Wed,CR-19-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-04T00:00:00.000Z,
+1705,Dr. Mehwish Awan,Deep Learning,2K23-BSCS-13C,FoC,Wed,CR-28-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-04T00:00:00.000Z,
+1706,Dr. Mehwish Awan,Deep Learning,2K23-BSCS-13C,FoC,Wed,CR-28-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-04T00:00:00.000Z,
+1987,Dr. Muhammad Imran Malik,Deep Learning,2K23-BSCS-13B,FoC,Wed,CR-05-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-25T00:00:00.000Z,
+1707,Ms. Sahar Arshad,Mobile Application Development-I,2K23-BSDS-1A,FoC,Fri,CR-28-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-06T00:00:00.000Z,
+1988,Dr. Muhammad Mustafa Tahseen,Electromagnetic Field Theory,2K24-BEE-16B,ECE,Thu,CR-05-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-26T00:00:00.000Z,
+1708,Ms. Sahar Arshad,Mobile Application Development-I,2K23-BSDS-1A,FoC,Fri,CR-28-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-06T00:00:00.000Z,
+1709,Ms. Sahar Arshad,Object Oriented Programming,2K25-BSAi-2A,FoC,Fri,CR-01-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-06T00:00:00.000Z,
+1710,Mr. Arshad Nazir,Digital Logic Design,2K25-BSCS-15C,ECE,Fri,CR-03-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-06T00:00:00.000Z,
+1711,Dr. Muhammad Bilal Ali,Database Systems,2K25-BSCS-15C,FoC,Fri,CR-03-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-06T00:00:00.000Z,
+1712,Dr. Muhammad Bilal Ali,Database Systems,2K25-BSCS-15C,FoC,Fri,CR-03-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-06T00:00:00.000Z,
+1713,Ms. Maria Jamshaid,Ideology and Constitution of Pakistan,2K25-BCE-1A,H&S,Fri,CR-13-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-06T00:00:00.000Z,
+1877,Ms. Maria Jamshaid,Ideology and Constitution of Pakistan,2K23-BSDS-1A,H&S,Tue,CR-25-Acad Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-17T00:00:00.000Z,
+1715,Dr. Rizwan Ahmad,Communication Systems,2K23-BEE-15D,ECE,Fri,CR-18-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-06T00:00:00.000Z,
+1716,Dr. Farid Gul,Linear Control Systems,2K23-BEE-15A,ECE,Fri,CR-19-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-06T00:00:00.000Z,
+1717,Dr. Farid Gul,Linear Control Systems,2K23-BEE-15B,ECE,Fri,CR-20-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-06T00:00:00.000Z,
+1718,Dr. Farid Gul,Linear Control Systems,2K23-BEE-15C,ECE,Fri,CR-19-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-06T00:00:00.000Z,
+1719,Dr. Hirra Anwar,Software Engineering,2K23-BSCS-13C,FoC,Fri,CR-26-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-06T00:00:00.000Z,
+1989,Dr. Muhammad Mustafa Tahseen,Electromagnetic Field Theory,2K24-BEE-16B,ECE,Thu,CR-05-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-26T00:00:00.000Z,
+1990,Mr. Habeel Ahmad,Digital Logic Design,2K25-BSCS-15D,ECE,Wed,CR-13-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-25T00:00:00.000Z,
+1720,Dr. Hirra Anwar,Software Engineering,2K23-BSCS-13C,FoC,Fri,CR-26-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-06T00:00:00.000Z,
+1991,Dr. Samia Tahir,Expository Writing,2K24-BSCS-14D,H&S,Wed,CR-16-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-04T00:00:00.000Z,
+1992,Dr. Sara Shakil,Computer Organization & Assembly Language,2K24-BSCS-14C,ECE,Mon,CR-16-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-02T00:00:00.000Z,
+1993,Dr. Sara Shakil,Computer Organization & Assembly Language,2K24-BSCS-14D,ECE,Thu,CR-18-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-05T00:00:00.000Z,
+1994,Dr. Sara Shakil,Computer Organization & Assembly Language,2K24-BSCS-14D,ECE,Thu,CR-18-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-05T00:00:00.000Z,
+1721,Ms. Nikhar Azhar,Deep Learning,2K23-BSCS-13E,FoC,Fri,CR-27-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-06T00:00:00.000Z,
+1722,Ms. Nikhar Azhar,Deep Learning,2K23-BSCS-13E,FoC,Fri,CR-27-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-06T00:00:00.000Z,
+1723,Dr. Tauseef ur Rehman,Digital Signal Processing,2K23-BEE-15A,ECE,Mon,CR-19-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-09T00:00:00.000Z,
+1724,Dr. Tauseef ur Rehman,Digital Signal Processing,2K23-BEE-15B,ECE,Mon,CR-20-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-09T00:00:00.000Z,
+1876,Dr. Saira Zainab,Linear Algebra & ODEs,2K25-BCE-1A,H&S,Tue,CR-04-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-17T00:00:00.000Z,
+1995,Dr. Sara Shakil,Computer Organization & Assembly Language,2K24-BSCS-14C,ECE,Mon,CR-16-IAEC,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-02T00:00:00.000Z,
+2132,Dr. Muhammad Bilal Ali,Database Systems,2K25-BSCS-15C,FoC,Fri,CR-03-UG Block,12:00 AM,01:00 AM,0,Lec,Late,2026-03-06T00:00:00.000Z,
+1726,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14A,ECE,Tue,CR-01-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-10T00:00:00.000Z,Elective
+2131,Dr. Sobia Jamil,Ideology and Constitution of Pakistan,2K25-BEE-17C,H&S,Thu,CR-15-UG Block,12:00 AM,01:00 AM,0,Lec,Late,2026-03-05T00:00:00.000Z,
+2130,Dr. Farkhanda Afzal,Multivariable Calculus,2K25-BSCS-15D,H&S,Thu,CR-02-UG Block,12:00 AM,01:00 AM,0,Lec,Late,2026-03-05T00:00:00.000Z,
+1875,Dr. Saira Zainab,Linear Algebra and ODEs,2K25-BESE-16A,H&S,Tue,CR-02-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-17T00:00:00.000Z,
+1728,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14B,ECE,Tue,CR-01-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-10T00:00:00.000Z,Elective
+1874,Ms. Hina Yousaf,Expository Writing,2K24-BSCS-14C,H&S,Mon,Lecture Hall-PG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-23T00:00:00.000Z,
+1996,Ms. Sobia Ashraf,Formal Methods,2K23-BESE-14A,FoC,Thu,CR-23-Acad Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-05T00:00:00.000Z,
+1997,Ms. Sobia Ashraf,Formal Methods,2K23-BESE-14A,FoC,Thu,CR-23-Acad Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-05T00:00:00.000Z,
+2129,Dr. Mehvish Rashid,Software Design and Architecture,2K24-BESE-15B,FoC,Wed,CR-17-IAEC,12:00 AM,01:00 AM,0,Lec,Late,2026-03-04T00:00:00.000Z,
+2128,Dr. Mehvish Rashid,Software Design and Architecture,2K24-BESE-15A,FoC,Tue,CR-16-IAEC,12:00 AM,01:00 AM,0,Lec,Late,2026-03-03T00:00:00.000Z,
+1730,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14C,ECE,Tue,CR-01-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-10T00:00:00.000Z,Elective
+1873,Ms. Hina Yousaf,Expository Writing,2K24-BSCS-14A,H&S,Mon,CR-04-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-23T00:00:00.000Z,
+1732,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14D,ECE,Tue,CR-01-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-10T00:00:00.000Z,Elective
+1733,Mr. Abdul Mateen,Electronic Circuit Design,2K24-BEE-16D,ECE,Tue,CR-08-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-10T00:00:00.000Z,
+1998,Ms. Sobia Ashraf,Formal Methods,2K23-BESE-14B,FoC,Wed,CR-24-Acad Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-04T00:00:00.000Z,
+2127,Dr. Neelma Riaz,Expository Writing,2K24-BEE-16D,H&S,Tue,CR-08-UG Block,12:00 AM,01:00 AM,0,Lec,Late,2026-03-03T00:00:00.000Z,
+2126,Ms. Sahar Arshad,Object Oriented Programming,2K25-BSAi-2A,FoC,Tue,CR-01-UG Block,12:00 AM,01:00 AM,0,Lec,Late,2026-03-03T00:00:00.000Z,
+2125,Dr. Nauman Anwar Baig,Digital Signal Processing,2k23-BEE-15C,ECE,Mon,CR-19-IAEC,12:00 AM,01:00 AM,0,Lec,Late,2026-03-02T00:00:00.000Z,
+2124,Dr. Farzana Jabeen,Web Technologies,2k24-BSCS-14C,FoC,Mon,CR-18-IAEC,12:00 AM,01:00 AM,0,Lec,Late,2026-03-02T00:00:00.000Z,
+1872,Ms. Hina Yousaf,Expository Writing,2K24-BSCS-14B,H&S,Mon,Lecture Hall-PG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-23T00:00:00.000Z,
+1735,Mr. Taufiq ur Rehman,Operating Systems,2K24-BESE-15A,FoC,Tue,CR-16-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-10T00:00:00.000Z,
+1999,Ms. Sobia Ashraf,Formal Methods,2K23-BESE-14B,FoC,Wed,CR-24-Acad Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-04T00:00:00.000Z,
+1736,Mr. Taufiq ur Rehman,Operating Systems,2K24-BESE-15A,FoC,Tue,CR-16-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-10T00:00:00.000Z,
+2123,Dr. Rai Sajjad Saif,Linear Algebra,2k25-BSCS-15E,H&S,Mon,CR-04-UG Block,12:00 AM,01:00 AM,0,Lec,Late,2026-03-02T00:00:00.000Z,
+2122,Mr. Huzaifa Abbas,Computer Programming,2k25-BEE-17C,ECE,Fri,CR-15-UG Block,12:00 AM,01:00 AM,0,Lec,Late,2026-02-27T00:00:00.000Z,
+1737,Dr. Khursheed Muhammad,Multivariable Calculus,2K25-BSCS-15B,H&S,Wed,CR-11-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-11T00:00:00.000Z,
+2121,Ms. Maria Jamshaid,Ideology and Constitution of Pakistan,2K23-BSDS-1A,H&S,Fri,CR-13-UG Block,12:00 AM,01:00 AM,0,Lec,Late,2026-02-27T00:00:00.000Z,
+2120,Dr. Aimal Tariq Rextin,Object Oriented Programming,2k25-BESE-16A,FoC,Fri,CR-09-UG Block,12:00 AM,01:00 AM,0,Lec,Late,2026-02-27T00:00:00.000Z,
+1738,Dr. Khursheed Muhammad,Multivariable Calculus,2K25-BSCS-15C,H&S,Wed,CR-08-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-11T00:00:00.000Z,
+2000,Dr. Quanita Kiran,Discrete Mathematics,2K25-BESE-16B,H&S,Fri,CR-12-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,
+1739,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14A,ECE,Wed,CR-11-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-11T00:00:00.000Z,Elective
+2119,Dr. Omar Zeb,Computer Organization & Assembly Language,2K24-BSCS-14A,ECE,Wed,CR-21-SMRIMMS,12:00 AM,01:00 AM,0,Lec,Late,2026-02-25T00:00:00.000Z,
+2118,Ms. Hina Yousaf,Expository Writing,2k24-BSCS-14B,H&S,Wed,CR-21-SMRIMMS,12:00 AM,01:00 AM,0,Lec,Late,2026-02-25T00:00:00.000Z,
+1740,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14B,ECE,Wed,CR-11-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-11T00:00:00.000Z,Elective
+2001,Dr. Quanita Kiran,Discrete Mathematics,2K25-BESE-16B,H&S,Fri,CR-12-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,
+2117,Mr. Ahsan Azhar,Electrical Network Analysis,2k25-BEE-17A,ECE,Wed,CR-14-UG Block,12:00 AM,01:00 AM,0,Lec,Late,2026-02-25T00:00:00.000Z,
+1741,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14C,ECE,Wed,CR-11-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-11T00:00:00.000Z,Elective
+2002,Mr. Muhammad Usman Ghani,Understanding of Quran II,2K25-BSCS-15B,H&S,Mon,CR-02-UG Block,12:00 AM,01:00 AM,0,Lab,Makeup,2026-03-02T00:00:00.000Z,
+1742,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14D,ECE,Wed,CR-11-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-11T00:00:00.000Z,Elective
+2116,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13B,FoC,Mon,CR-26-Acad Block,12:00 AM,01:00 AM,0,Lec,Late,2026-02-23T00:00:00.000Z,
+1743,Mr. Taufiq ur Rehman,Operating Systems,2K24-BESE-15B,FoC,Wed,CR-17-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-11T00:00:00.000Z,
+2115,Dr. Sadiq Amin,Computer Programming,2k25-BEE-17A,ECE,Mon,CR-14-UG Block,12:00 AM,01:00 AM,0,Lec,Late,2026-02-23T00:00:00.000Z,
+1744,Mr. Taufiq ur Rehman,Operating Systems,2K24-BESE-15B,FoC,Wed,CR-17-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-11T00:00:00.000Z,
+2114,Dr. Sadiq Amin,Fundamentals of Programming,2K25-BCE-1A,ECE,Mon,CR-13-UG Block,12:00 AM,01:00 AM,0,Lec,Late,2026-02-23T00:00:00.000Z,
+2113,Dr. Arshad Siddiqui,Linear Algebra,2k24-BEE-16C,H&S,Mon,CR-07-UG Block,12:00 AM,01:00 AM,0,Lec,Late,2026-02-23T00:00:00.000Z,
+1745,Dr. Tauseef ur Rehman,Digital Signal Processing,2K23-BEE-15B,ECE,Wed,CR-20-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-11T00:00:00.000Z,
+2112,Mr. Hafiz Siddiqe,Understanding of Quran II,2K25-BSAI-2A,H&S,Fri,CR-01,12:00 AM,01:00 AM,0,Lab,Late,2026-02-20T00:00:00.000Z,
+2111,Dr. Muhammad Moazam Fraz,Large Language Models,2K23-BSDS-1A,FoC,Wed,CR-28,12:00 AM,01:00 AM,0,Lec,Late,2026-02-18T00:00:00.000Z,
+1746,Dr. Tauseef ur Rehman,Digital Signal Processing,2K23-BEE-15B,ECE,Wed,CR-20-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-11T00:00:00.000Z,
+1747,Dr. Sidra Shafiq,Applied Physics,2K24-BSAi-1A,H&S,Thu,CR-11-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-12T00:00:00.000Z,
+2110,Ms. Hina Yousaf,Expository Writing,2k24-BSCS-14B,H&S,Wed,CR-21,12:00 AM,01:00 AM,0,Lec,Late,2026-02-18T00:00:00.000Z,
+2109,Dr. Muhammad Jameel Nawaz,Microprocessor Systems,2k24-BEE-16C,ECE,Wed,CR-07,12:00 AM,01:00 AM,0,Lec,Late,2026-02-18T00:00:00.000Z,
+1748,Mr. Muhammad Usman Ghani,Understanding of Quran II,2K25-BCE-1A,H&S,Thu,CR-13-UG Block,12:00 AM,01:00 AM,0,Lab,Missed,2026-02-12T00:00:00.000Z,
+2003,Mr. Muhammad Usman Ghani,Understanding of Quran II,2K25-BSCS-15E,H&S,Fri,CR-11-UG Block,12:00 AM,01:00 AM,0,Lab,Makeup,2026-02-27T00:00:00.000Z,
+2004,Mr. Muhammad Usman Ghani,Understanding of Quran II,2K25-BESE-16B,H&S,Tue,CR-10-UG Block,12:00 AM,01:00 AM,0,Lab,Makeup,2026-03-03T00:00:00.000Z,
+2108,Dr. Neelma Riaz,Expository Writing,2k24-BEE-16D,H&S,Tue,CR-08,12:00 AM,01:00 AM,0,Lec,Late,2026-02-17T00:00:00.000Z,
+2107,Dr. Muhammad Jameel Nawaz,Microprocessor Systems,2k24-BEE-16D,ECE,Mon,CR-08,12:00 AM,01:00 AM,0,Lec,Late,2026-02-16T00:00:00.000Z,
+1750,Mr. Muhammad Usman Ghani,Understanding of Quran II,2K25-BCE-1A,H&S,Thu,CR-13-UG Block,12:00 AM,01:00 AM,0,Lab,Missed,2026-02-12T00:00:00.000Z,
+2106,Mr. Hafiz Siddiqe,Understanding of Quran II,2K25-BSAI-2A,H&S,Fri,CR-01,12:00 AM,01:00 AM,0,Lab,Late,2026-02-13T00:00:00.000Z,
+2105,Ms. Nikhar Azhar,Deep Learning,2k23-BSCS-13E,FoC,Fri,CR-27,12:00 AM,01:00 AM,0,Lec,Late,2026-02-13T00:00:00.000Z,
+1751,Dr. Tauseef ur Rehman,Digital Signal Processing,2K23-BEE-15A,ECE,Thu,CR-19-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-12T00:00:00.000Z,
+2104,Mr. Hafiz Siddiqe,Understanding of Quran II,2K25-BSAI-2A,H&S,Fri,CR-01,12:00 AM,01:00 AM,0,Lab,Late,2026-02-13T00:00:00.000Z,
+2103,Syeda Rabia Shaheen,Principles of Sociology,2k22-BSCS-12A,H&S,Thu,Lec Hall IAEC,12:00 AM,01:00 AM,0,Lec,Late,2026-02-12T00:00:00.000Z,
+2005,Mr. Maajid Maqbool,Entrepreneurship,2K23-BESE-14B,FoC,Fri,CR-02-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,
+2102,Dr. Muhammad Ashraf,Computer Architecture & Logic Design,2k25-BESE-16A,FoC,Thu,CR-07,12:00 AM,01:00 AM,0,Lec,Late,2026-02-12T00:00:00.000Z,
+2101,Dr. Muhammad Ahmad Rathore,Compiler Construction,2k23-BSCS-13B,FoC,Wed,CR-24,12:00 AM,01:00 AM,0,Lec,Late,2026-02-11T00:00:00.000Z,
+1752,Dr. Tauseef ur Rehman,Digital Signal Processing,2K23-BEE-15A,ECE,Thu,CR-19-IAEC,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-12T00:00:00.000Z,
+2006,Mr. Maajid Maqbool,Entrepreneurship,2K22-BEE-14B,FoC,Fri,CR-02-UG Block,12:00 AM,01:00 AM,0,Lec,Makeup,2026-02-27T00:00:00.000Z,
+2100,Dr. Rizwan Ahmad,Communication Systems,2k23-BEE-15D,ECE,Wed,CR-18,12:00 AM,01:00 AM,0,Lec,Late,2026-02-11T00:00:00.000Z,
+1753,Dr. Adnan Aslam,Discrete Mathematics,2K25-BSDS-3A,H&S,Thu,CR-27-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-12T00:00:00.000Z,
+2007,Dr. Qaiser Riaz,Web Technologies,2K24-BSCS-14A,FoC,Mon,Computing Lab-06,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-02T00:00:00.000Z,
+1754,Dr. Adnan Aslam,Discrete Mathematics,2K25-BSDS-3A,H&S,Thu,CR-27-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-12T00:00:00.000Z,
+2099,Dr. Arshad Siddiqui,Linear Algebra,2k24-BEE-16C,H&S,Wed,CR-07,12:00 AM,01:00 AM,0,Lec,Late,2026-02-11T00:00:00.000Z,
+2098,Dr. Muhammad Imran Malik,Deep Learning,2k23-BSCS-13B,FoC,Wed,CR-05,12:00 AM,01:00 AM,0,Lec,Late,2026-02-11T00:00:00.000Z,
+1755,Dr. Adnan Aslam,Discrete Mathematics,2K25-BSCS-15E,H&S,Thu,CR-27-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-12T00:00:00.000Z,
+2008,Dr. Qaiser Riaz,Web Technologies,2K24-BSCS-14A,FoC,Mon,Computing Lab-06,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-02T00:00:00.000Z,
+2097,Dr. Ahmed Naeem,Logic and Sequential Circuit Design,2K25-BCE-1A,ECE,Tue,CR-13,12:00 AM,01:00 AM,0,Lec,Late,2026-02-10T00:00:00.000Z,
+2096,Mr. Habeel Ahmed,Electrical Network Analysis,2k25-BEE-17D,ECE,Tue,CR-07,12:00 AM,01:00 AM,0,Lec,Late,2026-02-10T00:00:00.000Z,
+1756,Dr. Adnan Aslam,Discrete Mathematics,2K25-BSCS-15E,H&S,Thu,CR-27-Acad Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-12T00:00:00.000Z,
+2095,Dr. Sarosh Tahir,Object Oriented Programming,2k25-BSCS-15E,FoC,Tue,CR-04,12:00 AM,01:00 AM,0,Lec,Late,2026-02-10T00:00:00.000Z,
+2094,Dr. Ayesha Hakim,Advanced Database Management Systems,2k24-BSCS-14D,FoC,Mon,CR-22,12:00 AM,01:00 AM,0,Lec,Late,2026-02-09T00:00:00.000Z,
+1757,Ms. Naema Asif,Computer Organization & Assembly Language,2K24-BSDS-2A,FoC,Fri,CR-12-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-13T00:00:00.000Z,Elective
+2009,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14A,ECE,Mon,Embedded Systems Lab,12:00 AM,01:00 AM,0,Lec,Makeup,2026-03-02T00:00:00.000Z,Elective
+2093,Dr. Farkhanda Afzal,Multivariable Calculus,2k25-BSCS-15D,H&S,Fri,CR-06,12:00 AM,01:00 AM,0,Lec,Late,2026-02-06T00:00:00.000Z,
+2092,Mr. Hafiz Siddiqe,Understanding of Quran II,2K25-BSAI-2A,H&S,Fri,CR-01,12:00 AM,01:00 AM,0,Lab,Late,2026-02-06T00:00:00.000Z,
+1758,Ms. Naema Asif,Computer Organization & Assembly Language,2K24-BSDS-2A,FoC,Fri,CR-12-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-13T00:00:00.000Z,Elective
+1759,Dr. Khursheed Muhammad,Multivariable Calculus,2K25-BSCS-15A,H&S,Mon,CR-02-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-16T00:00:00.000Z,
+2091,Mr. Yaruq Nadeem,Entrepreneurship,2k22-BEE-14A,H&S,Tue,CR-08,12:00 AM,01:00 AM,0,Lec,Late,2026-02-03T00:00:00.000Z,
+1760,Dr. Neelma Riaz,Expository Writing,2K24-BEE-16D,H&S,Mon,CR-08-UG Block,12:00 AM,01:00 AM,0,Lec,Missed,2026-02-16T00:00:00.000Z,
+1482,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Fri,Basic Electronics Lab,01:00 AM,02:00 AM,60,Lab,Makeup,2026-01-30T00:00:00.000Z,
+1483,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Fri,Basic Electronics Lab,02:00 AM,03:00 AM,120,Lab,Makeup,2026-01-30T00:00:00.000Z,
+1484,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Fri,Basic Electronics Lab,03:00 AM,04:00 AM,180,Lab,Makeup,2026-01-30T00:00:00.000Z,
+1485,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Fri,Basic Electronics Lab,04:00 AM,05:00 AM,240,Lab,Makeup,2026-01-30T00:00:00.000Z,
+1486,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Fri,Basic Electronics Lab,05:00 AM,06:00 AM,300,Lab,Makeup,2026-01-30T00:00:00.000Z,
+1487,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Fri,Basic Electronics Lab,06:00 AM,07:00 AM,360,Lab,Makeup,2026-01-30T00:00:00.000Z,
+1488,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Fri,Basic Electronics Lab,07:00 AM,08:00 AM,420,Lab,Makeup,2026-01-30T00:00:00.000Z,
+2169,Dr. Sarosh Tahir,Software Engineering,2K23-BSCS-13E,FoC,Mon,CR-02-UG Block,08:00 AM,09:00 AM,480,Lec,Makeup,2026-03-30T00:00:00.000Z,
+1489,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Fri,Basic Electronics Lab,08:00 AM,09:00 AM,480,Lab,Makeup,2026-01-30T00:00:00.000Z,
+1635,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14A,FoC,Thu,CR-04-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-12T00:00:00.000Z,
+1464,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14C,FoC,Tue,CR- 22 RIMMS,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-17T00:00:00.000Z,
+1792,Mr. Waseem Ahmed,Professional Ethics,2K22-BEE-14C,H&S,Fri,CR-09-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-13T00:00:00.000Z,
+1655,Ms. Sahar Arshad,Mobile Application Development-I,2K23-BSDS-1A,FoC,Mon,CR-05-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-09T00:00:00.000Z,
+2368,Dr. Neelma Riaz,Expository Writing,2K24-BEE-16D,H&S,Tue,CR-08-UG Block,09:00 AM,10:00 AM,540,Lec,Missed,2026-03-31T00:00:00.000Z,
+2270,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13B,FoC,Mon,CR-26-Acad Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-04-06T00:00:00.000Z,
+1532,Mr. Hamza Saleem,Human Computer Interaction,2K23-BESE-14B,FoC,Tue,CR-24-Acad Block,09:00 AM,10:00 AM,540,Lec,Missed,2026-02-03T00:00:00.000Z,
+1550,Dr. Samia Tahir,Expository Writing,2K24-BSAI-1A,H&S,Tue,CR-02-UG Block,09:00 AM,10:00 AM,540,Lec,Missed,2026-01-27T00:00:00.000Z,
+1589,Mr. Jaudat Mamoon,Object Oriented Programming,2K25-BSCS-15B,FoC,Tue,CR-02-UG Block,09:00 AM,10:00 AM,540,Lec,Missed,2026-01-27T00:00:00.000Z,
+1859,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13B,FoC,Mon,CR-26-Acad Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-23T00:00:00.000Z,
+1463,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14C,FoC,Tue,CR- 22 RIMMS,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-10T00:00:00.000Z,
+1642,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14C,FoC,Wed,CR-22-SMRIMMS,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-04T00:00:00.000Z,
+1857,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13A,FoC,Thu,CR-03-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-26T00:00:00.000Z,
+1462,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14C,FoC,Tue,CR- 22 RIMMS,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-03T00:00:00.000Z,
+1643,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14C,FoC,Wed,CR-22-SMRIMMS,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-11T00:00:00.000Z,
+2272,Dr. Ibrar Hussain,Differential Equations,2K25-BEE-17C,H&S,Mon,CR-28-Acad Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-04-06T00:00:00.000Z,
+1853,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14D,ECE,Fri,CR-01-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1644,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14C,FoC,Wed,CR-22-SMRIMMS,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-18T00:00:00.000Z,
+1851,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14C,ECE,Fri,CR-01-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1595,Dr. Farkhanda Afzal,Multivariable Calculus,2K25-BSCS-15D,H&S,Thu,CR-02-UG Block,09:00 AM,10:00 AM,540,Lec,Missed,2026-01-29T00:00:00.000Z,
+1632,Mr. Jaudat Mamoon,Object Oriented Programming,2K25-BSCS-15C,FoC,Fri,CR-05-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-27T00:00:00.000Z,
+2288,Dr. Huma Ghafoor,Communication Systems,2K23-BEE-15A,ECE,Tue,CR-19-IAEC,09:00 AM,10:00 AM,540,Lec,Missed,2026-03-17T00:00:00.000Z,
+2372,Dr. Hina Munir Dutt,Complex Variables and Transforms,2K24-BESE-15B,H&S,Tue,CR-17-IAEC,09:00 AM,10:00 AM,540,Lec,Missed,2026-03-31T00:00:00.000Z,
+1460,Dr. Imran Malik,Applied Physics,2K24-BSCS-14A,H&S,Mon,CR-04-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-02T00:00:00.000Z,
+1849,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14B,ECE,Fri,CR-01-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+2159,Mr. Tariq Mansoor,Entrepreneurship,2K22-BEE-14D,H&S,Fri,CR-09-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-03-27T00:00:00.000Z,
+1547,Dr. Samia Tahir,Expository Writing,2K24-BSAI-1A,H&S,Thu,CR-02-UG Block,09:00 AM,10:00 AM,540,Lec,Missed,2026-01-29T00:00:00.000Z,
+1453,Dr. Neelma Riaz,Expository Writing,2K24-BEE-16D,H&S,Fri,CR-02-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-01-30T00:00:00.000Z,
+1847,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14A,ECE,Fri,CR-01-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+2180,Dr. Farkhanda Afzal,Multivariable Calculus,2K25-BSCS-15E,H&S,Tue,CR-21-SMRIMMS,09:00 AM,10:00 AM,540,Lec,Makeup,2026-03-31T00:00:00.000Z,
+2163,Mr. Tariq Mansoor,Entrepreneurship,2K22-BEE-14D,H&S,Fri,CR-09-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-03-27T00:00:00.000Z,
+2350,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14A,H&S,Mon,CR-12-UG Block,09:00 AM,10:00 AM,540,Lec,Missed,2026-03-30T00:00:00.000Z,Elective
+2354,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14C,H&S,Mon,CR-12-UG Block,09:00 AM,10:00 AM,540,Lec,Missed,2026-03-30T00:00:00.000Z,Elective
+1510,Mr. Muhammad Usman Ghani,Understanding of Quran II,2K25-BSCS-15E,H&S,Tue,Lecture Hall-PG Block,09:00 AM,10:00 AM,540,Lab,Makeup,2026-02-03T00:00:00.000Z,
+2172,Dr. Imran Malik,Applied Physics,2K24-BSCS-14A,H&S,Mon,CR-04-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-03-30T00:00:00.000Z,
+1631,Mr. Jaudat Mamoon,Object Oriented Programming,2K25-BSCS-15C,FoC,Fri,CR-05-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-20T00:00:00.000Z,
+1838,Ms. Nikhar Azhar,Deep Learning,2K23-BSCS-13E,FoC,Thu,Computing Lab-11,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-26T00:00:00.000Z,
+1650,Ms. Nikhar Azhar,Deep Learning,2K23-BSCS-13E,FoC,Thu,Computing Lab-11,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-12T00:00:00.000Z,
+2322,Dr. Neelma Naz,Linear Control Systems,2K23-BEE-15D,ECE,Wed,CR-18-IAEC,09:00 AM,10:00 AM,540,Lec,Missed,2026-03-25T00:00:00.000Z,
+1640,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14B,FoC,Fri,CR-02-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-20T00:00:00.000Z,
+1560,Dr. Samia Tahir,Expository Writing,2K24-BSDS-2A,H&S,Fri,CR-02-UG Block,09:00 AM,10:00 AM,540,Lec,Missed,2026-01-30T00:00:00.000Z,
+1564,Dr. Ahmed Naeem,Logic and Sequential Circuit Design,2K25-BCE-1A,ECE,Tue,CR-13-UG Block,09:00 AM,10:00 AM,540,Lec,Missed,2026-02-03T00:00:00.000Z,
+1606,Dr. Imran Malik,Applied Physics,2K24-BSCS-14A,ECE,Mon,CR-04-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-02T00:00:00.000Z,
+1490,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Fri,Basic Electronics Lab,09:00 AM,10:00 AM,540,Lab,Makeup,2026-01-30T00:00:00.000Z,
+1593,Mr. Jaudat Mamoon,Object Oriented Programming,2K25-BSCS-15C,FoC,Wed,CR-02-UG Block,09:00 AM,10:00 AM,540,Lec,Missed,2026-01-28T00:00:00.000Z,
+2318,Mr. Jaudat Mamoon,Object Oriented Programming,2K25-BSCS-15C,FoC,Wed,CR-03-UG Block,09:00 AM,10:00 AM,540,Lec,Missed,2026-03-25T00:00:00.000Z,
+2407,Ms. Sobia Ashraf,Formal Methods,2K23-BESE-14A,FoC,Wed,CR-23-Acad Block,09:00 AM,10:00 AM,540,Lec,Missed,2026-04-01T00:00:00.000Z,
+2170,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13B,FoC,Mon,CR-26-Acad Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-03-30T00:00:00.000Z,
+2352,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14B,H&S,Mon,CR-12-UG Block,09:00 AM,10:00 AM,540,Lec,Missed,2026-03-30T00:00:00.000Z,Elective
+1609,Dr. Muhammad Bilal Ali,Database Systems,2K25-BSCS-15C,FoC,Tue,Computing Lab-01,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-03T00:00:00.000Z,
+2312,Mr. Tariq Mansoor,Entrepreneurship,2K22-BEE-14C,H&S,Tue,CR-04-UG Block,09:00 AM,10:00 AM,540,Lec,Missed,2026-03-17T00:00:00.000Z,
+1588,Mr. Jaudat Mamoon,Object Oriented Programming,2K25-BSCS-15B,FoC,Mon,CR-02-UG Block,09:00 AM,10:00 AM,540,Lec,Missed,2026-01-26T00:00:00.000Z,
+2442,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14B,FoC,Mon,CR-21-SMRIMMS,09:00 AM,10:00 AM,540,Lec,Missed,2026-04-06T00:00:00.000Z,
+1553,Dr. Farzana Jabeen,Web Technologies,2K24-BSCS-14C,FoC,Mon,CR-02-UG Block,09:00 AM,10:00 AM,540,Lec,Missed,2026-02-02T00:00:00.000Z,
+1468,Dr. Nazia Pervaiz,Machine Learning,2K24-BSDS-2A,FoC,Fri,CR-12-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-01-30T00:00:00.000Z,
+1616,Mr. Hamza Saleem,Human Computer Interaction,2K23-BESE-14B,FoC,Fri,CR-24-Acad Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-06T00:00:00.000Z,
+2363,Dr. Hina Munir Dutt,Complex Variables and Transforms,2K24-BESE-15B,H&S,Mon,CR-17-IAEC,09:00 AM,10:00 AM,540,Lec,Missed,2026-03-30T00:00:00.000Z,
+2367,Dr. Samia Tahir,Expository Writing,2K24-BSAi-1A,H&S,Tue,CR-06-UG Block,09:00 AM,10:00 AM,540,Lec,Missed,2026-03-31T00:00:00.000Z,
+1618,Dr. Hirra Anwar,Software Engineering,2K23-BSCS-13C,FoC,Wed,SMRIMMS Seminar Hall,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-04T00:00:00.000Z,
+2215,Ms. Hina Yousaf,Expository Writing,2K24-BSCS-14A,H&S,Thu,CR-01-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-04-02T00:00:00.000Z,
+1785,Dr. Gibrail Islam,Software Engineering,2K23-BSCS-13B,FoC,Mon,CR-26-Acad Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-09T00:00:00.000Z,
+2299,Dr. Samia Tahir,Expository Writing,2K24-BSAi-1A,H&S,Tue,CR-06-UG Block,09:00 AM,10:00 AM,540,Lec,Missed,2026-03-17T00:00:00.000Z,
+2356,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14D,H&S,Mon,CR-12-UG Block,09:00 AM,10:00 AM,540,Lec,Missed,2026-03-30T00:00:00.000Z,Elective
+1633,Dr. Naima Iltaaf,Web Technologies,2K24-BSAi-1A,FoC,Fri,Computing Lab-08,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-06T00:00:00.000Z,
+2281,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13B,FoC,Mon,CR-26-Acad Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-04-13T00:00:00.000Z,
+2296,Dr. Neelma Riaz,Expository Writing,2K24-BEE-16D,H&S,Tue,CR-08-UG Block,09:00 AM,10:00 AM,540,Lec,Missed,2026-03-17T00:00:00.000Z,
+1626,Mr. Jaudat Mamoon,Object Oriented Programming,2K25-BSCS-15B,FoC,Thu,CR-05-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-12T00:00:00.000Z,
+1628,Mr. Jaudat Mamoon,Object Oriented Programming,2K25-BSCS-15B,FoC,Thu,CR-05-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-19T00:00:00.000Z,
+1630,Mr. Jaudat Mamoon,Object Oriented Programming,2K25-BSCS-15C,FoC,Fri,CR-05-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-13T00:00:00.000Z,
+1788,Dr. Gibrail Islam,Software Engineering,2K23-BSCS-13A,FoC,Tue,Lecture Hall-PG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-10T00:00:00.000Z,
+2158,Dr. Samia Tahir,Expository Writing,2K24-BSAi-1A,H&S,Fri,CR-02-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-03-27T00:00:00.000Z,
+1789,Dr. Gibrail Islam,Software Engineering,2K23-BSCS-13B,FoC,Tue,Lecture Hall-PG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-10T00:00:00.000Z,
+1790,Mr. Waseem Ahmed,Professional Ethics,2K22-BEE-14A,H&S,Fri,CR-09-UG Block,09:00 AM,10:00 AM,540,Lec,Makeup,2026-02-20T00:00:00.000Z,
+1809,Dr. Muhammad Moazzam Ali,Microprocessor Systems,2K24-BEE-16B,ECE,Thu,CR-06-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-12T00:00:00.000Z,
+322,Dr. Adnan Rashid,Compiler Construction,2K22-BSCS-12B,FoC,Wed,CR-06-UG Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-05-13T00:00:00.000Z,
+1850,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14B,ECE,Fri,CR-01-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1848,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14A,ECE,Fri,CR-01-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+2190,Dr. Arshad Siddiqui,Linear Algebra,2K24-BEE-16C,H&S,Wed,CR-09-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-04-01T00:00:00.000Z,
+2408,Ms. Sobia Ashraf,Formal Methods,2K23-BESE-14A,FoC,Wed,CR-23-Acad Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-04-01T00:00:00.000Z,
+2369,Dr. Neelma Riaz,Functional English,2K25-BESE-16A,H&S,Tue,CR-09-UG Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-03-31T00:00:00.000Z,
+2179,Dr. Sarosh Tahir,Object Oriented Programming,2K25-BSCS-15E,FoC,Tue,CR-22-SMRIMMS,10:00 AM,11:00 AM,600,Lec,Makeup,2026-03-31T00:00:00.000Z,
+1566,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Fri,CR-02-UG Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-01-30T00:00:00.000Z,
+1503,Mr. Muhammad Nashit Shah,Computer Architecture & Logic Design,2K25-BESE-16B,ECE,Wed,CR-08-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-04T00:00:00.000Z,
+1498,Dr. Neelma Riaz,Functional English,2K25-BESE-16A,H&S,Tue,CR-09-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-03T00:00:00.000Z,
+1581,Mr. Jaudat Mamoon,Object Oriented Programming,2K25-BSCS-15A,FoC,Mon,CR-02-UG Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-01-26T00:00:00.000Z,
+1491,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Fri,Basic Electronics Lab,10:00 AM,11:00 AM,600,Lab,Makeup,2026-01-30T00:00:00.000Z,
+2171,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13B,FoC,Mon,CR-26-Acad Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-03-30T00:00:00.000Z,
+2320,Dr. Sobia Jamil,Ideology and Constitution of Pakistan,2K25-BEE-17A,H&S,Wed,CR-14-UG Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-03-25T00:00:00.000Z,
+2319,Mr. Jaudat Mamoon,Object Oriented Programming,2K25-BSCS-15C,FoC,Wed,CR-03-UG Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-03-25T00:00:00.000Z,
+2313,Mr. Tariq Mansoor,Entrepreneurship,2K22-BEE-14C,H&S,Tue,CR-04-UG Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-03-17T00:00:00.000Z,
+1556,Dr. Samia Tahir,Expository Writing,2K24-BSCS-14D,H&S,Fri,CR-02-UG Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-01-30T00:00:00.000Z,
+1554,Dr. Farzana Jabeen,Web Technologies,2K24-BSCS-14C,FoC,Mon,CR-02-UG Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-02-02T00:00:00.000Z,
+2306,Dr. Sidra Shafiq,Applied Physics,2K24-BSCS-14C,H&S,Tue,Physics Lab-1-SNS,10:00 AM,11:00 AM,600,Lab,Missed,2026-03-17T00:00:00.000Z,
+1574,Dr. Quanita Kiran,Discrete Mathematics,2K25-BESE-16A,H&S,Wed,CR-02-UG Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-01-21T00:00:00.000Z,
+1575,Mr. Muhammad Usman Ghani,Understanding of Quran II,2K25-BESE-16B,H&S,Fri,CR-02-UG Block,10:00 AM,11:00 AM,600,Lab,Missed,2026-01-30T00:00:00.000Z,
+1617,Mr. Hamza Saleem,Human Computer Interaction,2K23-BESE-14B,FoC,Fri,CR-24-Acad Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-06T00:00:00.000Z,
+1619,Dr. Hirra Anwar,Software Engineering,2K23-BSCS-13C,FoC,Wed,SMRIMMS Seminar Hall,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-04T00:00:00.000Z,
+1479,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Fri,Basic Electronics Lab,10:00 AM,11:00 AM,600,Lab,Makeup,2026-01-30T00:00:00.000Z,
+1585,Dr. Abdul Haleem Hamid,Linear Algebra,2K25-BSCS-15A,H&S,Wed,CR-02-UG Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-01-21T00:00:00.000Z,
+1623,Mr. Jaudat Mamoon,Object Oriented Programming,2K25-BSCS-15A,FoC,Fri,CR-05-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-13T00:00:00.000Z,
+1624,Mr. Jaudat Mamoon,Object Oriented Programming,2K25-BSCS-15A,FoC,Fri,CR-05-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-20T00:00:00.000Z,
+1625,Mr. Jaudat Mamoon,Object Oriented Programming,2K25-BSCS-15A,FoC,Fri,CR-05-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-27T00:00:00.000Z,
+1627,Mr. Jaudat Mamoon,Object Oriented Programming,2K25-BSCS-15B,FoC,Thu,CR-05-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-12T00:00:00.000Z,
+1629,Mr. Jaudat Mamoon,Object Oriented Programming,2K25-BSCS-15B,FoC,Thu,CR-05-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-19T00:00:00.000Z,
+1470,Mr. Ahsan Azhar,Electrical Network Analysis,2K25-BEE-17A,ECE,Tue,Basic Electronics Lab,10:00 AM,11:00 AM,600,Lec,Makeup,2026-01-27T00:00:00.000Z,
+2294,Dr. Neelma Riaz,Functional English,2K25-BESE-16A,H&S,Tue,CR-09-UG Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-03-17T00:00:00.000Z,
+2289,Dr. Huma Ghafoor,Communication Systems,2K23-BEE-15A,ECE,Tue,CR-19-IAEC,10:00 AM,11:00 AM,600,Lec,Missed,2026-03-17T00:00:00.000Z,
+1634,Dr. Naima Iltaaf,Web Technologies,2K24-BSAi-1A,FoC,Fri,Computing Lab-08,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-06T00:00:00.000Z,
+2282,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13B,FoC,Mon,CR-26-Acad Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-04-13T00:00:00.000Z,
+1455,Dr. Neelma Riaz,Expository Writing,2K24-BEE-16D,H&S,Thu,CR-05-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-01-29T00:00:00.000Z,
+2273,Dr. Ibrar Hussain,Differential Equations,2K25-BEE-17C,H&S,Mon,CR-28-Acad Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-04-06T00:00:00.000Z,
+2164,Mr. Tariq Mansoor,Entrepreneurship,2K22-BEE-14D,H&S,Fri,CR-09-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-03-27T00:00:00.000Z,
+1454,Dr. Neelma Riaz,Expository Writing,2K24-BEE-16D,H&S,Fri,CR-02-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-01-30T00:00:00.000Z,
+2160,Mr. Tariq Mansoor,Entrepreneurship,2K22-BEE-14D,H&S,Fri,CR-09-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-03-27T00:00:00.000Z,
+2271,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13B,FoC,Mon,CR-26-Acad Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-04-06T00:00:00.000Z,
+1641,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14B,FoC,Fri,CR-02-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-20T00:00:00.000Z,
+2437,Mr. Wajid Ali,Workshop Practice,2k25-BEE-17D,ECE,Thu,MRC Lab-02 (SMME),10:00 AM,11:00 AM,600,Lab,Missed,2026-04-02T00:00:00.000Z,
+2255,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14D,H&S,Fri,CR-13-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+2355,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14C,H&S,Mon,CR-12-UG Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-03-30T00:00:00.000Z,Elective
+1651,Ms. Nikhar Azhar,Deep Learning,2K23-BSCS-13E,FoC,Thu,Computing Lab-11,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-12T00:00:00.000Z,
+1652,Mr. Arshad Nazir,Digital Logic Design,2K25-BSCS-15C,ECE,Mon,CR-04-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-09T00:00:00.000Z,
+2252,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14C,H&S,Fri,CR-13-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+2434,Mr. Wajid Ali,Workshop Practice,2k25-BEE-17A,ECE,Thu,MRC Lab-01 (SMME),10:00 AM,11:00 AM,600,Lab,Missed,2026-04-02T00:00:00.000Z,
+2353,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14B,H&S,Mon,CR-12-UG Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-03-30T00:00:00.000Z,Elective
+2249,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14B,H&S,Fri,CR-13-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+2246,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14A,H&S,Fri,CR-13-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+2357,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14D,H&S,Mon,CR-12-UG Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-03-30T00:00:00.000Z,Elective
+1548,Dr. Naima Iltaaf,Web Technologies,2K24-BSAI-1A,FoC,Thu,CR-02-UG Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-01-22T00:00:00.000Z,
+2243,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14D,H&S,Fri,CR-13-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+2240,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14C,H&S,Fri,CR-13-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+2402,Dr. Hina Munir Dutt,Complex Variables and Transforms,2K24-BESE-15B,H&S,Wed,CR-17-IAEC,10:00 AM,11:00 AM,600,Lec,Missed,2026-04-01T00:00:00.000Z,
+2237,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14B,H&S,Fri,CR-13-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+2234,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14A,H&S,Fri,CR-13-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+2146,Dr. Sobia Jamil,Ideology and Constitution of Pakistan,2K25-BEE-17A,H&S,Thu,CR-10-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-03-26T00:00:00.000Z,
+1865,Dr. Muhammad Moazzam Ali,Microprocessor Systems,2K24-BEE-16B,ECE,Thu,CR-06-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-19T00:00:00.000Z,
+2362,Dr. Hina Munir Dutt,Complex Variables and Transforms,2K24-BESE-15A,H&S,Mon,CR-17-IAEC,10:00 AM,11:00 AM,600,Lec,Missed,2026-03-30T00:00:00.000Z,
+2370,Dr. Neelma Riaz,Functional English,2K25-BESE-16A,H&S,Tue,CR-09-UG Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-03-31T00:00:00.000Z,
+1590,Mr. Jaudat Mamoon,Object Oriented Programming,2K25-BSCS-15B,FoC,Tue,CR-02-UG Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-01-27T00:00:00.000Z,
+2143,Ms. Sara Tariq Sheikh,Database Systems,2K25-BSAi-2A,FoC,Thu,CR-03-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-03-26T00:00:00.000Z,
+2371,Dr. Hina Munir Dutt,Complex Variables and Transforms,2K24-BESE-15A,H&S,Tue,CR-16-IAEC,10:00 AM,11:00 AM,600,Lec,Missed,2026-03-31T00:00:00.000Z,
+2232,Dr. Imran Shahzad,Linear Algebra,2K24-BEE-16A,H&S,Fri,CR-16-IAEC,10:00 AM,11:00 AM,600,Lec,Makeup,2026-04-03T00:00:00.000Z,
+1681,Ms. Sahar Arshad,Mobile Application Development-I,2K23-BSDS-1A,FoC,Wed,Computing Lab-07,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-11T00:00:00.000Z,
+2351,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14A,H&S,Mon,CR-12-UG Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-03-30T00:00:00.000Z,Elective
+2428,Dr. Imran Malik,Applied Physics,2k24-BSCS-14A,H&S,Thu,Physics Lab-1-SNS,10:00 AM,11:00 AM,600,Lab,Missed,2026-04-02T00:00:00.000Z,
+2222,Mr. Ammar Ahmed,Islamic Studies,2K25-BEE-17A,H&S,Fri,CR-01-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-04-03T00:00:00.000Z,
+2420,Dr. Imran Malik,Applied Physics,2k24-BSDS-2A,H&S,Wed,Physics Lab-1-SNS,10:00 AM,11:00 AM,600,Lab,Missed,2026-04-01T00:00:00.000Z,
+1786,Dr. Gibrail Islam,Software Engineering,2K23-BSCS-13B,FoC,Mon,CR-26-Acad Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-09T00:00:00.000Z,
+2393,Dr. Sidra Shafiq,Applied Physics,2k24-BSCS-14C,H&S,Tue,Physics Lab-1-SNS,10:00 AM,11:00 AM,600,Lab,Missed,2026-03-31T00:00:00.000Z,
+1533,Mr. Hamza Saleem,Human Computer Interaction,2K23-BESE-14B,FoC,Tue,CR-24-Acad Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-02-03T00:00:00.000Z,
+1860,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13B,FoC,Mon,CR-26-Acad Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-23T00:00:00.000Z,
+1791,Mr. Waseem Ahmed,Professional Ethics,2K22-BEE-14A,H&S,Fri,CR-09-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-20T00:00:00.000Z,
+2214,Dr. Sarosh Tahir,Object Oriented Programming,2K25-BSCS-15E,FoC,Thu,CR-16-IAEC,10:00 AM,11:00 AM,600,Lec,Makeup,2026-04-02T00:00:00.000Z,
+1594,Mr. Jaudat Mamoon,Object Oriented Programming,2K25-BSCS-15C,FoC,Wed,CR-02-UG Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-01-28T00:00:00.000Z,
+1793,Mr. Waseem Ahmed,Professional Ethics,2K22-BEE-14C,H&S,Fri,CR-09-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-13T00:00:00.000Z,
+1471,Dr. Sobia Jamil,Ideology and Constitution of Pakistan,2K25-BEE-17B,H&S,Fri,Lecture Hall-PG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-01-30T00:00:00.000Z,
+1526,Dr. Farid Gul,Linear Control Systems,2K23-BEE-15C,ECE,Tue,CR-19-IAEC,10:00 AM,11:00 AM,600,Lec,Missed,2026-02-03T00:00:00.000Z,
+2206,Ms. Sara Tariq Sheikh,Database Systems,2K25-BSAi-2A,FoC,Thu,Computing Lab-01,10:00 AM,11:00 AM,600,Lec,Makeup,2026-04-02T00:00:00.000Z,
+1867,Dr. Naima Iltaaf,Web Technologies,2K24-BSAi-1A,FoC,Fri,Computing Lab-08,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-20T00:00:00.000Z,
+1854,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14D,ECE,Fri,CR-01-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+1852,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14C,ECE,Fri,CR-01-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-02-27T00:00:00.000Z,Elective
+2202,Mr. Arshad Nazir,Digital Logic Design,2K25-BSCS-15B,ECE,Thu,CR-10-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-04-02T00:00:00.000Z,
+1596,Dr. Abdul Haleem Hamid,Linear Algebra,2K25-BSCS-15D,H&S,Thu,CR-02-UG Block,10:00 AM,11:00 AM,600,Lec,Missed,2026-01-22T00:00:00.000Z,
+2191,Dr. Arshad Siddiqui,Linear Algebra,2K24-BEE-16D,H&S,Wed,CR-09-UG Block,10:00 AM,11:00 AM,600,Lec,Makeup,2026-04-01T00:00:00.000Z,
+1572,Dr. Muhammad Ashraf,Computer Architecture & Logic Design,2K25-BESE-16A,FoC,Mon,CR-02-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-01-19T00:00:00.000Z,
+1580,Ms. Maryam Sajjad,Database Systems,2K25-BSCS-15A,FoC,Fri,CR-02-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-01-30T00:00:00.000Z,
+1582,Mr. Jaudat Mamoon,Object Oriented Programming,2K25-BSCS-15A,FoC,Mon,CR-02-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-01-26T00:00:00.000Z,
+1583,Dr. Abdul Haleem Hamid,Linear Algebra,2K25-BSCS-15A,H&S,Thu,CR-02-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-01-22T00:00:00.000Z,
+1586,Mr. Jaudat Mamoon,Object Oriented Programming,2K25-BSCS-15A,FoC,Wed,CR-02-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-01-28T00:00:00.000Z,
+1592,Mr. Jaudat Mamoon,Object Oriented Programming,2K25-BSCS-15C,FoC,Tue,CR-02-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-01-27T00:00:00.000Z,
+1597,Dr. Abdul Haleem Hamid,Linear Algebra,2K25-BSCS-15D,H&S,Wed,CR-02-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-01-21T00:00:00.000Z,
+1600,Dr. Farkhanda Afzal,Multivariable Calculus,2K25-BSCS-15E,H&S,Thu,CR-02-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-01-29T00:00:00.000Z,
+1603,Dr. Bilal Ahmed,Linear Algebra,2K25-BSDS-3A,H&S,Fri,CR-02-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-01-23T00:00:00.000Z,
+1614,Mr. Arshad Nazir,Digital Logic Design,2K25-BSCS-15C,ECE,Wed,CR-24-Acad Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-02-04T00:00:00.000Z,
+1615,Mr. Arshad Nazir,Digital Logic Design,2K25-BSCS-15C,ECE,Wed,CR-24-Acad Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-02-11T00:00:00.000Z,
+1620,Dr. Mehwish Awan,Deep Learning,2K23-BSCS-13C,FoC,Fri,CR-26-Acad Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-02-06T00:00:00.000Z,
+1622,Ms. Sahar Arshad,Mobile Application Development-I,2K23-BSDS-1A,FoC,Wed,Computing Lab-07,11:00 AM,12:00 PM,660,Lec,Makeup,2026-02-04T00:00:00.000Z,
+2343,Mr. Maajid Maqbool,Entrepreneurship,2K22-BEE-14B,FoC,Thu,CR-13-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-03-26T00:00:00.000Z,
+2335,Dr. Madiha Khalid,Cyber Security (Gp-02),2K23-BSCS-13E,FoC,Wed,CR-27-Acad Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-03-25T00:00:00.000Z,Elective
+2333,Dr. Madiha Khalid,Cyber Security (Gp-02),2K23-BSCS-13D,FoC,Wed,CR-27-Acad Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-03-25T00:00:00.000Z,Elective
+2331,Dr. Madiha Khalid,Cyber Security (Gp-02),2K23-BSCS-13C,FoC,Wed,CR-27-Acad Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-03-25T00:00:00.000Z,Elective
+1682,Mr. Ammar Ahmed,Islamic Studies,2K25-BEE-17C,H&S,Fri,CR-15-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-02-13T00:00:00.000Z,
+2329,Dr. Madiha Khalid,Cyber Security (Gp-02),2K23-BSCS-13B,FoC,Wed,CR-27-Acad Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-03-25T00:00:00.000Z,Elective
+1690,Dr. Sana Qadir,Computer Forensics,2K22-BESE-13A,FoC,Mon,CR-26-Acad Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-02-16T00:00:00.000Z,Elective
+1804,Ms. Maryam Sajjad,Database Systems,2K25-BSCS-15A,FoC,Tue,Computing Lab-05,11:00 AM,12:00 PM,660,Lec,Makeup,2026-02-10T00:00:00.000Z,
+1845,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14D,ECE,Fri,CR-01-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-02-20T00:00:00.000Z,Elective
+1843,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14C,ECE,Fri,CR-01-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-02-20T00:00:00.000Z,Elective
+2327,Dr. Madiha Khalid,Cyber Security (Gp-02),2K23-BSCS-13A,FoC,Wed,CR-27-Acad Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-03-25T00:00:00.000Z,Elective
+1841,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14B,ECE,Fri,CR-01-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-02-20T00:00:00.000Z,Elective
+1839,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14A,ECE,Fri,CR-01-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-02-20T00:00:00.000Z,Elective
+2446,Dr. Syed Imran Ali,Big Data Analytics (Gp-01),2K23-BSCS-13B,FoC,Mon,CR-23-Acad Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-04-06T00:00:00.000Z,Elective
+2321,Dr. Sobia Jamil,Ideology and Constitution of Pakistan,2K25-BEE-17A,H&S,Wed,CR-14-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-03-25T00:00:00.000Z,
+2444,Dr. Syed Imran Ali,Big Data Analytics (Gp-01),2K23-BSCS-13A,FoC,Mon,CR-23-Acad Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-04-06T00:00:00.000Z,Elective
+2317,Mr. Jaudat Mamoon,Object Oriented Programming,2K25-BSCS-15A,FoC,Wed,CR-02-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-03-25T00:00:00.000Z,
+2443,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14C,FoC,Mon,CR-18-IAEC,11:00 AM,12:00 PM,660,Lec,Missed,2026-04-06T00:00:00.000Z,
+2307,Dr. Sidra Shafiq,Applied Physics,2K24-BSCS-14C,H&S,Tue,Physics Lab-1-SNS,11:00 AM,12:00 PM,660,Lab,Missed,2026-03-17T00:00:00.000Z,
+2440,Dr. Sana Qadir,Computer Forensics,2K22-BESE-13A,FoC,Mon,CR-15-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-04-06T00:00:00.000Z,Elective
+2304,Mr. Taufique ur Rehman,Operating Systems,2K24-BESE-15A,FoC,Tue,CR-16-IAEC,11:00 AM,12:00 PM,660,Lec,Missed,2026-03-17T00:00:00.000Z,
+2303,Mr. Arshad Nazir,Digital Logic Design,2K25-BSCS-15B,ECE,Tue,CR-02-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-03-17T00:00:00.000Z,
+2297,Dr. Rabia Irfan,Data Warehousing and Business Intelligence,2K23-BSDS-1A,FoC,Tue,CR-28-Acad Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-03-17T00:00:00.000Z,
+2295,Dr. Neelma Riaz,Functional English,2K25-BESE-16A,H&S,Tue,CR-09-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-03-17T00:00:00.000Z,
+2275,Dr. Ibrar Hussain,Numerical Methods,2K23-BEE-15C,H&S,Tue,CR-20-IAEC,11:00 AM,12:00 PM,660,Lec,Makeup,2026-04-07T00:00:00.000Z,
+2438,Mr. Wajid Ali,Workshop Practice,2k25-BEE-17D,ECE,Thu,MRC Lab-02 (SMME),11:00 AM,12:00 PM,660,Lab,Missed,2026-04-02T00:00:00.000Z,
+2269,Dr. Fahd Sikandar Khan,Computer Programming,2K25-BEE-17D,FoC,Fri,CR-15-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-04-03T00:00:00.000Z,
+2256,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14D,H&S,Fri,CR-13-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+2435,Mr. Wajid Ali,Workshop Practice,2k25-BEE-17A,ECE,Thu,MRC Lab-01 (SMME),11:00 AM,12:00 PM,660,Lab,Missed,2026-04-02T00:00:00.000Z,
+2253,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14C,H&S,Fri,CR-13-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+2250,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14B,H&S,Fri,CR-13-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+2247,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14A,H&S,Fri,CR-13-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+2244,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14D,H&S,Fri,CR-13-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+2241,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14C,H&S,Fri,CR-13-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+2238,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14B,H&S,Fri,CR-13-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+2235,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14A,H&S,Fri,CR-13-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+2233,Dr. Imran Shahzad,Linear Algebra,2K24-BEE-16B,H&S,Fri,CR-16-IAEC,11:00 AM,12:00 PM,660,Lec,Makeup,2026-04-03T00:00:00.000Z,
+4,Dr. Arbab Latif,Community Service Learning,2K22-BEE-14C,ECE,Tue,CR-01-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-05-05T00:00:00.000Z,
+2429,Dr. Imran Malik,Applied Physics,2k24-BSCS-14A,H&S,Thu,Physics Lab-1-SNS,11:00 AM,12:00 PM,660,Lab,Missed,2026-04-02T00:00:00.000Z,
+2223,Mr. Arshad Nazir,Digital Logic Design,2K25-BSCS-15A,ECE,Fri,CR-02-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-04-03T00:00:00.000Z,
+2421,Dr. Imran Malik,Applied Physics,2k24-BSDS-2A,H&S,Wed,Physics Lab-1-SNS,11:00 AM,12:00 PM,660,Lab,Missed,2026-04-01T00:00:00.000Z,
+2211,Mr. Taufique ur Rehman,Operating Systems,2K24-BESE-15B,FoC,Thu,CR-17-IAEC,11:00 AM,12:00 PM,660,Lec,Makeup,2026-04-02T00:00:00.000Z,
+2418,Dr. Syed Imran Ali,Big Data Analytics (Gp-02),2K23-BSCS-13E,FoC,Wed,CR-25-Acad Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-04-01T00:00:00.000Z,Elective
+2147,Dr. Sobia Jamil,Ideology and Constitution of Pakistan,2K25-BEE-17A,H&S,Thu,CR-10-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-03-26T00:00:00.000Z,
+2416,Dr. Syed Imran Ali,Big Data Analytics (Gp-02),2K23-BSCS-13D,FoC,Wed,CR-25-Acad Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-04-01T00:00:00.000Z,Elective
+2414,Dr. Syed Imran Ali,Big Data Analytics (Gp-02),2K23-BSCS-13C,FoC,Wed,CR-25-Acad Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-04-01T00:00:00.000Z,Elective
+2412,Dr. Syed Imran Ali,Big Data Analytics (Gp-02),2K23-BSCS-13B,FoC,Wed,CR-25-Acad Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-04-01T00:00:00.000Z,Elective
+2410,Dr. Syed Imran Ali,Big Data Analytics (Gp-02),2K23-BSCS-13A,FoC,Wed,CR-25-Acad Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-04-01T00:00:00.000Z,Elective
+2452,Dr. Syed Imran Ali,Big Data Analytics (Gp-01),2K23-BSCS-13E,FoC,Mon,CR-23-Acad Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-04-06T00:00:00.000Z,Elective
+2403,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14B,FoC,Wed,CR-21-SMRIMMS,11:00 AM,12:00 PM,660,Lec,Missed,2026-04-01T00:00:00.000Z,
+2401,Dr. Hina Munir Dutt,Complex Variables and Transforms,2K24-BESE-15A,H&S,Wed,CR-16-IAEC,11:00 AM,12:00 PM,660,Lec,Missed,2026-04-01T00:00:00.000Z,
+2450,Dr. Syed Imran Ali,Big Data Analytics (Gp-01),2K23-BSCS-13D,FoC,Mon,CR-23-Acad Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-04-06T00:00:00.000Z,Elective
+2394,Dr. Sidra Shafiq,Applied Physics,2k24-BSCS-14C,H&S,Tue,Physics Lab-1-SNS,11:00 AM,12:00 PM,660,Lab,Missed,2026-03-31T00:00:00.000Z,
+2384,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14D,H&S,Tue,CR-12-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-03-31T00:00:00.000Z,Elective
+2382,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14C,H&S,Tue,CR-12-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-03-31T00:00:00.000Z,Elective
+2448,Dr. Syed Imran Ali,Big Data Analytics (Gp-01),2K23-BSCS-13C,FoC,Mon,CR-23-Acad Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-04-06T00:00:00.000Z,Elective
+2380,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14B,H&S,Tue,CR-12-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-03-31T00:00:00.000Z,Elective
+2378,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14A,H&S,Tue,CR-12-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-03-31T00:00:00.000Z,Elective
+2365,Dr. Nosherwan Shoaib,Electrical Network Analysis,2K25-BEE-17C,ECE,Mon,CR-28-Acad Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-03-30T00:00:00.000Z,
+1439,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14A,ECE,Wed,CR-11-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-01-28T00:00:00.000Z,Elective
+1440,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14B,ECE,Wed,CR-11-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-01-28T00:00:00.000Z,Elective
+1441,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14C,ECE,Wed,CR-11-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-01-28T00:00:00.000Z,Elective
+1442,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14D,ECE,Wed,CR-11-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-01-28T00:00:00.000Z,Elective
+1445,Dr. Farid Gul,Linear Control Systems,2K23-BEE-15A,ECE,Mon,Lecture Hall-PG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-01-26T00:00:00.000Z,
+1447,Dr. Farid Gul,Linear Control Systems,2K23-BEE-15A,ECE,Tue,DSP & Comm Lab,11:00 AM,12:00 PM,660,Lec,Makeup,2026-01-20T00:00:00.000Z,
+1458,Dr. Mehwish Fatima,Programming for AI,2K24-BSAI-1A,FoC,Tue,Computing Lab-04,11:00 AM,12:00 PM,660,Lec,Makeup,2026-01-20T00:00:00.000Z,
+1465,Dr. Sohail Iqbal,Theory of Automata,2K24-BSCS-14D,FoC,Thu,CR-06-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-01-29T00:00:00.000Z,
+1472,Dr. Sobia Jamil,Ideology and Constitution of Pakistan,2K25-BEE-17B,H&S,Fri,Lecture Hall-PG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-01-30T00:00:00.000Z,
+1473,Mr. Ahsan Azhar,Electrical Network Analysis,2K25-BEE-17B,ECE,Tue,Basic Electronics Lab,11:00 AM,12:00 PM,660,Lec,Makeup,2026-01-27T00:00:00.000Z,
+1480,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Fri,Basic Electronics Lab,11:00 AM,12:00 PM,660,Lab,Makeup,2026-01-30T00:00:00.000Z,
+1492,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Fri,Basic Electronics Lab,11:00 AM,12:00 PM,660,Lab,Makeup,2026-01-30T00:00:00.000Z,
+1494,Dr. Sobia Jamil,Ideology and Constitution of Pakistan,2k25-BEE-17C,H&S,Fri,Lecture Hall-PG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-01-30T00:00:00.000Z,
+1499,Dr. Neelma Riaz,Functional English,2K25-BESE-16A,H&S,Tue,CR-09-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-02-03T00:00:00.000Z,
+1500,Dr. Quanita Kiran,Discrete Mathematics,2K25-BESE-16A,H&S,Tue,CR-09-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-01-20T00:00:00.000Z,
+1504,Mr. Muhammad Nashit Shah,Computer Architecture & Logic Design,2K25-BESE-16B,ECE,Wed,CR-08-UG Block,11:00 AM,12:00 PM,660,Lec,Makeup,2026-02-04T00:00:00.000Z,
+1523,Dr. Farid Gul,Linear Control Systems,2K23-BEE-15A,ECE,Tue,CR-02-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-01-20T00:00:00.000Z,
+1524,Dr. Farid Gul,Linear Control Systems,2K23-BEE-15A,ECE,Tue,CR-19-IAEC,11:00 AM,12:00 PM,660,Lec,Missed,2026-02-03T00:00:00.000Z,
+1530,Dr. Rizwan Ahmad,Communication Systems,2K23-BEE-15D,ECE,Wed,CR-02-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-01-28T00:00:00.000Z,
+1534,Dr. Usman Khan,Electronic Circuit Design,2K24-BEE-16A,ECE,Tue,CR-02-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-01-27T00:00:00.000Z,
+1549,Dr. Naima Iltaaf,Web Technologies,2K24-BSAI-1A,FoC,Thu,CR-02-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-01-22T00:00:00.000Z,
+1563,Dr. Samia Tahir,Expository Writing,2K24-BSDS-2A,H&S,Thu,CR-02-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-01-29T00:00:00.000Z,
+1567,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Fri,CR-02-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-01-30T00:00:00.000Z,
+1568,Mr. Huzaifa Abbas,Computer Programming,2k25-BEE-17C,ECE,Mon,CR-02-UG Block,11:00 AM,12:00 PM,660,Lec,Missed,2026-01-19T00:00:00.000Z,
+2453,Dr. Syed Imran Ali,Big Data Analytics (Gp-01),2K23-BSCS-13E,FoC,Mon,CR-23-Acad Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-04-06T00:00:00.000Z,Elective
+2445,Dr. Syed Imran Ali,Big Data Analytics (Gp-01),2K23-BSCS-13A,FoC,Mon,CR-23-Acad Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-04-06T00:00:00.000Z,Elective
+1493,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Fri,Basic Electronics Lab,12:00 PM,01:00 PM,720,Lab,Makeup,2026-01-30T00:00:00.000Z,
+1559,Dr. Samia Tahir,Expository Writing,2K24-BSCS-14D,H&S,Thu,CR-02-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-01-29T00:00:00.000Z,
+1495,Dr. Sobia Jamil,Ideology and Constitution of Pakistan,2k25-BEE-17C,H&S,Fri,Lecture Hall-PG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-01-30T00:00:00.000Z,
+2411,Dr. Syed Imran Ali,Big Data Analytics (Gp-02),2K23-BSCS-13A,FoC,Wed,CR-25-Acad Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-04-01T00:00:00.000Z,Elective
+2447,Dr. Syed Imran Ali,Big Data Analytics (Gp-01),2K23-BSCS-13B,FoC,Mon,CR-23-Acad Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-04-06T00:00:00.000Z,Elective
+2413,Dr. Syed Imran Ali,Big Data Analytics (Gp-02),2K23-BSCS-13B,FoC,Wed,CR-25-Acad Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-04-01T00:00:00.000Z,Elective
+1836,Dr. Farzana Jabeen,Web Technologies,2K24-BSCS-14B,FoC,Mon,Computing Lab-06,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-16T00:00:00.000Z,
+1834,Mr. Ahsan Azhar,Electrical Network Analysis,2K25-BEE-17A,ECE,Tue,EMS Lab,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-17T00:00:00.000Z,
+2415,Dr. Syed Imran Ali,Big Data Analytics (Gp-02),2K23-BSCS-13C,FoC,Wed,CR-25-Acad Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-04-01T00:00:00.000Z,Elective
+1604,Dr. Bilal Ahmed,Linear Algebra,2K25-BSDS-3A,H&S,Fri,CR-02-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-01-23T00:00:00.000Z,
+1601,Dr. Farkhanda Afzal,Multivariable Calculus,2K25-BSCS-15E,H&S,Thu,CR-02-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-01-29T00:00:00.000Z,
+1501,Mr. Muhammad Nashit Shah,Computer Architecture & Logic Design,2K25-BESE-16B,ECE,Thu,Lecture Hall-PG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-01-22T00:00:00.000Z,
+2404,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14B,FoC,Wed,CR-21-SMRIMMS,12:00 PM,01:00 PM,720,Lec,Missed,2026-04-01T00:00:00.000Z,
+2308,Dr. Sidra Shafiq,Applied Physics,2K24-BSCS-14C,H&S,Tue,Physics Lab-1-SNS,12:00 PM,01:00 PM,720,Lab,Missed,2026-03-17T00:00:00.000Z,
+2451,Dr. Syed Imran Ali,Big Data Analytics (Gp-01),2K23-BSCS-13D,FoC,Mon,CR-23-Acad Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-04-06T00:00:00.000Z,Elective
+1840,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14A,ECE,Fri,CR-01-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-20T00:00:00.000Z,Elective
+1842,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14B,ECE,Fri,CR-01-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-20T00:00:00.000Z,Elective
+1598,Dr. Abdul Haleem Hamid,Linear Algebra,2K25-BSCS-15D,H&S,Wed,CR-02-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-01-21T00:00:00.000Z,
+2366,Dr. Nosherwan Shoaib,Electrical Network Analysis,2K25-BEE-17C,ECE,Mon,CR-28-Acad Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-03-30T00:00:00.000Z,
+1505,Mr. Salman Mushtaq,Understanding of Quran II,2K25-BSCS-15A,H&S,Tue,CR-02-UG Block,12:00 PM,01:00 PM,720,Lab,Makeup,2026-01-27T00:00:00.000Z,
+1828,Ms. Naema Asif,Computer Organization & Assembly Language,2K24-BSDS-2A,FoC,Mon,Control System Lab,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-23T00:00:00.000Z,Elective
+1827,Ms. Naema Asif,Computer Organization & Assembly Language,2K24-BSDS-2A,FoC,Mon,Control System Lab,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-16T00:00:00.000Z,Elective
+1825,Mr. Taufiq ur Rehman,Operating Systems,2K24-BESE-15A,FoC,Fri,Computing Lab-04,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-13T00:00:00.000Z,
+2161,Mr. Ahsan Azhar,Electrical Network Analysis,2K25-BEE-17A,ECE,Fri,CR-01-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-03-27T00:00:00.000Z,
+2165,Dr. Imran Malik,Applied Physics,2K24-BSDS-2A,H&S,Fri,CR-11-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-03-27T00:00:00.000Z,
+1824,Ms. Hareem Ashraf,Software Project Management,2K23-BESE-14B,FoC,Fri,CR-24-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-13T00:00:00.000Z,
+2174,Dr. Sana Qadir,Computer Forensics,2K22-BESE-13A,FoC,Mon,Seminar Hall-RIMMS,12:00 PM,01:00 PM,720,Lec,Makeup,2026-03-30T00:00:00.000Z,Elective
+2175,Dr. Sana Qadir,Computer Forensics,2K22-BESE-13B,FoC,Mon,Seminar Hall-RIMMS,12:00 PM,01:00 PM,720,Lec,Makeup,2026-03-30T00:00:00.000Z,Elective
+1844,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14C,ECE,Fri,CR-01-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-20T00:00:00.000Z,Elective
+1846,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14D,ECE,Fri,CR-01-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-20T00:00:00.000Z,Elective
+2186,Mr. Arshad Nazir,Digital Logic Design,2K25-BSCS-15B,ECE,Wed,CR-02-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-04-01T00:00:00.000Z,
+2187,Mr. Abdul Mateen,Electronic Circuit Design,2K24-BEE-16D,ECE,Wed,CR-11-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-04-01T00:00:00.000Z,
+2417,Dr. Syed Imran Ali,Big Data Analytics (Gp-02),2K23-BSCS-13D,FoC,Wed,CR-25-Acad Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-04-01T00:00:00.000Z,Elective
+2192,Mr. Taufique ur Rehman,Operating Systems,2K24-BESE-15A,FoC,Wed,Lec Hall-IAEC,12:00 PM,01:00 PM,720,Lec,Makeup,2026-04-01T00:00:00.000Z,
+1815,Dr. Adnan Aslam,Discrete Mathematics,2K25-BSDS-3A,H&S,Fri,CR-11-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-13T00:00:00.000Z,
+2419,Dr. Syed Imran Ali,Big Data Analytics (Gp-02),2K23-BSCS-13E,FoC,Wed,CR-25-Acad Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-04-01T00:00:00.000Z,Elective
+1814,Dr. Adnan Aslam,Discrete Mathematics,2K25-BSCS-15E,H&S,Fri,CR-11-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-13T00:00:00.000Z,
+1806,Ms. Maryam Sajjad,Database Systems,2K25-BSCS-15A,FoC,Tue,Computing Lab-05,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-17T00:00:00.000Z,
+1805,Ms. Maryam Sajjad,Database Systems,2K25-BSCS-15A,FoC,Tue,Computing Lab-05,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-10T00:00:00.000Z,
+2422,Dr. Imran Malik,Applied Physics,2k24-BSDS-2A,H&S,Wed,Physics Lab-1-SNS,12:00 PM,01:00 PM,720,Lab,Missed,2026-04-01T00:00:00.000Z,
+1795,Mr. Abdul Mateen,Electronic Circuit Design,2K24-BEE-16D,ECE,Wed,CR-02-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-18T00:00:00.000Z,
+2349,Dr. Neelma Riaz,Expository Writing,2K24-BEE-16D,H&S,Mon,CR-08-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-03-30T00:00:00.000Z,
+2344,Mr. Maajid Maqbool,Entrepreneurship,2K22-BEE-14B,FoC,Thu,CR-13-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-03-26T00:00:00.000Z,
+2224,Mr. Ahsan Azhar,Electrical Network Analysis,2K25-BEE-17A,ECE,Fri,CR-01-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-04-03T00:00:00.000Z,
+2236,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14A,H&S,Fri,CR-13-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+1794,Mr. Abdul Mateen,Electronic Circuit Design,2K24-BEE-16D,ECE,Wed,CR-02-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-11T00:00:00.000Z,
+2361,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14D,H&S,Mon,CR-12-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-03-30T00:00:00.000Z,Elective
+2239,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14B,H&S,Fri,CR-13-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+1527,Dr. Rizwan Ahmad,Communication Systems,2K23-BEE-15D,ECE,Fri,CR-02-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-01-30T00:00:00.000Z,
+2360,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14C,H&S,Mon,CR-12-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-03-30T00:00:00.000Z,Elective
+2359,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14B,H&S,Mon,CR-12-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-03-30T00:00:00.000Z,Elective
+2358,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14A,H&S,Mon,CR-12-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-03-30T00:00:00.000Z,Elective
+2242,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14C,H&S,Fri,CR-13-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+1861,Mr. Taufiq ur Rehman,Operating Systems,2K24-BESE-15A,FoC,Fri,Computing Lab-04,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-20T00:00:00.000Z,
+1584,Dr. Abdul Haleem Hamid,Linear Algebra,2K25-BSCS-15A,H&S,Thu,CR-02-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-01-22T00:00:00.000Z,
+2328,Dr. Madiha Khalid,Cyber Security (Gp-02),2K23-BSCS-13A,FoC,Wed,CR-27-Acad Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-03-25T00:00:00.000Z,Elective
+1691,Dr. Sana Qadir,Computer Forensics,2K22-BESE-13B,FoC,Mon,CR-26-Acad Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-16T00:00:00.000Z,Elective
+2245,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14D,H&S,Fri,CR-13-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+1688,Dr. Muhammad Khuram Shahzad,Parallel and Distributed Computing,2K23-BSCS-13B,FoC,Fri,Computing Lab-01,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-20T00:00:00.000Z,
+2347,Dr. Zafar Ali,Linear Algebra,2K25-BSCS-15B,H&S,Fri,CR-05-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-03-27T00:00:00.000Z,
+1535,Dr. Usman Khan,Electronic Circuit Design,2K24-BEE-16A,ECE,Tue,CR-02-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-01-27T00:00:00.000Z,
+1687,Dr. Muhammad Khuram Shahzad,Parallel and Distributed Computing,2K23-BSCS-13B,FoC,Fri,Computing Lab-01,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-13T00:00:00.000Z,
+2248,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14A,H&S,Fri,CR-13-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+2430,Dr. Imran Malik,Applied Physics,2k24-BSCS-14A,H&S,Thu,Physics Lab-1-SNS,12:00 PM,01:00 PM,720,Lab,Missed,2026-04-02T00:00:00.000Z,
+2251,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14B,H&S,Fri,CR-13-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+2254,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14C,H&S,Fri,CR-13-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+2330,Dr. Madiha Khalid,Cyber Security (Gp-02),2K23-BSCS-13B,FoC,Wed,CR-27-Acad Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-03-25T00:00:00.000Z,Elective
+2436,Mr. Wajid Ali,Workshop Practice,2k25-BEE-17A,ECE,Thu,MRC Lab-01 (SMME),12:00 PM,01:00 PM,720,Lab,Missed,2026-04-02T00:00:00.000Z,
+2257,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14D,H&S,Fri,CR-13-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-04-03T00:00:00.000Z,Elective
+2260,Dr. Farzana Jabeen,Web Technologies,2K24-BSCS-14B,FoC,Fri,CR-11-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-04-03T00:00:00.000Z,
+1573,Dr. Muhammad Ashraf,Computer Architecture & Logic Design,2K25-BESE-16A,FoC,Mon,CR-02-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-01-19T00:00:00.000Z,
+2332,Dr. Madiha Khalid,Cyber Security (Gp-02),2K23-BSCS-13C,FoC,Wed,CR-27-Acad Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-03-25T00:00:00.000Z,Elective
+2334,Dr. Madiha Khalid,Cyber Security (Gp-02),2K23-BSCS-13D,FoC,Wed,CR-27-Acad Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-03-25T00:00:00.000Z,Elective
+2336,Dr. Madiha Khalid,Cyber Security (Gp-02),2K23-BSCS-13E,FoC,Wed,CR-27-Acad Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-03-25T00:00:00.000Z,Elective
+1450,Dr. Farid Gul,Linear Control Systems,2K23-BEE-15C,ECE,Thu,CR-09-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-01-29T00:00:00.000Z,
+1571,Mr. Ammar Ahmed,Islamic Studies,2k25-BEE-17C,H&S,Thu,CR-02-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-01-29T00:00:00.000Z,
+2278,Dr. Ibrar Hussain,Numerical Methods,2K23-BEE-15C,H&S,Thu,Computing Lab-03,12:00 PM,01:00 PM,720,Lec,Makeup,2026-04-09T00:00:00.000Z,
+2285,Mr. Arshad Nazir,Digital Logic Design,2K25-BSCS-15C,ECE,Thu,CR-26-Acad Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-04-30T00:00:00.000Z,
+1466,Dr. Sohail Iqbal,Theory of Automata,2K24-BSCS-14D,FoC,Thu,CR-06-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-19T00:00:00.000Z,
+1621,Dr. Mehwish Awan,Deep Learning,2K23-BSCS-13C,FoC,Fri,CR-26-Acad Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-06T00:00:00.000Z,
+1613,Mr. Arshad Nazir,Digital Logic Design,2K25-BSCS-15B,ECE,Wed,CR-24-Acad Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-11T00:00:00.000Z,
+1612,Mr. Arshad Nazir,Digital Logic Design,2K25-BSCS-15B,ECE,Wed,CR-24-Acad Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-04T00:00:00.000Z,
+2383,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14C,H&S,Tue,CR-12-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-03-31T00:00:00.000Z,Elective
+1610,Mr. Ahsan Azhar,Electrical Network Analysis,2K25-BEE-17A,ECE,Tue,Basic Electronics Lab,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-03T00:00:00.000Z,
+2385,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14D,H&S,Tue,CR-12-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-03-31T00:00:00.000Z,Elective
+2381,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14B,H&S,Tue,CR-12-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-03-31T00:00:00.000Z,Elective
+2298,Dr. Rabia Irfan,Data Warehousing and Business Intelligence,2K23-BSDS-1A,FoC,Tue,CR-28-Acad Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-03-17T00:00:00.000Z,
+2395,Dr. Sidra Shafiq,Applied Physics,2k24-BSCS-14C,H&S,Tue,Physics Lab-1-SNS,12:00 PM,01:00 PM,720,Lab,Missed,2026-03-31T00:00:00.000Z,
+2399,Mr. Ammar Ahmed,Islamic Studies,2K25-BEE-17A,H&S,Wed,CR-14-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-04-01T00:00:00.000Z,
+2439,Mr. Wajid Ali,Workshop Practice,2k25-BEE-17D,ECE,Thu,MRC Lab-02 (SMME),12:00 PM,01:00 PM,720,Lab,Missed,2026-04-02T00:00:00.000Z,
+2379,Dr. Ehsan ul Hassan,Human Resource Management (Gp-02),2K22-BEE-14A,H&S,Tue,CR-12-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-03-31T00:00:00.000Z,Elective
+2449,Dr. Syed Imran Ali,Big Data Analytics (Gp-01),2K23-BSCS-13C,FoC,Mon,CR-23-Acad Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-04-06T00:00:00.000Z,Elective
+1608,Dr. Imran Malik,Applied Physics,2k24-BSDS-2A,ECE,Fri,CR-12-UG Block,12:00 PM,01:00 PM,720,Lec,Makeup,2026-02-06T00:00:00.000Z,
+2373,Dr. Hina Munir Dutt,Differential Equations,2K25-BEE-17D,H&S,Tue,CR-09-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-03-31T00:00:00.000Z,
+2305,Mr. Taufique ur Rehman,Operating Systems,2K24-BESE-15A,FoC,Tue,CR-16-IAEC,12:00 PM,01:00 PM,720,Lec,Missed,2026-03-17T00:00:00.000Z,
+2441,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14A,FoC,Mon,CR-21-SMRIMMS,12:00 PM,01:00 PM,720,Lec,Missed,2026-04-06T00:00:00.000Z,
+2400,Dr. Hina Munir Dutt,Differential Equations,2K25-BEE-17D,H&S,Wed,CR-15-UG Block,12:00 PM,01:00 PM,720,Lec,Missed,2026-04-01T00:00:00.000Z,
+2144,Dr. Fahad Ahmed Satti,Database Systems,2K25-BSDS-3A,FoC,Thu,Lec Hall-PG Block,01:00 PM,02:00 PM,780,Lec,Makeup,2026-03-26T00:00:00.000Z,
+2216,Ms. Hina Yousaf,Expository Writing,2K24-BSCS-14B,H&S,Thu,CR-01-UG Block,01:00 PM,02:00 PM,780,Lec,Makeup,2026-04-02T00:00:00.000Z,
+2156,Dr. Muhammad Yousaf,Engineering Economics,2K22-BSCS-12B,H&S,Thu,Lec Hall-PG Block,01:00 PM,02:00 PM,780,Lec,Makeup,2026-03-26T00:00:00.000Z,
+2157,Dr. Muhammad Yousaf,Engineering Economics,2K22-BSCS-12C,H&S,Thu,Lec Hall-PG Block,01:00 PM,02:00 PM,780,Lec,Makeup,2026-03-26T00:00:00.000Z,
+1819,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14D,ECE,Wed,CR-02-UG Block,01:00 PM,02:00 PM,780,Lec,Makeup,2026-02-18T00:00:00.000Z,Elective
+2193,Mr. Taufique ur Rehman,Operating Systems,2K24-BESE-15A,FoC,Wed,Lec Hall-IAEC,01:00 PM,02:00 PM,780,Lec,Makeup,2026-04-01T00:00:00.000Z,
+1818,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14C,ECE,Wed,CR-02-UG Block,01:00 PM,02:00 PM,780,Lec,Makeup,2026-02-18T00:00:00.000Z,Elective
+2217,Dr. Muhammad Yousaf,Engineering Economics,2K22-BSCS-12A,H&S,Thu,Lec Hall-PG Block,01:00 PM,02:00 PM,780,Lec,Makeup,2026-04-02T00:00:00.000Z,
+2154,Dr. Fahad Ahmed Satti,Database Systems,2K25-BSDS-3A,FoC,Thu,CR-09-UG Block,01:00 PM,02:00 PM,780,Lec,Makeup,2026-03-26T00:00:00.000Z,
+2155,Dr. Muhammad Yousaf,Engineering Economics,2K22-BSCS-12A,H&S,Thu,Lec Hall-PG Block,01:00 PM,02:00 PM,780,Lec,Makeup,2026-03-26T00:00:00.000Z,
+2218,Dr. Muhammad Yousaf,Engineering Economics,2K22-BSCS-12B,H&S,Thu,Lec Hall-PG Block,01:00 PM,02:00 PM,780,Lec,Makeup,2026-04-02T00:00:00.000Z,
+1817,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14B,ECE,Wed,CR-02-UG Block,01:00 PM,02:00 PM,780,Lec,Makeup,2026-02-18T00:00:00.000Z,Elective
+2219,Dr. Muhammad Yousaf,Engineering Economics,2K22-BSCS-12C,H&S,Thu,Lec Hall-PG Block,01:00 PM,02:00 PM,780,Lec,Makeup,2026-04-02T00:00:00.000Z,
+1816,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14A,ECE,Wed,CR-02-UG Block,01:00 PM,02:00 PM,780,Lec,Makeup,2026-02-18T00:00:00.000Z,Elective
+1536,Dr. Arshad Siddiqui,Linear Algebra,2K24-BEE-16C,H&S,Wed,CR-02-UG Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-01-21T00:00:00.000Z,
+1443,Dr. Tahira Anwar Lashari,Principles of Sociology,2K22-BSCS-12C,FoC,Mon,CR-09-UG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-02T00:00:00.000Z,
+1451,Dr. Farid Gul,Linear Control Systems,2K23-BEE-15C,ECE,Thu,CR-09-UG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-01-22T00:00:00.000Z,
+1467,Dr. Samia Tahir,Expository Writing,2K24-BSCS-14D,H&S,Tue,CR-06-UG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-01-27T00:00:00.000Z,
+1469,Dr. Nazia Pervaiz,Machine Learning,2K24-BSDS-2A,FoC,Thu,CR-12-UG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-01-29T00:00:00.000Z,
+1474,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Mon,Basic Electronics Lab,02:00 PM,03:00 PM,840,Lab,Missed,2026-01-26T00:00:00.000Z,
+1496,Mr. Huzaifa Abbas,Computer Programming,2k25-BEE-17C,ECE,Wed,Computing Lab-07,02:00 PM,03:00 PM,840,Lec,Makeup,2026-01-21T00:00:00.000Z,
+1509,Dr. Muhammad Bilal Ali,Database Systems,2K25-BSCS-15C,FoC,Mon,Computing Lab-01,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-02T00:00:00.000Z,
+1525,Dr. Farid Gul,Linear Control Systems,2K23-BEE-15B,ECE,Tue,CR-20-IAEC,02:00 PM,03:00 PM,840,Lec,Missed,2026-02-03T00:00:00.000Z,
+1528,Dr. Ahmed Naeem,Digital Signal Processing,2K23-BEE-15D,ECE,Tue,CR-18-IAEC,02:00 PM,03:00 PM,840,Lec,Missed,2026-02-03T00:00:00.000Z,
+1539,Dr. Mehvish Rashid,Software Design and Architecture,2K24-BESE-15A,FoC,Tue,CR-02-UG Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-01-27T00:00:00.000Z,
+1541,Dr. Aimal Tariq Rextin,Design & Analysis of Algorithm,2K24-BESE-15B,FoC,Tue,CR-02-UG Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-01-27T00:00:00.000Z,
+1543,Dr. Mehvish Rashid,Software Design and Architecture,2K24-BESE-15B,FoC,Wed,CR-02-UG Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-01-28T00:00:00.000Z,
+1545,Dr. Mehwish Fatima,Programming for AI,2K24-BSAI-1A,FoC,Mon,CR-02-UG Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-01-19T00:00:00.000Z,
+1551,Dr. Seemab Latif,Machine Learning,2K24-BSAI-1A,FoC,Tue,CR-02-UG Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-01-27T00:00:00.000Z,
+1557,Dr. Naima Iltaaf,Web Technologies,2K24-BSCS-14D,FoC,Mon,CR-02-UG Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-01-19T00:00:00.000Z,
+1569,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Mon,CR-02-UG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-01-26T00:00:00.000Z,
+1576,Mr. Muhammad Nashit Shah,Computer Architecture & Logic Design,2K25-BESE-16B,ECE,Mon,CR-02-UG Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-01-26T00:00:00.000Z,
+1577,Mr. Muhammad Nashit Shah,Computer Architecture & Logic Design,2K25-BESE-16B,ECE,Mon,CR-02-UG Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-02-02T00:00:00.000Z,
+1578,Mr. Muhammad Nashit Shah,Computer Architecture & Logic Design,2K25-BESE-16B,ECE,Tue,CR-02-UG Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-01-27T00:00:00.000Z,
+1587,Mr. Salman Mushtaq,Understanding of Quran II,2K25-BSCS-15A,H&S,Wed,CR-02-UG Block,02:00 PM,03:00 PM,840,Lab,Missed,2026-01-28T00:00:00.000Z,
+1591,Mr. Muhammad Usman Ghani,Understanding of Quran II,2K25-BSCS-15B,H&S,Wed,CR-02-UG Block,02:00 PM,03:00 PM,840,Lab,Missed,2026-01-28T00:00:00.000Z,
+1599,Mr. Muhammad Usman Ghani,Understanding of Quran II,2K25-BSCS-15E,H&S,Fri,CR-02-UG Block,02:00 PM,03:00 PM,840,Lab,Missed,2026-01-30T00:00:00.000Z,
+1607,Dr. Imran Malik,Applied Physics,2K24-BSCS-14B,ECE,Mon,CR-21-SMRIMMS,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-02T00:00:00.000Z,
+1611,Mr. Ahsan Azhar,Electrical Network Analysis,2K25-BEE-17B,ECE,Tue,Basic Electronics Lab,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-03T00:00:00.000Z,
+1653,Dr. Sara Shakil,Computer Organization & Assembly Language,2K24-BSCS-14C,ECE,Mon,CR-11-UG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-09T00:00:00.000Z,
+1656,Ms. Sahar Arshad,Object Oriented Programming,2K25-BSAi-2A,FoC,Wed,Computing Lab-01,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-11T00:00:00.000Z,
+1663,Ms. Naema Asif,Mobile Application Development,2K22-BESE-13A,FoC,Thu,Computing Lab-01,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-12T00:00:00.000Z,Elective
+1664,Ms. Naema Asif,Mobile Application Development,2K22-BESE-13B,FoC,Thu,Computing Lab-01,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-12T00:00:00.000Z,Elective
+1665,Ms. Naema Asif,Mobile Application Development,2K22-BESE-13A,FoC,Thu,Computing Lab-01,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-19T00:00:00.000Z,Elective
+1666,Ms. Naema Asif,Mobile Application Development,2K22-BESE-13B,FoC,Thu,Computing Lab-01,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-19T00:00:00.000Z,Elective
+1667,Ms. Naema Asif,Mobile Application Development,2K22-BESE-13A,FoC,Thu,Computing Lab-01,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-26T00:00:00.000Z,Elective
+1668,Ms. Naema Asif,Mobile Application Development,2K22-BESE-13B,FoC,Thu,Computing Lab-01,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-26T00:00:00.000Z,Elective
+1669,Ms. Naema Asif,Mobile Application Development,2K22-BESE-13A,FoC,Thu,Computing Lab-01,02:00 PM,03:00 PM,840,Lec,Makeup,2026-03-05T00:00:00.000Z,Elective
+1670,Ms. Naema Asif,Mobile Application Development,2K22-BESE-13B,FoC,Thu,Computing Lab-01,02:00 PM,03:00 PM,840,Lec,Makeup,2026-03-05T00:00:00.000Z,Elective
+1671,Ms. Naema Asif,Mobile Application Development,2K22-BESE-13A,FoC,Thu,Computing Lab-01,02:00 PM,03:00 PM,840,Lec,Makeup,2026-03-19T00:00:00.000Z,Elective
+1672,Ms. Naema Asif,Mobile Application Development,2K22-BESE-13B,FoC,Thu,Computing Lab-01,02:00 PM,03:00 PM,840,Lec,Makeup,2026-03-19T00:00:00.000Z,Elective
+1673,Ms. Naema Asif,Mobile Application Development,2K22-BESE-13A,FoC,Thu,Computing Lab-01,02:00 PM,03:00 PM,840,Lec,Makeup,2026-03-26T00:00:00.000Z,Elective
+1674,Ms. Naema Asif,Mobile Application Development,2K22-BESE-13B,FoC,Thu,Computing Lab-01,02:00 PM,03:00 PM,840,Lec,Makeup,2026-03-26T00:00:00.000Z,Elective
+1675,Ms. Naema Asif,Mobile Application Development,2K22-BESE-13A,FoC,Thu,Computing Lab-01,02:00 PM,03:00 PM,840,Lec,Makeup,2026-04-02T00:00:00.000Z,Elective
+1676,Ms. Naema Asif,Mobile Application Development,2K22-BESE-13B,FoC,Thu,Computing Lab-01,02:00 PM,03:00 PM,840,Lec,Makeup,2026-04-02T00:00:00.000Z,Elective
+1677,Ms. Naema Asif,Mobile Application Development,2K22-BESE-13A,FoC,Thu,Computing Lab-01,02:00 PM,03:00 PM,840,Lec,Makeup,2026-04-09T00:00:00.000Z,Elective
+1678,Ms. Naema Asif,Mobile Application Development,2K22-BESE-13B,FoC,Thu,Computing Lab-01,02:00 PM,03:00 PM,840,Lec,Makeup,2026-04-09T00:00:00.000Z,Elective
+1679,Ms. Naema Asif,Mobile Application Development,2K22-BESE-13A,FoC,Thu,Computing Lab-01,02:00 PM,03:00 PM,840,Lec,Makeup,2026-04-16T00:00:00.000Z,Elective
+1680,Ms. Naema Asif,Mobile Application Development,2K22-BESE-13B,FoC,Thu,Computing Lab-01,02:00 PM,03:00 PM,840,Lec,Makeup,2026-04-16T00:00:00.000Z,Elective
+1683,Dr. Sohail Iqbal,Theory of Automata,2K24-BSCS-14D,FoC,Wed,CR-11-UG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-18T00:00:00.000Z,
+1685,Dr. Muhammad Khuram Shahzad,Parallel and Distributed Computing,2K23-BSCS-13A,FoC,Fri,Computing Lab-01,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-13T00:00:00.000Z,
+1686,Dr. Muhammad Khuram Shahzad,Parallel and Distributed Computing,2K23-BSCS-13A,FoC,Fri,Computing Lab-01,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-20T00:00:00.000Z,
+1774,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13A,FoC,Wed,CR-25-Acad Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-02-18T00:00:00.000Z,
+1799,Dr. Rizwan Ahmad,Communication Systems,2K23-BEE-15D,ECE,Fri,CR-18-IAEC,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-13T00:00:00.000Z,
+1802,Dr. Rizwan Ahmad,Communication Systems,2K23-BEE-15D,ECE,Fri,CR-18-IAEC,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-20T00:00:00.000Z,
+1807,Ms. Maryam Sajjad,Database Systems,2K25-BSCS-15B,FoC,Tue,Computing Lab-05,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-10T00:00:00.000Z,
+1808,Ms. Maryam Sajjad,Database Systems,2K25-BSCS-15B,FoC,Tue,Computing Lab-05,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-17T00:00:00.000Z,
+1826,Mr. Taufiq ur Rehman,Operating Systems,2K24-BESE-15B,FoC,Fri,Computing Lab-04,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-13T00:00:00.000Z,
+1829,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14A,FoC,Fri,CR-05-UG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-20T00:00:00.000Z,
+1837,Dr. Farzana Jabeen,Web Technologies,2K24-BSCS-14C,FoC,Tue,Computing Lab-06,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-17T00:00:00.000Z,
+1856,Dr. Tauseef ur Rehman,Digital Signal Processing,2K23-BEE-15B,ECE,Fri,CR-20-IAEC,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-20T00:00:00.000Z,
+1862,Mr. Taufiq ur Rehman,Operating Systems,2K24-BESE-15B,FoC,Fri,Computing Lab-04,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-20T00:00:00.000Z,
+1863,Dr. Sobia Jamil,Ideology and Constitution of Pakistan,2K25-BEE-17A,H&S,Thu,Lecture Hall-PG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-19T00:00:00.000Z,
+1868,Dr. Muhammad Imran Malik,Deep Learning,2K23-BSCS-13B,FoC,Wed,CR-05-UG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-02-18T00:00:00.000Z,
+2137,Dr. Muhammad Imran Malik,Deep Learning,2K23-BSCS-13B,FoC,Wed,Lec Hall-PG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-03-25T00:00:00.000Z,
+2145,Dr. Neelma Naz,Linear Control Systems,2K23-BEE-15D,ECE,Thu,CR-06-UG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-03-26T00:00:00.000Z,
+2148,Mr. Muhammad Abdullah,Digital Logic Design,2K25-BSAi-2A,ECE,Thu,CR-16-IAEC,02:00 PM,03:00 PM,840,Lec,Makeup,2026-03-26T00:00:00.000Z,
+2150,Mr. Ahsan Azhar,Electrical Network Analysis,2K25-BEE-17A,ECE,Thu,Lec Hall-PG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-03-26T00:00:00.000Z,
+2152,Dr. Neelma Naz,Linear Control Systems,2K23-BEE-15D,ECE,Thu,CR-12-UG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-03-26T00:00:00.000Z,
+2162,Mr. Ahsan Azhar,Electrical Network Analysis,2K25-BEE-17B,ECE,Fri,CR-01-UG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-03-27T00:00:00.000Z,
+2166,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14A,FoC,Fri,CR-07-UG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-03-27T00:00:00.000Z,
+2168,Ms. Sara Tariq Sheikh,Database Systems,2K25-BSCS-15D,FoC,Mon,Lec Hall-PG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-03-30T00:00:00.000Z,
+2173,Dr. Imran Malik,Applied Physics,2K24-BSCS-14B,H&S,Mon,CR-16-IAEC,02:00 PM,03:00 PM,840,Lec,Makeup,2026-03-30T00:00:00.000Z,
+2176,Ms. Sara Tariq Sheikh,Database Systems,2K25-BSCS-15D,FoC,Mon,Computing Lab-05,02:00 PM,03:00 PM,840,Lec,Makeup,2026-03-30T00:00:00.000Z,
+2177,Dr. Tahira Anwar Lashari,Principles of Sociology,2K22-BSCS-12C,FoC,Mon,CR-09-UG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-03-30T00:00:00.000Z,
+2194,Dr. Muhammad Imran Malik,Deep Learning,2K23-BSCS-13B,FoC,Wed,CR-05-UG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-04-01T00:00:00.000Z,
+2203,Dr. Adnan Rashid,Compiler Construction,2K22-BSCS-12A,FoC,Thu,CR-02-UG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-04-02T00:00:00.000Z,
+2207,Mr. Ahsan Azhar,Electrical Network Analysis,2K25-BEE-17A,ECE,Thu,Lec Hall-PG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-04-02T00:00:00.000Z,
+2225,Mr. Ahsan Azhar,Electrical Network Analysis,2K25-BEE-17B,ECE,Fri,CR-07-UG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-04-03T00:00:00.000Z,
+2226,Dr. Quanita Kiran,Discrete Mathematics,2K25-BESE-16A,H&S,Fri,CR-02-UG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-04-03T00:00:00.000Z,
+2227,Dr. Quanita Kiran,Discrete Mathematics,2K25-BESE-16B,H&S,Fri,CR-02-UG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-04-03T00:00:00.000Z,
+2229,Dr. Ahmed Naeem,Digital Signal Processing,2K23-BEE-15D,ECE,Fri,Computing Lab-03,02:00 PM,03:00 PM,840,Lab,Makeup,2026-04-03T00:00:00.000Z,
+2262,Dr. Zafar Ali,Linear Algebra,2K25-BSCS-15B,H&S,Fri,Lec Hall-IAEC,02:00 PM,03:00 PM,840,Lec,Makeup,2026-04-03T00:00:00.000Z,
+2279,Ms. Sadia Arshad,Functional English,2K25-BESE-16B,H&S,Fri,CR-15-UG Block,02:00 PM,03:00 PM,840,Lec,Makeup,2026-04-10T00:00:00.000Z,
+2293,Dr. Imran Shahzad,Linear Algebra,2K24-BEE-16B,H&S,Tue,CR-06-UG Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-03-17T00:00:00.000Z,
+2301,Mr. Abdul Mateen,Electronic Circuit Design,2K24-BEE-16D,ECE,Tue,CR-08-UG Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-03-17T00:00:00.000Z,
+2309,Dr. Sidra Shafiq,Applied Physics,2K24-BSCS-14D,H&S,Tue,Physics Lab-1-SNS,02:00 PM,03:00 PM,840,Lab,Missed,2026-03-17T00:00:00.000Z,
+2314,Hafiz Muhammad Siddique,Understanding of Quran II,2K25-BSDS-3A,H&S,Wed,CR-01-UG Block,02:00 PM,03:00 PM,840,Lab,Missed,2026-03-25T00:00:00.000Z,
+2323,Ms. Hareem Ashraf,Software Project Management,2K23-BESE-14A,FoC,Wed,CR-23-Acad Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-03-25T00:00:00.000Z,
+2325,Ms. Yusra Arshad,Compiler Construction,2K23-BSCS-13C,ECE,Wed,CR-26-Acad Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-03-25T00:00:00.000Z,
+2337,Ms. Nikhar Azhar,Deep Learning,2K23-BSCS-13D,FoC,Wed,CR-27-Acad Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-03-25T00:00:00.000Z,
+2339,Dr. Adnan Rashid,Compiler Construction,2K22-BSCS-12A,FoC,Thu,CR-07-UG Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-03-26T00:00:00.000Z,
+2342,Dr. Neelma Riaz,Functional English,2K25-BESE-16A,H&S,Thu,CR-09-UG Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-03-26T00:00:00.000Z,
+2345,Dr. Zafar Ali,Linear Algebra,2K25-BSCS-15C,H&S,Fri,CR-03-UG Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-03-27T00:00:00.000Z,
+2364,Dr. Hina Munir Dutt,Differential Equations,2K25-BEE-17D,H&S,Mon,CR-15-UG Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-03-30T00:00:00.000Z,
+2374,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14A,H&S,Tue,CR-09-UG Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-03-31T00:00:00.000Z,Elective
+2375,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14B,H&S,Tue,CR-09-UG Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-03-31T00:00:00.000Z,Elective
+2376,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14C,H&S,Tue,CR-09-UG Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-03-31T00:00:00.000Z,Elective
+2377,Dr. Ehsan ul Hassan,Human Resource Management (Gp-01),2K22-BEE-14D,H&S,Tue,CR-09-UG Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-03-31T00:00:00.000Z,Elective
+2386,Dr. Fahd Sikandar Khan,Computer Programming,2K25-BEE-17D,FoC,Tue,CR-19-IAEC,02:00 PM,03:00 PM,840,Lec,Missed,2026-03-31T00:00:00.000Z,
+2388,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14A,FoC,Tue,CR-21-SMRIMMS,02:00 PM,03:00 PM,840,Lec,Missed,2026-03-31T00:00:00.000Z,
+2390,Mr. Fazal e Haq,Digital Signal Processing,2k23-BEE-15D,ECE,Mon,DSP & Comm Lab,02:00 PM,03:00 PM,840,Lab,Missed,2026-03-30T00:00:00.000Z,
+2396,Dr. Sidra Shafiq,Applied Physics,2k24-BSCS-14D,H&S,Tue,Physics Lab-1-SNS,02:00 PM,03:00 PM,840,Lab,Missed,2026-03-31T00:00:00.000Z,
+2409,Ms. Sobia Ashraf,Formal Methods,2K23-BESE-14B,FoC,Wed,CR-24-Acad Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-04-01T00:00:00.000Z,
+2423,Dr. Sidra Shafiq,Applied Physics,2k24-BSAI-1A,H&S,Wed,Physics Lab-1-SNS,02:00 PM,03:00 PM,840,Lab,Missed,2026-04-01T00:00:00.000Z,
+2427,Dr. Neelma Riaz,Functional English,2K25-BESE-16A,H&S,Thu,CR-09-UG Block,02:00 PM,03:00 PM,840,Lec,Missed,2026-04-02T00:00:00.000Z,
+2431,Dr. Imran Malik,Applied Physics,2k24-BSCS-14B,H&S,Thu,Physics Lab-1-SNS,02:00 PM,03:00 PM,840,Lab,Missed,2026-04-02T00:00:00.000Z,
+1657,Ms. Naema Asif,Computer Organization & Assembly Language,2K24-BSDS-2A,FoC,Thu,CR-06-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-02-12T00:00:00.000Z,Elective
+1654,Dr. Sara Shakil,Computer Organization & Assembly Language,2K24-BSCS-14C,ECE,Mon,CR-11-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-02-09T00:00:00.000Z,
+2136,Dr. Junaid Younas,Deep Learning,2K23-BSCS-13A,FoC,Wed,Lec Hall-PG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-03-18T00:00:00.000Z,
+2138,Mr. Maajid Maqbool,Entrepreneurship,2K22-BEE-14B,FoC,Wed,CR-11-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-03-25T00:00:00.000Z,
+2149,Mr. Muhammad Abdullah,Digital Logic Design,2K25-BSAi-2A,ECE,Thu,CR-16-IAEC,03:00 PM,04:00 PM,900,Lec,Makeup,2026-03-26T00:00:00.000Z,
+2167,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14A,FoC,Fri,CR-07-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-03-27T00:00:00.000Z,
+2424,Dr. Sidra Shafiq,Applied Physics,2k24-BSAI-1A,H&S,Wed,Physics Lab-1-SNS,03:00 PM,04:00 PM,900,Lab,Missed,2026-04-01T00:00:00.000Z,
+2178,Dr. Tahira Anwar Lashari,Principles of Sociology,2K22-BSCS-12C,FoC,Mon,CR-09-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-03-30T00:00:00.000Z,
+2425,Dr. Neelma Riaz,Expository Writing,2K24-BEE-16D,H&S,Thu,CR-08-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-04-02T00:00:00.000Z,
+2198,Mr. Saeed Afzal,Linear Algebra,2K25-BSAi-2A,H&S,Thu,CR-06-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-04-02T00:00:00.000Z,
+2204,Dr. Adnan Rashid,Compiler Construction,2K22-BSCS-12B,FoC,Thu,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-04-02T00:00:00.000Z,
+3890,Dr. Ahmed Naeem,Digital Signal Processing,2K23-BEE-15D,ECE,Fri,CR-01,03:00 PM,04:00 PM,900,Lab,Makeup,2026-08-07T00:00:00.000Z,
+2209,Ms. Ayesha Kanwal,Software Quality Engineering,2K23-BESE-14A,FoC,Thu,Lec Hall-IAEC,03:00 PM,04:00 PM,900,Lec,Makeup,2026-04-02T00:00:00.000Z,
+2210,Ms. Ayesha Kanwal,Software Quality Engineering,2K23-BESE-14B,FoC,Thu,Lec Hall-IAEC,03:00 PM,04:00 PM,900,Lec,Makeup,2026-04-02T00:00:00.000Z,
+2212,Dr. Zafar Ali,Linear Algebra,2K25-BSCS-15C,H&S,Thu,Lec Hall-PG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-04-02T00:00:00.000Z,
+2220,Dr. Nosherwan Shoaib,Electrical Network Analysis,2K25-BEE-17C,ECE,Fri,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-04-03T00:00:00.000Z,
+2228,Dr. Hashir Moheed Kiyani,Machine Learning,2K23-BESE-14A,FoC,Fri,CR-17-IAEC,03:00 PM,04:00 PM,900,Lec,Makeup,2026-04-03T00:00:00.000Z,
+2230,Dr. Ahmed Naeem,Digital Signal Processing,2K23-BEE-15D,ECE,Fri,Computing Lab-03,03:00 PM,04:00 PM,900,Lab,Makeup,2026-04-03T00:00:00.000Z,
+2258,Ms. Sadia Arshad,Functional English,2K25-BESE-16B,H&S,Fri,CR-15-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-04-03T00:00:00.000Z,
+2432,Dr. Imran Malik,Applied Physics,2k24-BSCS-14B,H&S,Thu,Physics Lab-1-SNS,03:00 PM,04:00 PM,900,Lab,Missed,2026-04-02T00:00:00.000Z,
+2263,Dr. Zafar Ali,Linear Algebra,2K25-BSCS-15B,H&S,Fri,Lec Hall-IAEC,03:00 PM,04:00 PM,900,Lec,Makeup,2026-04-03T00:00:00.000Z,
+2264,Ms. Hina Yousaf,Expository Writing,2K24-BSCS-14A,H&S,Fri,CR-06-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-04-03T00:00:00.000Z,
+2265,Dr. Muhammad Moazzam Ali,Microprocessor Systems,2K24-BEE-16A,ECE,Fri,Lec Hall-PG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-04-03T00:00:00.000Z,
+2280,Ms. Sadia Arshad,Functional English,2K25-BESE-16B,H&S,Fri,CR-15-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-04-10T00:00:00.000Z,
+2286,Dr. Aimal Tariq Rextin,Design & Analysis of Algorithm,2K24-BESE-15B,FoC,Tue,CR-17-IAEC,03:00 PM,04:00 PM,900,Lec,Missed,2026-03-17T00:00:00.000Z,
+2290,Dr. Huma Ghafoor,Communication Systems,2K23-BEE-15B,ECE,Tue,CR-20-IAEC,03:00 PM,04:00 PM,900,Lec,Missed,2026-03-17T00:00:00.000Z,
+2291,Dr. Imran Shahzad,Linear Algebra,2K24-BEE-16A,H&S,Tue,CR-05-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-03-17T00:00:00.000Z,
+2302,Mr. Abdul Mateen,Electronic Circuit Design,2K24-BEE-16D,ECE,Tue,CR-08-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-03-17T00:00:00.000Z,
+2310,Dr. Sidra Shafiq,Applied Physics,2K24-BSCS-14D,H&S,Tue,Physics Lab-1-SNS,03:00 PM,04:00 PM,900,Lab,Missed,2026-03-17T00:00:00.000Z,
+2315,Hafiz Muhammad Siddique,Understanding of Quran II,2K25-BSDS-3A,H&S,Wed,CR-01-UG Block,03:00 PM,04:00 PM,900,Lab,Missed,2026-03-25T00:00:00.000Z,
+2324,Ms. Hareem Ashraf,Software Project Management,2K23-BESE-14A,FoC,Wed,CR-23-Acad Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-03-25T00:00:00.000Z,
+2326,Ms. Yusra Arshad,Compiler Construction,2K23-BSCS-13C,ECE,Wed,CR-26-Acad Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-03-25T00:00:00.000Z,
+2338,Ms. Nikhar Azhar,Deep Learning,2K23-BSCS-13D,FoC,Wed,CR-27-Acad Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-03-25T00:00:00.000Z,
+2340,Dr. Adnan Rashid,Compiler Construction,2K22-BSCS-12B,FoC,Thu,CR-07-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-03-26T00:00:00.000Z,
+2341,Dr. Neelma Riaz,Expository Writing,2K24-BEE-16D,H&S,Thu,CR-08-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-03-26T00:00:00.000Z,
+2346,Dr. Zafar Ali,Linear Algebra,2K25-BSCS-15C,H&S,Fri,CR-03-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-03-27T00:00:00.000Z,
+2348,Dr. Imran Shahzad,Linear Algebra,2K24-BEE-16B,H&S,Mon,CR-06-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-03-30T00:00:00.000Z,
+2387,Dr. Fahd Sikandar Khan,Computer Programming,2K25-BEE-17D,FoC,Tue,CR-19-IAEC,03:00 PM,04:00 PM,900,Lec,Missed,2026-03-31T00:00:00.000Z,
+2389,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14A,FoC,Tue,CR-21-SMRIMMS,03:00 PM,04:00 PM,900,Lec,Missed,2026-03-31T00:00:00.000Z,
+2391,Mr. Fazal e Haq,Digital Signal Processing,2k23-BEE-15D,ECE,Mon,DSP & Comm Lab,03:00 PM,04:00 PM,900,Lab,Missed,2026-03-30T00:00:00.000Z,
+2397,Dr. Sidra Shafiq,Applied Physics,2k24-BSCS-14D,H&S,Tue,Physics Lab-1-SNS,03:00 PM,04:00 PM,900,Lab,Missed,2026-03-31T00:00:00.000Z,
+2405,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14C,FoC,Wed,CR-22-SMRIMMS,03:00 PM,04:00 PM,900,Lec,Missed,2026-04-01T00:00:00.000Z,
+1831,Dr. Hina Munir Dutt,Differential Equations,2K25-BEE-17D,H&S,Mon,CR-11-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-02-16T00:00:00.000Z,
+1830,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14A,FoC,Fri,CR-05-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-02-20T00:00:00.000Z,
+1823,Dr. Rabia Irfan,Introduction to Data Science,2K24-BSDS-2A,FoC,Thu,CR-12-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-02-19T00:00:00.000Z,
+1821,Mr. Tariq Mansoor,Entrepreneurship,2K22-BEE-14C,H&S,Fri,CR-09-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-02-13T00:00:00.000Z,
+1820,Ms. Hareem Ashraf,Software Project Management,2K23-BESE-14A,FoC,Thu,CR-23-Acad Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-02-12T00:00:00.000Z,
+1803,Dr. Rizwan Ahmad,Communication Systems,2K23-BEE-15D,ECE,Fri,CR-18-IAEC,03:00 PM,04:00 PM,900,Lec,Makeup,2026-02-20T00:00:00.000Z,
+1800,Dr. Rizwan Ahmad,Communication Systems,2K23-BEE-15D,ECE,Fri,CR-18-IAEC,03:00 PM,04:00 PM,900,Lec,Makeup,2026-02-13T00:00:00.000Z,
+1855,Dr. Tauseef ur Rehman,Digital Signal Processing,2K23-BEE-15A,ECE,Fri,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-02-20T00:00:00.000Z,
+1775,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13A,FoC,Wed,CR-25-Acad Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-02-18T00:00:00.000Z,
+1864,Dr. Sobia Jamil,Ideology and Constitution of Pakistan,2K25-BEE-17A,H&S,Thu,Lecture Hall-PG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-02-19T00:00:00.000Z,
+1767,Dr. Imran Shahzad,Linear Algebra,2K24-BEE-16A,H&S,Tue,CR-05-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-02-17T00:00:00.000Z,
+1749,Mr. Muhammad Usman Ghani,Understanding of Quran II,2K25-BCE-1A,H&S,Thu,CR-13-UG Block,03:00 PM,04:00 PM,900,Lab,Missed,2026-02-12T00:00:00.000Z,
+1869,Mr. Muhammad Usman Ghani,Understanding of Quran II,2K25-BCE-1A,H&S,Tue,CR-13-UG Block,03:00 PM,04:00 PM,900,Lab,Makeup,2026-02-17T00:00:00.000Z,
+1870,Mr. Muhammad Usman Ghani,Understanding of Quran II,2K25-BCE-1A,H&S,Tue,CR-13-UG Block,03:00 PM,04:00 PM,900,Lab,Makeup,2026-02-24T00:00:00.000Z,
+1734,Mr. Abdul Mateen,Electronic Circuit Design,2K24-BEE-16D,ECE,Tue,CR-08-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-02-10T00:00:00.000Z,
+1731,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14D,ECE,Tue,CR-01-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-02-10T00:00:00.000Z,Elective
+1729,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14C,ECE,Tue,CR-01-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-02-10T00:00:00.000Z,Elective
+1727,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14B,ECE,Tue,CR-01-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-02-10T00:00:00.000Z,Elective
+1725,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14A,ECE,Tue,CR-01-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-02-10T00:00:00.000Z,Elective
+1714,Ms. Maria Jamshaid,Ideology and Constitution of Pakistan,2K25-BCE-1A,H&S,Fri,CR-13-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-02-06T00:00:00.000Z,
+1684,Dr. Sohail Iqbal,Theory of Automata,2K24-BSCS-14D,FoC,Wed,CR-11-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-02-18T00:00:00.000Z,
+1661,Ms. Naema Asif,Computer Organization & Assembly Language,2K24-BSDS-2A,FoC,Thu,CR-06-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-03-05T00:00:00.000Z,Elective
+1659,Ms. Naema Asif,Computer Organization & Assembly Language,2K24-BSDS-2A,FoC,Thu,CR-06-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-02-26T00:00:00.000Z,Elective
+1648,Dr. Farid Gul,Linear Control Systems,2K23-BEE-15B,ECE,Mon,Lecture Hall-PG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-02-09T00:00:00.000Z,
+1647,Dr. Farid Gul,Linear Control Systems,2K23-BEE-15A,ECE,Mon,Lecture Hall-PG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-02-09T00:00:00.000Z,
+1645,Ms. Maria Jamshaid,Ideology and Constitution of Pakistan,2K25-BCE-1A,H&S,Tue,CR-13-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-02-10T00:00:00.000Z,
+1638,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14B,FoC,Fri,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-02-13T00:00:00.000Z,
+1636,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14B,FoC,Mon,CR-05-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-02-09T00:00:00.000Z,
+1579,Mr. Muhammad Nashit Shah,Computer Architecture & Logic Design,2K25-BESE-16B,ECE,Tue,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-01-27T00:00:00.000Z,
+1570,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Mon,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-01-26T00:00:00.000Z,
+1561,Dr. Rabia Irfan,Introduction to Data Science,2K24-BSDS-2A,FoC,Mon,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-02-02T00:00:00.000Z,
+1558,Dr. Naima Iltaaf,Web Technologies,2K24-BSCS-14D,FoC,Mon,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-01-19T00:00:00.000Z,
+1552,Dr. Seemab Latif,Machine Learning,2K24-BSAI-1A,FoC,Tue,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-01-27T00:00:00.000Z,
+1546,Dr. Mehwish Fatima,Programming for AI,2K24-BSAI-1A,FoC,Mon,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-01-19T00:00:00.000Z,
+1544,Dr. Mehvish Rashid,Software Design and Architecture,2K24-BESE-15B,FoC,Wed,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-01-28T00:00:00.000Z,
+1542,Dr. Aimal Tariq Rextin,Design & Analysis of Algorithm,2K24-BESE-15B,FoC,Tue,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-01-27T00:00:00.000Z,
+1540,Dr. Mehvish Rashid,Software Design and Architecture,2K24-BESE-15A,FoC,Tue,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-01-27T00:00:00.000Z,
+1537,Dr. Arshad Siddiqui,Linear Algebra,2K24-BEE-16D,H&S,Wed,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-01-21T00:00:00.000Z,
+1529,Dr. Ahmed Naeem,Digital Signal Processing,2K23-BEE-15D,ECE,Tue,CR-18-IAEC,03:00 PM,04:00 PM,900,Lec,Missed,2026-02-03T00:00:00.000Z,
+1521,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14D,ECE,Tue,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-01-20T00:00:00.000Z,Elective
+1520,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14D,ECE,Tue,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-02-03T00:00:00.000Z,Elective
+1518,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14C,ECE,Tue,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-01-20T00:00:00.000Z,Elective
+1517,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14C,ECE,Tue,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-02-03T00:00:00.000Z,Elective
+1515,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14B,ECE,Tue,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-01-20T00:00:00.000Z,Elective
+1514,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14B,ECE,Tue,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-02-03T00:00:00.000Z,Elective
+1512,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14A,ECE,Tue,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-01-20T00:00:00.000Z,Elective
+1511,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14A,ECE,Tue,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Missed,2026-02-03T00:00:00.000Z,Elective
+1507,Mr. Arshad Nazir,Digital Logic Design,2K25-BSCS-15A,ECE,Tue,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-02-10T00:00:00.000Z,
+1506,Mr. Arshad Nazir,Digital Logic Design,2K25-BSCS-15A,ECE,Tue,CR-02-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-02-03T00:00:00.000Z,
+1477,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Mon,Basic Electronics Lab,03:00 PM,04:00 PM,900,Lab,Missed,2026-01-26T00:00:00.000Z,
+1475,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Mon,Basic Electronics Lab,03:00 PM,04:00 PM,900,Lab,Missed,2026-01-26T00:00:00.000Z,
+1461,Dr. Imran Malik,Applied Physics,2K24-BSCS-14B,H&S,Mon,CR-21-SMRIMMS,03:00 PM,04:00 PM,900,Lec,Makeup,2026-02-02T00:00:00.000Z,
+1459,Dr. Mehwish Fatima,Programming for AI,2K24-BSAI-1A,FoC,Tue,Computing Lab-04,03:00 PM,04:00 PM,900,Lec,Makeup,2026-01-20T00:00:00.000Z,
+1456,Dr. Neelma Riaz,Expository Writing,2K24-BEE-16D,H&S,Wed,CR-08-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-01-28T00:00:00.000Z,
+1449,Dr. Farid Gul,Linear Control Systems,2K23-BEE-15B,ECE,Thu,Control System Lab,03:00 PM,04:00 PM,900,Lec,Makeup,2026-01-22T00:00:00.000Z,
+1446,Dr. Farid Gul,Linear Control Systems,2K23-BEE-15A,ECE,Thu,Control System Lab,03:00 PM,04:00 PM,900,Lec,Makeup,2026-01-22T00:00:00.000Z,
+1444,Dr. Tahira Anwar Lashari,Principles of Sociology,2K22-BSCS-12C,FoC,Mon,CR-09-UG Block,03:00 PM,04:00 PM,900,Lec,Makeup,2026-02-02T00:00:00.000Z,
+1646,Ms. Maria Jamshaid,Ideology and Constitution of Pakistan,2K25-BCE-1A,H&S,Tue,CR-13-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-10T00:00:00.000Z,
+1639,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14B,FoC,Fri,CR-02-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-13T00:00:00.000Z,
+1637,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14B,FoC,Mon,CR-05-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-09T00:00:00.000Z,
+1605,Dr. Bilal Ahmed,Linear Algebra,2K25-BSDS-3A,H&S,Thu,CR-02-UG Block,04:00 PM,05:00 PM,960,Lec,Missed,2026-01-22T00:00:00.000Z,
+1602,Dr. Rai Sajjad Saif,Linear Algebra,2K25-BSCS-15E,H&S,Thu,CR-02-UG Block,04:00 PM,05:00 PM,960,Lec,Missed,2026-01-22T00:00:00.000Z,
+2151,Mr. Ahsan Azhar,Electrical Network Analysis,2K25-BEE-17B,ECE,Thu,Lec Hall-PG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-03-26T00:00:00.000Z,
+2300,Mr. Abdul Mateen,Electronic Circuit Design,2K24-BEE-16B,ECE,Tue,CR-06-UG Block,04:00 PM,05:00 PM,960,Lec,Missed,2026-03-17T00:00:00.000Z,
+1565,Mr. Ahsan Azhar,Electrical Network Analysis,2K25-BEE-17A,ECE,Wed,CR-02-UG Block,04:00 PM,05:00 PM,960,Lec,Missed,2026-01-28T00:00:00.000Z,
+1562,Dr. Rabia Irfan,Introduction to Data Science,2K24-BSDS-2A,FoC,Mon,CR-02-UG Block,04:00 PM,05:00 PM,960,Lec,Missed,2026-02-02T00:00:00.000Z,
+2153,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13A,FoC,Thu,CR-25-Acad Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-03-26T00:00:00.000Z,
+1555,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14C,FoC,Wed,CR-02-UG Block,04:00 PM,05:00 PM,960,Lec,Missed,2026-01-28T00:00:00.000Z,
+1832,Dr. Rabia Irfan,Data Warehousing and Business Intelligence,2K23-BSDS-1A,FoC,Thu,CR-14-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-19T00:00:00.000Z,
+1538,Dr. Arshad Siddiqui,Linear Algebra,2K24-BEE-16D,H&S,Wed,CR-02-UG Block,04:00 PM,05:00 PM,960,Lec,Missed,2026-01-21T00:00:00.000Z,
+2454,Dr. Bilal Ahmed,Linear Algebra,2K25-BSDS-3A,H&S,Thu,CR-01-UG Block,04:00 PM,05:00 PM,960,Lec,Missed,2026-05-07T00:00:00.000Z,
+1531,Dr. Hashir Moheed Kiyani,Machine Learning,2K23-BESE-14A,FoC,Tue,CR-02-UG Block,04:00 PM,05:00 PM,960,Lec,Missed,2026-01-20T00:00:00.000Z,
+1522,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14D,ECE,Tue,CR-02-UG Block,04:00 PM,05:00 PM,960,Lec,Missed,2026-02-03T00:00:00.000Z,Elective
+1689,Dr. Muhammad Saad Zia,Electronic Circuit Design,2K24-BEE-16C,ECE,Mon,CR-01-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-16T00:00:00.000Z,
+1519,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14C,ECE,Tue,CR-02-UG Block,04:00 PM,05:00 PM,960,Lec,Missed,2026-02-03T00:00:00.000Z,Elective
+1516,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14B,ECE,Tue,CR-02-UG Block,04:00 PM,05:00 PM,960,Lec,Missed,2026-02-03T00:00:00.000Z,Elective
+1513,Syed Jawad Hussain Shah,Digital Design Verification,2K22-BEE-14A,ECE,Tue,CR-02-UG Block,04:00 PM,05:00 PM,960,Lec,Missed,2026-02-03T00:00:00.000Z,Elective
+1508,Mr. Muhammad Usman Ghani,Understanding of Quran II,2K25-BSCS-15B,H&S,Thu,CR-02-UG Block,04:00 PM,05:00 PM,960,Lab,Makeup,2026-01-29T00:00:00.000Z,
+1502,Mr. Muhammad Usman Ghani,Understanding of Quran II,2K25-BESE-16B,H&S,Tue,CR-07-UG Block,04:00 PM,05:00 PM,960,Lab,Makeup,2026-02-03T00:00:00.000Z,
+1497,Dr. Neelma Riaz,Functional English,2K25-BESE-16A,H&S,Thu,CR-10-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-01-29T00:00:00.000Z,
+1478,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Mon,Basic Electronics Lab,04:00 PM,05:00 PM,960,Lab,Missed,2026-01-26T00:00:00.000Z,
+1476,Dr. Nosherwan Shoaib,Electrical Network Analysis,2k25-BEE-17C,ECE,Mon,Basic Electronics Lab,04:00 PM,05:00 PM,960,Lab,Missed,2026-01-26T00:00:00.000Z,
+2311,Dr. Sidra Shafiq,Applied Physics,2K24-BSCS-14D,H&S,Tue,Physics Lab-1-SNS,04:00 PM,05:00 PM,960,Lab,Missed,2026-03-17T00:00:00.000Z,
+1457,Dr. Neelma Riaz,Expository Writing,2K24-BEE-16D,H&S,Wed,CR-08-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-01-28T00:00:00.000Z,
+3889,Dr. Aimal Tariq Rextin,Design & Analysis of Algorithm,2K24-BESE-15B,FoC,Mon,CR- 22 RIMMS,04:00 PM,05:00 PM,960,Lec,Makeup,2026-06-29T00:00:00.000Z,
+1452,Dr. Fahad Ahmed Satti,Parallel & Distributed Computing,2K23-BSDS-1A,FoC,Tue,CR-28-Acad Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-03T00:00:00.000Z,
+1822,Mr. Tariq Mansoor,Entrepreneurship,2K22-BEE-14C,H&S,Fri,CR-09-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-13T00:00:00.000Z,
+1448,Dr. Farid Gul,Linear Control Systems,2K23-BEE-15B,ECE,Mon,Lecture Hall-PG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-01-26T00:00:00.000Z,
+1660,Ms. Naema Asif,Computer Organization & Assembly Language,2K24-BSDS-2A,FoC,Thu,CR-06-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-26T00:00:00.000Z,Elective
+2181,Dr. Mehvish Rashid,Software Design and Architecture,2K24-BESE-15A,FoC,Tue,CR-04-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-03-31T00:00:00.000Z,
+2182,Dr. Mehvish Rashid,Software Design and Architecture,2K24-BESE-15B,FoC,Tue,CR-04-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-03-31T00:00:00.000Z,
+2142,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13A,FoC,Wed,CR-25-Acad Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-03-25T00:00:00.000Z,
+1649,Dr. Farid Gul,Linear Control Systems,2K23-BEE-15C,ECE,Mon,Lecture Hall-PG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-09T00:00:00.000Z,
+2185,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13A,FoC,Wed,CR-25-Acad Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-04-01T00:00:00.000Z,
+1871,Mr. Muhammad Usman Ghani,Understanding of Quran II,2K25-BCE-1A,H&S,Tue,CR-13-UG Block,04:00 PM,05:00 PM,960,Lab,Makeup,2026-02-24T00:00:00.000Z,
+2188,Dr. Mehvish Rashid,Software Design and Architecture,2K24-BESE-15A,FoC,Wed,CR-03-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-04-01T00:00:00.000Z,
+2189,Dr. Mehvish Rashid,Software Design and Architecture,2K24-BESE-15B,FoC,Wed,CR-03-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-04-01T00:00:00.000Z,
+2316,Hafiz Muhammad Siddique,Understanding of Quran II,2K25-BSDS-3A,H&S,Wed,CR-01-UG Block,04:00 PM,05:00 PM,960,Lab,Missed,2026-03-25T00:00:00.000Z,
+2195,Dr. Fahd Sikandar Khan,Computer Programming,2K25-BEE-17D,FoC,Wed,CR-11-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-04-01T00:00:00.000Z,
+1813,Dr. Adnan Aslam,Discrete Mathematics,2K25-BSDS-3A,H&S,Thu,CR-09-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-12T00:00:00.000Z,
+2199,Mr. Saeed Afzal,Linear Algebra,2K25-BSAi-2A,H&S,Thu,CR-06-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-04-02T00:00:00.000Z,
+2200,Ms. Sobia Ashraf,Formal Methods,2K23-BESE-14A,FoC,Thu,CR-07-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-04-02T00:00:00.000Z,
+2201,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13A,FoC,Thu,CR-25-Acad Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-04-02T00:00:00.000Z,
+2426,Dr. Sidra Shafiq,Applied Physics,2k24-BSAI-1A,H&S,Wed,Physics Lab-1-SNS,04:00 PM,05:00 PM,960,Lab,Missed,2026-04-01T00:00:00.000Z,
+2205,Dr. Adnan Rashid,Compiler Construction,2K22-BSCS-12C,FoC,Thu,CR-02-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-04-02T00:00:00.000Z,
+2208,Mr. Ahsan Azhar,Electrical Network Analysis,2K25-BEE-17B,ECE,Thu,CR-14-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-04-02T00:00:00.000Z,
+1812,Dr. Adnan Aslam,Discrete Mathematics,2K25-BSCS-15E,H&S,Thu,CR-09-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-12T00:00:00.000Z,
+2213,Dr. Zafar Ali,Linear Algebra,2K25-BSCS-15C,H&S,Thu,Lec Hall-PG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-04-02T00:00:00.000Z,
+1811,Dr. Hina Munir Dutt,Complex Variables and Transforms,2K24-BESE-15A,H&S,Wed,Lecture Hall-IAEC,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-18T00:00:00.000Z,
+2221,Dr. Nosherwan Shoaib,Electrical Network Analysis,2K25-BEE-17C,ECE,Fri,CR-02-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-04-03T00:00:00.000Z,
+1810,Dr. Hina Munir Dutt,Complex Variables and Transforms,2K24-BESE-15A,H&S,Tue,Lecture Hall-IAEC,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-17T00:00:00.000Z,
+2392,Mr. Fazal e Haq,Digital Signal Processing,2k23-BEE-15D,ECE,Mon,DSP & Comm Lab,04:00 PM,05:00 PM,960,Lab,Missed,2026-03-30T00:00:00.000Z,
+2231,Dr. Ahmed Naeem,Digital Signal Processing,2K23-BEE-15D,ECE,Fri,Computing Lab-03,04:00 PM,05:00 PM,960,Lab,Makeup,2026-04-03T00:00:00.000Z,
+1866,Mr. Maajid Maqbool,Entrepreneurship,2K22-BEE-14B,FoC,Tue,CR-24-Acad Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-17T00:00:00.000Z,
+1801,Dr. Rizwan Ahmad,Communication Systems,2K23-BEE-15D,ECE,Tue,CR-18-IAEC,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-17T00:00:00.000Z,
+1662,Ms. Naema Asif,Computer Organization & Assembly Language,2K24-BSDS-2A,FoC,Thu,CR-06-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-03-05T00:00:00.000Z,Elective
+1798,Dr. Rizwan Ahmad,Communication Systems,2K23-BEE-15D,ECE,Tue,CR-18-IAEC,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-10T00:00:00.000Z,
+2398,Dr. Sidra Shafiq,Applied Physics,2k24-BSCS-14D,H&S,Tue,Physics Lab-1-SNS,04:00 PM,05:00 PM,960,Lab,Missed,2026-03-31T00:00:00.000Z,
+1658,Ms. Naema Asif,Computer Organization & Assembly Language,2K24-BSDS-2A,FoC,Thu,CR-06-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-12T00:00:00.000Z,Elective
+2259,Ms. Sadia Arshad,Functional English,2K25-BESE-16B,H&S,Fri,CR-15-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-04-03T00:00:00.000Z,
+2261,Dr. Farzana Jabeen,Web Technologies,2K24-BSCS-14C,FoC,Fri,CR-03-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-04-03T00:00:00.000Z,
+1797,Dr. Hirra Anwar,Software Engineering,2K23-BSCS-13D,FoC,Wed,Lecture Hall-PG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-11T00:00:00.000Z,
+2266,Dr. Muhammad Moazzam Ali,Microprocessor Systems,2K24-BEE-16A,ECE,Fri,Lec Hall-PG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-04-03T00:00:00.000Z,
+2267,Dr. Muhammad Moazzam Ali,Microprocessor Systems,2K24-BEE-16B,ECE,Fri,Lec Hall-PG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-04-03T00:00:00.000Z,
+2268,Dr. Muhammad Moazzam Ali,Microprocessor Systems,2K24-BEE-16B,ECE,Fri,Lec Hall-PG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-04-03T00:00:00.000Z,
+1858,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13A,FoC,Thu,CR-25-Acad Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-26T00:00:00.000Z,
+2406,Dr. Fatima Abdullah,Theory of Automata,2K24-BSCS-14C,FoC,Wed,CR-22-SMRIMMS,04:00 PM,05:00 PM,960,Lec,Missed,2026-04-01T00:00:00.000Z,
+1796,Dr. Hirra Anwar,Software Engineering,2K23-BSCS-13C,FoC,Wed,Lecture Hall-PG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-11T00:00:00.000Z,
+2274,Mr. Muhammad Abdullah,Digital Logic Design,2K25-BSAi-2A,ECE,Mon,CR-01-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-04-06T00:00:00.000Z,
+2276,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13A,FoC,Wed,CR-25-Acad Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-04-08T00:00:00.000Z,
+2277,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13A,FoC,Thu,CR-25-Acad Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-04-09T00:00:00.000Z,
+2433,Dr. Imran Malik,Applied Physics,2k24-BSCS-14B,H&S,Thu,Physics Lab-1-SNS,04:00 PM,05:00 PM,960,Lab,Missed,2026-04-02T00:00:00.000Z,
+2283,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13A,FoC,Wed,CR-25-Acad Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-04-15T00:00:00.000Z,
+2284,Dr. Muhammad Ahmad Rathore,Compiler Construction,2K23-BSCS-13A,FoC,Thu,CR-25-Acad Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-04-16T00:00:00.000Z,
+2287,Dr. Aimal Tariq Rextin,Design & Analysis of Algorithm,2K24-BESE-15B,FoC,Tue,CR-17-IAEC,04:00 PM,05:00 PM,960,Lec,Missed,2026-03-17T00:00:00.000Z,
+1787,Dr. Gibrail Islam,Software Engineering,2K23-BSCS-13A,FoC,Wed,CR-25-Acad Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-11T00:00:00.000Z,
+1835,Mr. Ahsan Azhar,Electrical Network Analysis,2K25-BEE-17B,ECE,Tue,EMS Lab,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-17T00:00:00.000Z,
+1833,Dr. Rabia Irfan,Data Warehousing and Business Intelligence,2K23-BSDS-1A,FoC,Thu,CR-14-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-02-26T00:00:00.000Z,
+2133,Mr. Maajid Maqbool,Entrepreneurship,2K23-BESE-14A,FoC,Tue,CR-02-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-03-17T00:00:00.000Z,
+2134,Mr. Maajid Maqbool,Entrepreneurship,2K23-BESE-14B,FoC,Tue,CR-02-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-03-17T00:00:00.000Z,
+2135,Mr. Maajid Maqbool,Entrepreneurship,2K22-BEE-14B,FoC,Tue,CR-02-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-03-17T00:00:00.000Z,
+2292,Dr. Imran Shahzad,Linear Algebra,2K24-BEE-16A,H&S,Tue,CR-05-UG Block,04:00 PM,05:00 PM,960,Lec,Missed,2026-03-17T00:00:00.000Z,
+2139,Mr. Maajid Maqbool,Entrepreneurship,2K22-BEE-14B,FoC,Wed,CR-11-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-03-25T00:00:00.000Z,
+2140,Mr. Maajid Maqbool,Entrepreneurship,2K22-BESE-14A,FoC,Wed,CR-11-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-03-25T00:00:00.000Z,
+2141,Mr. Maajid Maqbool,Entrepreneurship,2K22-BESE-14B,FoC,Wed,CR-11-UG Block,04:00 PM,05:00 PM,960,Lec,Makeup,2026-03-25T00:00:00.000Z,
+2183,Mr. Saeed Afzal,Numerical Methods,2K23-BEE-15A,H&S,Wed,Lec Hall-PG Block,05:00 PM,06:00 PM,1020,Lec,Makeup,2026-04-01T00:00:00.000Z,
+2196,Mr. Saeed Afzal,Numerical Methods,2K23-BEE-15A,H&S,Thu,Lec Hall-PG Block,05:00 PM,06:00 PM,1020,Lec,Makeup,2026-04-02T00:00:00.000Z,
+2184,Mr. Saeed Afzal,Numerical Methods,2K23-BEE-15B,H&S,Wed,Lec Hall-PG Block,05:00 PM,06:00 PM,1020,Lec,Makeup,2026-04-01T00:00:00.000Z,
+2197,Mr. Saeed Afzal,Numerical Methods,2K23-BEE-15B,H&S,Thu,Lec Hall-PG Block,05:00 PM,06:00 PM,1020,Lec,Makeup,2026-04-02T00:00:00.000Z,

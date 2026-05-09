@@ -417,12 +417,51 @@ async function handleApi(method, pathname, req, res) {
   if (method === "POST" && pathname === "/api/entries") {
     const { Faculty, Subject, Class, Date: date, Location, Time, EndTime, Type, User, scheduleId } = body;
     try {
-      await db.query(
-        `UPDATE public.weekly_schedule SET type = $1, entry_date = $2, user_email = $3
-         WHERE faculty = $4 AND subject = $5 AND class_name = $6 AND time_start = $7
-         AND (schedule_id = $8 OR schedule_id IS NULL)`,
-        [Type, date, User, Faculty, Subject, Class, Time, scheduleId ?? null]
+      // Find reference row to get dept and lec_lab
+      const ref = await db.query(
+        `SELECT dept, lec_lab, day FROM public.weekly_schedule
+         WHERE faculty = $1 AND subject = $2 AND class_name = $3
+         AND (type IS NULL OR type = '')
+         AND (schedule_id = $4 OR schedule_id IS NULL) LIMIT 1`,
+        [Faculty, Subject, Class, scheduleId ?? null]
       );
+      const dept = ref.rows[0]?.dept || '';
+      const lecLab = ref.rows[0]?.lec_lab || 'Lec';
+
+      // Calculate day from date
+      const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+      const dayName = dayNames[new Date(date + 'T00:00:00').getDay()];
+
+      // Parse hours from Time and EndTime
+      function timeToHour(t) {
+        if (!t) return 9;
+        const m = t.match(/(\d+):(\d+)\s*(AM|PM)/i);
+        if (!m) return 9;
+        let h = parseInt(m[1]);
+        const ap = m[3].toUpperCase();
+        if (ap === 'PM' && h !== 12) h += 12;
+        if (ap === 'AM' && h === 12) h = 0;
+        return h;
+      }
+      function label(h) {
+        const t12 = (h % 12) || 12;
+        const ap = h >= 12 ? 'PM' : 'AM';
+        return (t12 < 10 ? '0' : '') + t12 + ':00 ' + ap;
+      }
+
+      const startH = timeToHour(Time);
+      const endH = timeToHour(EndTime);
+
+      // Insert one row per hour slot
+      for (let h = startH; h < endH; h++) {
+        await db.query(
+          `INSERT INTO public.weekly_schedule
+           (faculty, subject, class_name, dept, day, location, time_start, time_end, lec_lab, type, entry_date, user_email, schedule_id)
+           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`,
+          [Faculty, Subject, Class, dept, dayName, Location || '',
+           label(h), label(h+1), lecLab, Type, date, User || '', scheduleId ?? null]
+        );
+      }
       return json(res, 200, { success: true });
     } catch (e) { return json(res, 500, { error: e.message }); }
   }

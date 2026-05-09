@@ -533,7 +533,7 @@ async function handleApi(method, pathname, req, res) {
   if (method === "POST" && pathname === "/api/holidays") {
     const { date, name } = body;
     try {
-      const r = await db.query("INSERT INTO public.holidays (date, name) VALUES ($1, $2) RETURNING *", [date, name]);
+      const r = await db.query("INSERT INTO public.holidays (id, date, name) VALUES (nextval('public.holidays_id_seq'), $1, $2) RETURNING *", [date, name]);
       return json(res, 200, { success: true, ...r.rows[0] });
     } catch (e) { return json(res, 500, { error: e.message }); }
   }

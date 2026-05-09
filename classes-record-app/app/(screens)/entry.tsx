@@ -1,3 +1,4 @@
+// v2 - login gate removed
 import React, { useState, useMemo, useEffect, useCallback } from "react";
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,

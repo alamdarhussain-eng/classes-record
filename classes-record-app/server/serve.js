@@ -996,8 +996,8 @@ async function handleApi(method, pathname, req, res) {
     } catch (e) { return json(res, 500, { error: e.message }); }
   }
 
-  // ── IMPORT SAMPLE ENDPOINTS (return empty) ────────────────────────────────
-  if (pathname.includes("/sample")) {
+  // ── IMPORT SAMPLE ENDPOINTS (return empty except schedule) ──────────────
+  if (pathname.includes("/sample") && pathname !== "/api/import/sample/schedule") {
     return json(res, 200, []);
   }
 

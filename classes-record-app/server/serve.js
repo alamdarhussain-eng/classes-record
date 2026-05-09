@@ -352,11 +352,62 @@ async function handleApi(method, pathname, req, res) {
   // GET /api/summary
   if (method === "GET" && pathname === "/api/summary") {
     const scheduleId = reqUrl.searchParams.get("scheduleId");
+    const start = reqUrl.searchParams.get("start");
+    const end = reqUrl.searchParams.get("end");
     try {
-      const q = scheduleId
-        ? await db.query("SELECT * FROM public.weekly_schedule WHERE schedule_id = $1", [parseInt(scheduleId)])
-        : await db.query("SELECT * FROM public.weekly_schedule");
-      return json(res, 200, q.rows);
+      const sidInt = scheduleId && scheduleId !== "undefined" && !isNaN(parseInt(scheduleId)) ? parseInt(scheduleId) : null;
+      const q = sidInt
+        ? await db.query("SELECT * FROM public.weekly_schedule WHERE schedule_id = $1", [sidInt])
+        : await db.query("SELECT * FROM public.weekly_schedule WHERE schedule_id IS NULL");
+      const rows = q.rows;
+
+      // Group by Faculty+Subject+Class
+      const groups = {};
+      for (const r of rows) {
+        const key = `${r.faculty}|||${r.subject}|||${r.class_name}`;
+        if (!groups[key]) {
+          groups[key] = {
+            Faculty: r.faculty,
+            Subject: r.subject,
+            Class: r.class_name,
+            CreditHrs: r.lec_lab || "Lec",
+            dept: r.dept,
+            ToBeConducted: 0,
+            Missed: 0,
+            Makeup: 0,
+            Late: 0,
+            MissedDates: [],
+            MakeupDates: [],
+            LateDates: [],
+            GrandTotal: 0,
+          };
+        }
+        const g = groups[key];
+        if (!r.type || r.type === "") {
+          g.ToBeConducted++;
+        } else if (r.type === "Missed") {
+          g.Missed++;
+          if (r.entry_date) g.MissedDates.push(r.entry_date);
+        } else if (r.type === "Makeup") {
+          g.Makeup++;
+          if (r.entry_date) g.MakeupDates.push(r.entry_date);
+        } else if (r.type === "Late") {
+          g.Late++;
+          if (r.entry_date) g.LateDates.push(r.entry_date);
+        }
+      }
+
+      // Calculate GrandTotal
+      const result = {};
+      for (const [key, g] of Object.entries(groups)) {
+        g.GrandTotal = g.ToBeConducted - g.Missed + g.Makeup;
+        const dept = g.dept;
+        if (!result[dept]) result[dept] = {};
+        const subKey = `${g.Faculty}|||${g.Subject}|||${g.Class}`;
+        if (!result[dept][subKey]) result[dept][subKey] = g;
+      }
+
+      return json(res, 200, result);
     } catch (e) { return json(res, 500, { error: e.message }); }
   }
 

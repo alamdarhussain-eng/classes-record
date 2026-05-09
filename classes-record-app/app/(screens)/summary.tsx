@@ -27,12 +27,7 @@ const MON_NUM: Record<string, string> = {
 };
 
 function shortDate(d: string): string {
-  const clean = (d || "").split("T")[0];
-  const parts = clean.split("-");
-  if (parts.length === 3 && MON_NUM[parts[1]]) {
-    return `${parseInt(parts[2])}-${MON_NUM[parts[1]]}`;
-  }
-  return clean;
+  return (d || "").split("T")[0];
 }
 
 interface FlatRow extends SummaryRecord { dept: string; }

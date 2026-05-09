@@ -63,7 +63,25 @@ export async function fetchSchedule(scheduleId?: number): Promise<ScheduleRow[]>
     ? `${API_BASE}/schedule?scheduleId=${scheduleId}`
     : `${API_BASE}/schedule`;
   const res = await fetch(url);
-  return res.json();
+  const rows = await res.json();
+  if (!Array.isArray(rows)) return [];
+  return rows.map((r: any) => ({
+    id: r.id,
+    Faculty: r.faculty || r.Faculty || "",
+    Subject: r.subject || r.Subject || "",
+    Class: r.class_name || r.Class || "",
+    Dept: r.dept || r.Dept || "",
+    Day: r.day || r.Day || "",
+    Location: r.location || r.Location || "",
+    TimeStart: r.time_start || r.TimeStart || "",
+    TimeEnd: r.time_end || r.TimeEnd || "",
+    LecLab: r.lec_lab || r.LecLab || "",
+    Type: r.type || r.Type || "",
+    EntryDate: r.entry_date || r.EntryDate || "",
+    Elective: r.elective || r.Elective || "",
+    UserEmail: r.user_email || r.UserEmail || "",
+    SortKey: r.sort_key || r.SortKey || 0,
+  }));
 }
 
 export async function addScheduleEntry(data: {

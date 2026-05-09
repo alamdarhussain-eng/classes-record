@@ -1,0 +1,569 @@
+/**
+ * Combined API + static file server for Classes Record app.
+ * Handles: auth (register/login/change-password/recover),
+ *          admin routes (list/delete/password/lock/expiry),
+ *          and static Expo build serving.
+ */
+
+const http = require("http");
+const fs = require("fs");
+const path = require("path");
+const { Database } = require("node:sqlite"); // adjust if you use better-sqlite3 or sqlite3
+
+// ── If your project uses better-sqlite3, replace the DB section below ──────
+// const Database = require("better-sqlite3");
+// const db = new Database(path.resolve(__dirname, "..", "data", "app.db"));
+
+const STATIC_ROOT = path.resolve(__dirname, "..", "static-build");
+const TEMPLATE_PATH = path.resolve(__dirname, "templates", "landing-page.html");
+const basePath = (process.env.BASE_PATH || "/").replace(/\/+$/, "");
+const ADMIN_PASSWORD = "Administr@r@123";
+const ADMIN_USERNAME = "patoprincipalseecs@gmail.com";
+
+// ── MIME types ─────────────────────────────────────────────────────────────
+const MIME_TYPES = {
+  ".html": "text/html; charset=utf-8",
+  ".js":   "application/javascript; charset=utf-8",
+  ".json": "application/json; charset=utf-8",
+  ".css":  "text/css; charset=utf-8",
+  ".png":  "image/png",
+  ".jpg":  "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".gif":  "image/gif",
+  ".svg":  "image/svg+xml",
+  ".ico":  "image/x-icon",
+  ".woff": "font/woff",
+  ".woff2":"font/woff2",
+  ".ttf":  "font/ttf",
+  ".otf":  "font/otf",
+  ".map":  "application/json",
+};
+
+// ── Helpers ────────────────────────────────────────────────────────────────
+function json(res, statusCode, data) {
+  const body = JSON.stringify(data);
+  res.writeHead(statusCode, {
+    "content-type": "application/json; charset=utf-8",
+    "access-control-allow-origin": "*",
+    "content-length": Buffer.byteLength(body),
+  });
+  res.end(body);
+}
+
+function cors(res) {
+  res.setHeader("access-control-allow-origin", "*");
+  res.setHeader("access-control-allow-methods", "GET,POST,PATCH,DELETE,OPTIONS");
+  res.setHeader("access-control-allow-headers", "content-type,x-admin-password");
+}
+
+function readBody(req) {
+  return new Promise((resolve, reject) => {
+    let body = "";
+    req.on("data", (chunk) => (body += chunk));
+    req.on("end", () => {
+      try { resolve(body ? JSON.parse(body) : {}); }
+      catch { reject(new Error("Invalid JSON")); }
+    });
+    req.on("error", reject);
+  });
+}
+
+function requireAdmin(req, res) {
+  if (req.headers["x-admin-password"] !== ADMIN_PASSWORD) {
+    json(res, 401, { success: false, message: "Unauthorized" });
+    return false;
+  }
+  return true;
+}
+
+function addDays(days) {
+  const d = new Date();
+  d.setDate(d.getDate() + days);
+  return d.toISOString().split("T")[0];
+}
+
+// ── Database setup ─────────────────────────────────────────────────────────
+// NOTE: Replace this block with your actual DB initialization.
+// This is a placeholder showing the schema you need.
+// If you already have a DB object exported from elsewhere, import it instead.
+
+let db; // assign your existing db here
+
+function initDb() {
+  // Run these migrations once at startup against your existing database:
+  const migrations = [
+    `CREATE TABLE IF NOT EXISTS auth_users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      username TEXT UNIQUE NOT NULL,
+      password TEXT NOT NULL,
+      pin TEXT,
+      isLocked INTEGER DEFAULT 0,
+      registeredAt TEXT DEFAULT (datetime('now')),
+      expiryDate TEXT DEFAULT NULL
+    )`,
+    "ALTER TABLE auth_users ADD COLUMN isLocked INTEGER DEFAULT 0",
+    "ALTER TABLE auth_users ADD COLUMN pin TEXT",
+    "ALTER TABLE auth_users ADD COLUMN registeredAt TEXT DEFAULT (datetime('now'))",
+    "ALTER TABLE auth_users ADD COLUMN expiryDate TEXT DEFAULT NULL",
+  ];
+
+  for (const sql of migrations) {
+    try { db.prepare(sql).run(); } catch { /* column already exists — fine */ }
+  }
+
+  // Give existing users without expiry a 30-day trial from their registration date
+  try {
+    db.prepare(`
+      UPDATE auth_users
+      SET expiryDate = date(registeredAt, '+30 days')
+      WHERE expiryDate IS NULL AND username != ?
+    `).run(ADMIN_USERNAME);
+  } catch { /* ignore */ }
+}
+
+// ── Route table ────────────────────────────────────────────────────────────
+async function handleApi(method, pathname, req, res) {
+  const body = (method === "POST" || method === "PATCH") ? await readBody(req) : {};
+  const idMatch = pathname.match(/^\/api\/admin\/users\/(\d+)(?:\/(\w+))?$/);
+  const userId = idMatch ? parseInt(idMatch[1]) : null;
+  const subRoute = idMatch ? idMatch[2] : null; // "password" | "lock" | "expiry" | undefined
+
+  // ── CORS preflight ─────────────────────────────────────────────────────
+  if (method === "OPTIONS") { cors(res); res.writeHead(204); res.end(); return; }
+
+  cors(res);
+
+  // ════════════════════════════════════════════════════════════════════════
+  // AUTH ROUTES
+  // ════════════════════════════════════════════════════════════════════════
+
+  // POST /api/auth/register
+  if (method === "POST" && pathname === "/api/auth/register") {
+    const { username, password, pin } = body;
+    if (!username || !password)
+      return json(res, 400, { success: false, message: "Username and password required" });
+    if (password.length < 4)
+      return json(res, 400, { success: false, message: "Password must be at least 4 characters" });
+
+    const expiryDate = addDays(30);
+    try {
+      db.prepare(
+        "INSERT INTO auth_users (username, password, pin, expiryDate) VALUES (?, ?, ?, ?)"
+      ).run(username.trim(), password.trim(), pin ?? null, expiryDate);
+      return json(res, 200, { success: true, expiryDate });
+    } catch (e) {
+      if (e.message?.includes("UNIQUE"))
+        return json(res, 409, { success: false, message: "Username already taken" });
+      return json(res, 500, { success: false, message: e.message });
+    }
+  }
+
+  // POST /api/auth/login
+  if (method === "POST" && pathname === "/api/auth/login") {
+    const { username, password } = body;
+    try {
+      const user = db.prepare(
+        "SELECT * FROM auth_users WHERE username = ? AND password = ?"
+      ).get(username, password);
+
+      if (!user)
+        return json(res, 200, { success: false, message: "Invalid username or password" });
+
+      if (user.isLocked)
+        return json(res, 200, { success: false, message: "Account is locked. Contact admin." });
+
+      // Expiry check — admin never expires
+      if (user.username !== ADMIN_USERNAME && user.expiryDate) {
+        const expired = new Date(user.expiryDate) < new Date();
+        if (expired) {
+          return json(res, 200, {
+            success: false,
+            expired: true,
+            message: "Your trial has expired. Contact admin to reactivate your account.",
+          });
+        }
+      }
+
+      return json(res, 200, {
+        success: true,
+        user: user.username,
+        expiryDate: user.expiryDate ?? null,
+      });
+    } catch (e) {
+      return json(res, 500, { success: false, message: e.message });
+    }
+  }
+
+  // POST /api/auth/change-password
+  if (method === "POST" && pathname === "/api/auth/change-password") {
+    const { username, currentPassword, newPassword } = body;
+    try {
+      const user = db.prepare(
+        "SELECT * FROM auth_users WHERE username = ? AND password = ?"
+      ).get(username, currentPassword);
+      if (!user) return json(res, 200, { success: false, message: "Current password is incorrect" });
+      db.prepare("UPDATE auth_users SET password = ? WHERE username = ?").run(newPassword, username);
+      return json(res, 200, { success: true });
+    } catch (e) {
+      return json(res, 500, { success: false, message: e.message });
+    }
+  }
+
+  // POST /api/auth/recover-password
+  if (method === "POST" && pathname === "/api/auth/recover-password") {
+    const { username, pin, newPassword } = body;
+    try {
+      const user = db.prepare(
+        "SELECT * FROM auth_users WHERE username = ? AND pin = ?"
+      ).get(username, pin);
+      if (!user) return json(res, 200, { success: false, message: "Username or PIN is incorrect" });
+      db.prepare("UPDATE auth_users SET password = ? WHERE username = ?").run(newPassword, username);
+      return json(res, 200, { success: true });
+    } catch (e) {
+      return json(res, 500, { success: false, message: e.message });
+    }
+  }
+
+  // ════════════════════════════════════════════════════════════════════════
+  // ADMIN ROUTES
+  // ════════════════════════════════════════════════════════════════════════
+
+  // GET /api/admin/users
+  if (method === "GET" && pathname === "/api/admin/users") {
+    if (!requireAdmin(req, res)) return;
+    try {
+      const users = db.prepare(`
+        SELECT
+          u.id,
+          u.username,
+          u.password,
+          COALESCE(u.pin, '') AS pin,
+          COALESCE(u.isLocked, 0) AS isLocked,
+          COALESCE(u.registeredAt, datetime('now')) AS registeredAt,
+          u.expiryDate,
+          COUNT(s.id) AS scheduleCount
+        FROM auth_users u
+        LEFT JOIN user_schedules s ON s.userId = u.username
+        WHERE u.username != ?
+        GROUP BY u.id
+        ORDER BY u.registeredAt DESC
+      `).all(ADMIN_USERNAME);
+      return json(res, 200, { success: true, users });
+    } catch (e) {
+      return json(res, 500, { success: false, message: e.message });
+    }
+  }
+
+  // DELETE /api/admin/users/:id
+  if (method === "DELETE" && userId && !subRoute) {
+    if (!requireAdmin(req, res)) return;
+    try {
+      const user = db.prepare("SELECT username FROM auth_users WHERE id = ?").get(userId);
+      if (!user) return json(res, 404, { success: false, message: "User not found" });
+
+      const username = user.username;
+      const schedules = db.prepare("SELECT id FROM user_schedules WHERE userId = ?").all(username);
+
+      for (const sch of schedules) {
+        for (const tbl of [
+          "schedule_rows","attendance_records","students",
+          "exam_marks","exam_weights","finance_payments","faculty_accounts"
+        ]) {
+          try { db.prepare(`DELETE FROM ${tbl} WHERE scheduleId = ?`).run(sch.id); } catch { /* table may not exist */ }
+        }
+      }
+      db.prepare("DELETE FROM user_schedules WHERE userId = ?").run(username);
+      db.prepare("DELETE FROM auth_users WHERE id = ?").run(userId);
+
+      return json(res, 200, { success: true });
+    } catch (e) {
+      return json(res, 500, { success: false, message: e.message });
+    }
+  }
+
+  // PATCH /api/admin/users/:id/password
+  if (method === "PATCH" && userId && subRoute === "password") {
+    if (!requireAdmin(req, res)) return;
+    const { newPassword } = body;
+    if (!newPassword || newPassword.length < 4)
+      return json(res, 400, { success: false, message: "Min 4 characters" });
+    try {
+      const r = db.prepare("UPDATE auth_users SET password = ? WHERE id = ?").run(newPassword, userId);
+      if (r.changes === 0) return json(res, 404, { success: false, message: "User not found" });
+      return json(res, 200, { success: true });
+    } catch (e) {
+      return json(res, 500, { success: false, message: e.message });
+    }
+  }
+
+  // PATCH /api/admin/users/:id/lock
+  if (method === "PATCH" && userId && subRoute === "lock") {
+    if (!requireAdmin(req, res)) return;
+    const { isLocked } = body;
+    try {
+      const r = db.prepare("UPDATE auth_users SET isLocked = ? WHERE id = ?").run(isLocked ? 1 : 0, userId);
+      if (r.changes === 0) return json(res, 404, { success: false, message: "User not found" });
+      return json(res, 200, { success: true });
+    } catch (e) {
+      return json(res, 500, { success: false, message: e.message });
+    }
+  }
+
+  // PATCH /api/admin/users/:id/expiry
+  if (method === "PATCH" && userId && subRoute === "expiry") {
+    if (!requireAdmin(req, res)) return;
+    const { expiryDate } = body;
+    if (!expiryDate) return json(res, 400, { success: false, message: "expiryDate required" });
+    try {
+      const r = db.prepare(
+        "UPDATE auth_users SET expiryDate = ?, isLocked = 0 WHERE id = ?"
+      ).run(expiryDate, userId);
+      if (r.changes === 0) return json(res, 404, { success: false, message: "User not found" });
+      return json(res, 200, { success: true, expiryDate });
+    } catch (e) {
+      return json(res, 500, { success: false, message: e.message });
+    }
+  }
+
+  // Unknown API route
+
+  // ════════════════════════════════════════════════════════════════════════
+  // USER SCHEDULES ROUTES
+  // ════════════════════════════════════════════════════════════════════════
+
+  // GET /api/schedules?username=...
+  if (method === "GET" && pathname === "/api/schedules") {
+    const username = url.searchParams.get("username");
+    if (!username) return json(res, 400, { success: false, message: "username required" });
+    try {
+      db.prepare(`CREATE TABLE IF NOT EXISTS user_schedules (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        userId TEXT NOT NULL,
+        name TEXT NOT NULL,
+        startDate TEXT,
+        endDate TEXT,
+        isPublic INTEGER DEFAULT 0,
+        createdAt TEXT DEFAULT (datetime('now'))
+      )`).run();
+      const schedules = db.prepare("SELECT * FROM user_schedules WHERE userId = ? ORDER BY createdAt DESC").all(username);
+      return json(res, 200, schedules.map(s => ({ ...s, isPublic: !!s.isPublic })));
+    } catch (e) { return json(res, 500, { error: e.message }); }
+  }
+
+  // GET /api/schedules/public
+  if (method === "GET" && pathname === "/api/schedules/public") {
+    try {
+      const schedules = db.prepare("SELECT * FROM user_schedules WHERE isPublic = 1 ORDER BY createdAt DESC").all();
+      return json(res, 200, schedules.map(s => ({ ...s, isPublic: !!s.isPublic })));
+    } catch (e) { return json(res, 500, { error: e.message }); }
+  }
+
+  // POST /api/schedules
+  if (method === "POST" && pathname === "/api/schedules") {
+    const { username, name, startDate, endDate } = body;
+    if (!username || !name) return json(res, 400, { success: false, message: "username and name required" });
+    try {
+      const r = db.prepare("INSERT INTO user_schedules (userId, name, startDate, endDate) VALUES (?, ?, ?, ?)").run(username, name, startDate ?? null, endDate ?? null);
+      const schedule = db.prepare("SELECT * FROM user_schedules WHERE id = ?").get(r.lastInsertRowid);
+      return json(res, 200, { success: true, schedule: { ...schedule, isPublic: !!schedule.isPublic } });
+    } catch (e) { return json(res, 500, { error: e.message }); }
+  }
+
+  // DELETE /api/schedules/:id
+  if (method === "DELETE" && pathname.match(/^\/api\/schedules\/\d+$/)) {
+    const id = parseInt(pathname.split("/").pop());
+    try {
+      db.prepare("DELETE FROM user_schedules WHERE id = ?").run(id);
+      return json(res, 200, { success: true });
+    } catch (e) { return json(res, 500, { error: e.message }); }
+  }
+
+  // PATCH /api/schedules/:id/public
+  if (method === "PATCH" && pathname.match(/^\/api\/schedules\/\d+\/public$/)) {
+    const id = parseInt(pathname.split("/")[3]);
+    const { isPublic } = body;
+    try {
+      db.prepare("UPDATE user_schedules SET isPublic = ? WHERE id = ?").run(isPublic ? 1 : 0, id);
+      const schedule = db.prepare("SELECT * FROM user_schedules WHERE id = ?").get(id);
+      return json(res, 200, { success: true, schedule: { ...schedule, isPublic: !!schedule.isPublic } });
+    } catch (e) { return json(res, 500, { error: e.message }); }
+  }
+
+  // ════════════════════════════════════════════════════════════════════════
+  // SCHEDULE ROWS ROUTES
+  // ════════════════════════════════════════════════════════════════════════
+
+  // GET /api/schedule?scheduleId=...
+  if (method === "GET" && pathname === "/api/schedule") {
+    const scheduleId = url.searchParams.get("scheduleId");
+    try {
+      db.prepare(`CREATE TABLE IF NOT EXISTS schedule_rows (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        scheduleId INTEGER,
+        Faculty TEXT, Subject TEXT, Class TEXT, Deptt TEXT,
+        Day TEXT, Location TEXT, Time TEXT, EndTime TEXT,
+        SortKey INTEGER DEFAULT 0, LecLab TEXT, Type TEXT,
+        EntryDate TEXT, Elective TEXT DEFAULT ''
+      )`).run();
+      const rows = scheduleId
+        ? db.prepare("SELECT * FROM schedule_rows WHERE scheduleId = ? ORDER BY SortKey").all(parseInt(scheduleId))
+        : db.prepare("SELECT * FROM schedule_rows ORDER BY SortKey").all();
+      return json(res, 200, rows);
+    } catch (e) { return json(res, 500, { error: e.message }); }
+  }
+
+  // POST /api/schedule
+  if (method === "POST" && pathname === "/api/schedule") {
+    const { faculty, subject, className, dept, day, location, timeStart, timeEnd, lecLab, elective, scheduleId } = body;
+    try {
+      const r = db.prepare(`INSERT INTO schedule_rows (scheduleId, Faculty, Subject, Class, Deptt, Day, Location, Time, EndTime, LecLab, Elective)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`).run(scheduleId ?? null, faculty, subject, className, dept, day, location ?? "", timeStart, timeEnd, lecLab ?? "", elective ?? "");
+      return json(res, 200, { success: true, id: r.lastInsertRowid });
+    } catch (e) { return json(res, 500, { error: e.message }); }
+  }
+
+  // DELETE /api/schedule/:id
+  if (method === "DELETE" && pathname.match(/^\/api\/schedule\/\d+$/)) {
+    const id = parseInt(pathname.split("/").pop());
+    try {
+      db.prepare("DELETE FROM schedule_rows WHERE id = ?").run(id);
+      return json(res, 200, { success: true });
+    } catch (e) { return json(res, 500, { error: e.message }); }
+  }
+
+  // ════════════════════════════════════════════════════════════════════════
+  // ENTRIES / ATTENDANCE RECORDS
+  // ════════════════════════════════════════════════════════════════════════
+
+  // POST /api/entries
+  if (method === "POST" && pathname === "/api/entries") {
+    const { Faculty, Subject, Class, Date: date, Location, Time, EndTime, Type, User } = body;
+    try {
+      db.prepare(`CREATE TABLE IF NOT EXISTS attendance_records (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        Faculty TEXT, Subject TEXT, Class TEXT, Date TEXT,
+        Location TEXT, Time TEXT, EndTime TEXT, Type TEXT, User TEXT
+      )`).run();
+      db.prepare(`INSERT INTO attendance_records (Faculty, Subject, Class, Date, Location, Time, EndTime, Type, User)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`).run(Faculty, Subject, Class, date, Location, Time, EndTime, Type, User);
+      return json(res, 200, { success: true });
+    } catch (e) { return json(res, 500, { error: e.message }); }
+  }
+
+  // ════════════════════════════════════════════════════════════════════════
+  // HOLIDAYS
+  // ════════════════════════════════════════════════════════════════════════
+
+  // GET /api/holidays
+  if (method === "GET" && pathname === "/api/holidays") {
+    try {
+      db.prepare(`CREATE TABLE IF NOT EXISTS holidays (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, name TEXT)`).run();
+      return json(res, 200, db.prepare("SELECT * FROM holidays ORDER BY date").all());
+    } catch (e) { return json(res, 500, { error: e.message }); }
+  }
+
+  // POST /api/holidays
+  if (method === "POST" && pathname === "/api/holidays") {
+    const { date, name } = body;
+    try {
+      const r = db.prepare("INSERT INTO holidays (date, name) VALUES (?, ?)").run(date, name);
+      return json(res, 200, { success: true, id: r.lastInsertRowid });
+    } catch (e) { return json(res, 500, { error: e.message }); }
+  }
+
+  // DELETE /api/holidays/:id
+  if (method === "DELETE" && pathname.match(/^\/api\/holidays\/\d+$/)) {
+    const id = parseInt(pathname.split("/").pop());
+    try {
+      db.prepare("DELETE FROM holidays WHERE id = ?").run(id);
+      return json(res, 200, { success: true });
+    } catch (e) { return json(res, 500, { error: e.message }); }
+  }
+
+  return json(res, 404, { error: "Not found" });
+}
+
+// ── Static file helpers (unchanged from original) ──────────────────────────
+function getAppName() {
+  try {
+    const appJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, "..", "app.json"), "utf-8"));
+    return appJson.expo?.name || "App Landing Page";
+  } catch { return "App Landing Page"; }
+}
+
+function serveManifest(platform, res) {
+  const manifestPath = path.join(STATIC_ROOT, platform, "manifest.json");
+  if (!fs.existsSync(manifestPath)) {
+    res.writeHead(404, { "content-type": "application/json" });
+    res.end(JSON.stringify({ error: `Manifest not found for platform: ${platform}` }));
+    return;
+  }
+  const manifest = fs.readFileSync(manifestPath, "utf-8");
+  res.writeHead(200, {
+    "content-type": "application/json",
+    "expo-protocol-version": "1",
+    "expo-sfv-version": "0",
+  });
+  res.end(manifest);
+}
+
+function serveLandingPage(req, res, template, appName) {
+  const protocol = req.headers["x-forwarded-proto"] || "https";
+  const host = req.headers["x-forwarded-host"] || req.headers["host"];
+  const html = template
+    .replace(/BASE_URL_PLACEHOLDER/g, `${protocol}://${host}`)
+    .replace(/EXPS_URL_PLACEHOLDER/g, host)
+    .replace(/APP_NAME_PLACEHOLDER/g, appName);
+  res.writeHead(200, { "content-type": "text/html; charset=utf-8" });
+  res.end(html);
+}
+
+function serveStaticFile(urlPath, res) {
+  const safePath = path.normalize(urlPath).replace(/^(\.\.(\/|\\|$))+/, "");
+  const filePath = path.join(STATIC_ROOT, safePath);
+  if (!filePath.startsWith(STATIC_ROOT)) { res.writeHead(403); res.end("Forbidden"); return; }
+  if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) { res.writeHead(404); res.end("Not Found"); return; }
+  const contentType = MIME_TYPES[path.extname(filePath).toLowerCase()] || "application/octet-stream";
+  res.writeHead(200, { "content-type": contentType });
+  res.end(fs.readFileSync(filePath));
+}
+
+// ── Server ─────────────────────────────────────────────────────────────────
+const landingPageTemplate = fs.readFileSync(TEMPLATE_PATH, "utf-8");
+const appName = getAppName();
+
+// NOTE: Call initDb() after you have set up your `db` variable above.
+// initDb();
+
+const server = http.createServer(async (req, res) => {
+  const url = new URL(req.url || "/", `http://${req.headers.host}`);
+  let pathname = url.pathname;
+
+  if (basePath && pathname.startsWith(basePath)) {
+    pathname = pathname.slice(basePath.length) || "/";
+  }
+
+  // API routes
+  if (pathname.startsWith("/api/")) {
+    try {
+      await handleApi(req.method, pathname, req, res);
+    } catch (e) {
+      json(res, 500, { error: String(e) });
+    }
+    return;
+  }
+
+  // Expo manifest
+  if (pathname === "/" || pathname === "/manifest") {
+    const platform = req.headers["expo-platform"];
+    if (platform === "ios" || platform === "android") return serveManifest(platform, res);
+    if (pathname === "/") return serveLandingPage(req, res, landingPageTemplate, appName);
+  }
+
+  serveStaticFile(pathname, res);
+});
+
+const port = parseInt(process.env.PORT || "3000", 10);
+server.listen(port, "0.0.0.0", () => {
+  console.log(`Server running on port ${port}`);
+});

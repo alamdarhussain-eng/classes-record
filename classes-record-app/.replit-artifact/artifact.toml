@@ -1,0 +1,27 @@
+kind = "mobile"
+previewPath = "/classes-record/"
+title = "Classes Record"
+version = "1.0.0"
+id = "artifacts/classes-record"
+router = "expo-domain"
+
+[[integratedSkills]]
+name = "expo"
+version = "1.0.0"
+
+[[services]]
+ensurePreviewReachable = "/status"
+name = "expo"
+paths = [ "/classes-record/" ]
+localPort = 25401
+
+[services.development]
+run = "pnpm --filter @workspace/classes-record run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/classes-record", "run", "build" ]
+run = [ "pnpm", "--filter", "@workspace/classes-record", "run", "serve" ]
+
+[services.env]
+PORT = "25401"
+BASE_PATH = "/classes-record/"

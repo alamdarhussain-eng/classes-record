@@ -905,6 +905,77 @@ async function handleApi(method, pathname, req, res) {
     return json(res, 200, []);
   }
 
+
+  // POST /api/meeting
+  if (method === "POST" && pathname === "/api/meeting") {
+    const { date, start, end, faculty } = body;
+    try {
+      const q = await db.query("SELECT * FROM public.weekly_schedule WHERE schedule_id IS NULL");
+      const rows = q.rows;
+      
+      // Parse time to minutes for comparison
+      function timeToMin(t) {
+        if (!t) return 0;
+        const [time, period] = t.split(' ');
+        let [h, m] = time.split(':').map(Number);
+        if (period === 'PM' && h !== 12) h += 12;
+        if (period === 'AM' && h === 12) h = 0;
+        return h * 60 + m;
+      }
+      
+      const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+      const dayName = dayNames[new Date(date + 'T00:00:00').getDay()];
+      const startMin = timeToMin(start);
+      const endMin = timeToMin(end);
+      
+      // Filter rows for this day
+      const dayRows = rows.filter(r => r.day === dayName && !r.type);
+      
+      // Find busy faculty in this time slot
+      const busyFaculty = {};
+      const allFaculty = [...new Set(rows.map(r => r.faculty))].sort();
+      
+      for (const r of dayRows) {
+        const rStart = timeToMin(r.time_start);
+        const rEnd = timeToMin(r.time_end);
+        // Check overlap
+        if (rStart < endMin && rEnd > startMin) {
+          if (!busyFaculty[r.faculty]) busyFaculty[r.faculty] = [];
+          busyFaculty[r.faculty].push({
+            subject: r.subject,
+            cls: r.class_name,
+            loc: r.location,
+            start: rStart,
+            end: rEnd,
+            type: r.lec_lab || "Lec"
+          });
+        }
+      }
+      
+      // Filter by requested faculty if provided
+      const targetFaculty = faculty && faculty.length > 0 ? faculty : allFaculty;
+      
+      const free = [];
+      const busy = [];
+      const summary = {};
+      
+      for (const f of targetFaculty) {
+        if (busyFaculty[f]) {
+          busy.push({ name: f, dept: rows.find(r => r.faculty === f)?.dept || '', records: busyFaculty[f] });
+          summary[f] = { free: 0, busy: 1 };
+        } else {
+          free.push({ name: f, dept: rows.find(r => r.faculty === f)?.dept || '' });
+          summary[f] = { free: 1, busy: 0 };
+        }
+      }
+      
+      return json(res, 200, {
+        date, dayName, start, end,
+        free, busy, summary
+      });
+    } catch (e) { return json(res, 500, { error: e.message }); }
+  }
+
   // Unknown API route
   return json(res, 404, { error: "Not found" });
 }

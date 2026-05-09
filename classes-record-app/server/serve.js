@@ -1,6 +1,7 @@
 /**
  * Combined API + static file server for Classes Record app.
  * PostgreSQL version - matches backup.sql schema exactly.
+ * Updated: May 9, 2026 - Fixed sample download, date formatting, field mapping, sequences
  */
 
 const http = require("http");
@@ -16,7 +17,7 @@ const basePath = (process.env.BASE_PATH || "/").replace(/\/+$/, "");
 const ADMIN_PASSWORD = "Administr@r@123";
 const ADMIN_USERNAME = "patoprincipalseecs@gmail.com";
 
-// ── MIME types ─────────────────────────────────────────────────────────────
+// MIME types
 const MIME_TYPES = {
   ".html": "text/html; charset=utf-8",
   ".js":   "application/javascript; charset=utf-8",
@@ -33,9 +34,10 @@ const MIME_TYPES = {
   ".ttf":  "font/ttf",
   ".otf":  "font/otf",
   ".map":  "application/json",
+  ".csv":  "text/csv; charset=utf-8",
 };
 
-// ── Helpers ────────────────────────────────────────────────────────────────
+// Helpers
 function json(res, statusCode, data) {
   const body = JSON.stringify(data);
   res.writeHead(statusCode, {
@@ -49,7 +51,7 @@ function json(res, statusCode, data) {
 function cors(res) {
   res.setHeader("access-control-allow-origin", "*");
   res.setHeader("access-control-allow-methods", "GET,POST,PATCH,DELETE,OPTIONS");
-  res.setHeader("access-control-allow-headers", "content-type,x-admin-password");
+  res.setHeader("access-control-allow-headers", "content-type,x-admin-password,x-requested-with");
 }
 
 function readBody(req) {
@@ -72,38 +74,52 @@ function requireAdmin(req, res) {
   return true;
 }
 
-function addDays(days) {
-  const d = new Date();
-  d.setDate(d.getDate() + days);
-  return d.toISOString().split("T")[0];
+function formatDate(dateVal) {
+  if (!dateVal) return "";
+  if (typeof dateVal === "string") return dateVal.split("T")[0];
+  try { return dateVal.toISOString().split("T")[0]; }
+  catch { return ""; }
 }
 
-// ── Route handler ──────────────────────────────────────────────────────────
+function timeToHour(t) {
+  if (!t) return 9;
+  const m = t.match(/(\d+):(\d+)\s*(AM|PM)/i);
+  if (!m) return 9;
+  let h = parseInt(m[1]);
+  const ap = m[3].toUpperCase();
+  if (ap === 'PM' && h !== 12) h += 12;
+  if (ap === 'AM' && h === 12) h = 0;
+  return h;
+}
+
+function hourLabel(h) {
+  if (h < 0 || h > 23) return '09:00 AM';
+  const t12 = (h % 12) || 12;
+  const ap = h >= 12 ? 'PM' : 'AM';
+  return (t12 < 10 ? '0' : '') + t12 + ':00 ' + ap;
+}
+
+// Route handler
 async function handleApi(method, pathname, req, res) {
-  const reqUrl = new URL(req.url, `http://${req.headers.host}`);
+  const reqUrl = new URL(req.url, 'http://' + (req.headers.host || 'localhost'));
   const body = (method === "POST" || method === "PATCH") ? await readBody(req) : {};
 
   if (method === "OPTIONS") { cors(res); res.writeHead(204); res.end(); return; }
   cors(res);
 
-  // ── AUTH ──────────────────────────────────────────────────────────────────
+  // ========== AUTH ROUTES ==========
 
-  // POST /api/auth/register
   if (method === "POST" && pathname === "/api/auth/register") {
-    // Fix sequence if needed
     await db.query("SELECT setval('public.users_id_seq', COALESCE((SELECT MAX(id) FROM public.users), 0) + 1, false)").catch(() => {});
     const { username, password, pin } = body;
     if (!username || !password) return json(res, 400, { success: false, message: "Username and password required" });
     if (password.length < 4) return json(res, 400, { success: false, message: "Password must be at least 4 characters" });
     try {
-      const expiry = new Date();
-      expiry.setDate(expiry.getDate() + 30);
-      const expiryDate = expiry.toISOString().split("T")[0];
       await db.query(
         "INSERT INTO public.users (id, username, password, pin) VALUES (nextval('public.users_id_seq'), $1, $2, $3) RETURNING id",
         [username.trim(), password.trim(), pin ?? ""]
       );
-      return json(res, 200, { success: true, expiryDate });
+      return json(res, 200, { success: true });
     } catch (e) {
       if (e.message.includes("unique") || e.message.includes("duplicate")) {
         return json(res, 409, { success: false, message: "Username already taken" });
@@ -112,87 +128,47 @@ async function handleApi(method, pathname, req, res) {
     }
   }
 
-  // POST /api/auth/login
   if (method === "POST" && pathname === "/api/auth/login") {
     const { username, password } = body;
     try {
-      const r = await db.query(
-        "SELECT * FROM public.users WHERE username = $1 AND password = $2",
-        [username, password]
-      );
+      const r = await db.query("SELECT * FROM public.users WHERE username = $1 AND password = $2", [username, password]);
       if (!r.rows.length) return json(res, 200, { success: false, message: "Invalid username or password" });
-      const user = r.rows[0];
-      return json(res, 200, { success: true, user: user.username });
-    } catch (e) {
-      return json(res, 500, { success: false, message: e.message });
-    }
+      return json(res, 200, { success: true, user: r.rows[0].username });
+    } catch (e) { return json(res, 500, { success: false, message: e.message }); }
   }
 
-  // POST /api/auth/change-password
   if (method === "POST" && pathname === "/api/auth/change-password") {
     const { username, currentPassword, newPassword } = body;
     try {
-      const r = await db.query(
-        "SELECT * FROM public.users WHERE username = $1 AND password = $2",
-        [username, currentPassword]
-      );
+      const r = await db.query("SELECT * FROM public.users WHERE username = $1 AND password = $2", [username, currentPassword]);
       if (!r.rows.length) return json(res, 200, { success: false, message: "Current password is incorrect" });
       await db.query("UPDATE public.users SET password = $1 WHERE username = $2", [newPassword, username]);
       return json(res, 200, { success: true });
-    } catch (e) {
-      return json(res, 500, { success: false, message: e.message });
-    }
+    } catch (e) { return json(res, 500, { success: false, message: e.message }); }
   }
 
-  // POST /api/auth/recover-password
   if (method === "POST" && pathname === "/api/auth/recover-password") {
     const { username, pin, newPassword } = body;
     try {
-      const r = await db.query(
-        "SELECT * FROM public.users WHERE username = $1 AND pin = $2",
-        [username, pin]
-      );
+      const r = await db.query("SELECT * FROM public.users WHERE username = $1 AND pin = $2", [username, pin]);
       if (!r.rows.length) return json(res, 200, { success: false, message: "Username or PIN is incorrect" });
       await db.query("UPDATE public.users SET password = $1 WHERE username = $2", [newPassword, username]);
       return json(res, 200, { success: true });
-    } catch (e) {
-      return json(res, 500, { success: false, message: e.message });
-    }
+    } catch (e) { return json(res, 500, { success: false, message: e.message }); }
   }
 
-  // ── ADMIN ─────────────────────────────────────────────────────────────────
-
-  // GET /api/admin/users
   if (method === "GET" && pathname === "/api/admin/users") {
     if (!requireAdmin(req, res)) return;
     try {
-      const r = await db.query(
-        "SELECT id, username, password, pin FROM public.users WHERE username != $1 ORDER BY id DESC",
-        [ADMIN_USERNAME]
-      );
+      const r = await db.query("SELECT id, username, password, pin FROM public.users WHERE username != $1 ORDER BY id DESC", [ADMIN_USERNAME]);
       return json(res, 200, { success: true, users: r.rows.map(u => ({
         ...u, isLocked: false, registeredAt: new Date().toISOString(), expiryDate: null, scheduleCount: 0
       }))});
-    } catch (e) {
-      return json(res, 500, { success: false, message: e.message });
-    }
+    } catch (e) { return json(res, 500, { success: false, message: e.message }); }
   }
 
-  // DELETE /api/admin/users/:id
-  if (method === "DELETE" && pathname.match(/^\/api\/admin\/users\/\d+$/)) {
-    if (!requireAdmin(req, res)) return;
-    const id = parseInt(pathname.split("/").pop());
-    try {
-      await db.query("DELETE FROM public.users WHERE id = $1", [id]);
-      return json(res, 200, { success: true });
-    } catch (e) {
-      return json(res, 500, { success: false, message: e.message });
-    }
-  }
+  // ========== SCHEDULES ROUTES ==========
 
-  // ── USER SCHEDULES ────────────────────────────────────────────────────────
-
-  // GET /api/schedules/public
   if (method === "GET" && pathname === "/api/schedules/public") {
     try {
       const r = await db.query("SELECT * FROM public.schedules WHERE is_public = true ORDER BY created_at DESC");
@@ -204,15 +180,11 @@ async function handleApi(method, pathname, req, res) {
     } catch (e) { return json(res, 500, { error: e.message }); }
   }
 
-  // GET /api/schedules?username=...
   if (method === "GET" && pathname === "/api/schedules") {
     const username = reqUrl.searchParams.get("username");
     if (!username) return json(res, 400, { success: false, message: "username required" });
     try {
-      const r = await db.query(
-        "SELECT * FROM public.schedules WHERE user_id = $1 ORDER BY created_at DESC",
-        [username]
-      );
+      const r = await db.query("SELECT * FROM public.schedules WHERE user_id = $1 ORDER BY created_at DESC", [username]);
       return json(res, 200, r.rows.map(s => ({
         id: s.id, userId: s.user_id, name: s.name,
         startDate: s.start_date, endDate: s.end_date,
@@ -221,7 +193,6 @@ async function handleApi(method, pathname, req, res) {
     } catch (e) { return json(res, 500, { error: e.message }); }
   }
 
-  // POST /api/schedules
   if (method === "POST" && pathname === "/api/schedules") {
     const { username, name, startDate, endDate } = body;
     if (!username || !name) return json(res, 400, { success: false, message: "username and name required" });
@@ -239,36 +210,26 @@ async function handleApi(method, pathname, req, res) {
     } catch (e) { return json(res, 500, { error: e.message }); }
   }
 
-  // DELETE /api/schedules/:id
-  if (method === "DELETE" && pathname.match(/^\/api\/schedules\/\d+$/)) {
-    const id = parseInt(pathname.split("/").pop());
+  if (method === "PATCH" && pathname.startsWith("/api/schedules/") && pathname.endsWith("/toggle-public")) {
+    const id = pathname.split("/")[3];
     try {
+      const r = await db.query("UPDATE public.schedules SET is_public = NOT is_public WHERE id = $1 RETURNING *", [id]);
+      if (!r.rows.length) return json(res, 404, { success: false, message: "Schedule not found" });
+      return json(res, 200, { success: true, isPublic: r.rows[0].is_public });
+    } catch (e) { return json(res, 500, { error: e.message }); }
+  }
+
+  if (method === "DELETE" && pathname.startsWith("/api/schedules/")) {
+    const id = pathname.split("/")[3];
+    try {
+      await db.query("DELETE FROM public.weekly_schedule WHERE schedule_id = $1", [id]);
       await db.query("DELETE FROM public.schedules WHERE id = $1", [id]);
       return json(res, 200, { success: true });
     } catch (e) { return json(res, 500, { error: e.message }); }
   }
 
-  // PATCH /api/schedules/:id/public
-  if (method === "PATCH" && pathname.match(/^\/api\/schedules\/\d+\/public$/)) {
-    const id = parseInt(pathname.split("/")[3]);
-    const { isPublic } = body;
-    try {
-      const r = await db.query(
-        "UPDATE public.schedules SET is_public = $1 WHERE id = $2 RETURNING *",
-        [isPublic, id]
-      );
-      const s = r.rows[0];
-      return json(res, 200, { success: true, schedule: {
-        id: s.id, userId: s.user_id, name: s.name,
-        startDate: s.start_date, endDate: s.end_date,
-        isPublic: s.is_public, createdAt: s.created_at
-      }});
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
+  // ========== WEEKLY SCHEDULE ROUTE ==========
 
-  // ── WEEKLY SCHEDULE ───────────────────────────────────────────────────────
-
-  // GET /api/schedule?scheduleId=...
   if (method === "GET" && pathname === "/api/schedule") {
     const scheduleId = reqUrl.searchParams.get("scheduleId");
     try {
@@ -277,81 +238,26 @@ async function handleApi(method, pathname, req, res) {
         ? await db.query("SELECT * FROM public.weekly_schedule WHERE schedule_id = $1 ORDER BY sort_key", [sidInt])
         : await db.query("SELECT * FROM public.weekly_schedule WHERE schedule_id IS NULL ORDER BY sort_key");
       return json(res, 200, r.rows.map(row => ({
-        id: row.id, Faculty: row.faculty, Subject: row.subject,
-        Class: row.class_name, Deptt: row.dept, Day: row.day,
-        Location: row.location, Time: row.time_start, EndTime: row.time_end,
-        SortKey: row.sort_key, LecLab: row.lec_lab, Type: row.type,
-        EntryDate: row.entry_date, Elective: row.elective ?? ""
+        // Capitalized (what UI components expect)
+        Faculty: row.faculty || "", Subject: row.subject || "", Class: row.class_name || "",
+        Deptt: row.dept || "", Day: row.day || "", Location: row.location || "",
+        Time: row.time_start || "", EndTime: row.time_end || "",
+        SortKey: row.sort_key || 0, LecLab: row.lec_lab || "", Type: row.type || "",
+        EntryDate: formatDate(row.entry_date), Elective: row.elective || "",
+        UserEmail: row.user_email || "", ScheduleId: row.schedule_id,
+        // Lowercase (for useApi.ts compatibility)
+        id: row.id, faculty: row.faculty || "", subject: row.subject || "",
+        class_name: row.class_name || "", dept: row.dept || "", day: row.day || "",
+        location: row.location || "", time_start: row.time_start || "", time_end: row.time_end || "",
+        lec_lab: row.lec_lab || "", type: row.type || "", entry_date: formatDate(row.entry_date),
+        elective: row.elective || "", user_email: row.user_email || "", sort_key: row.sort_key || 0,
+        schedule_id: row.schedule_id
       })));
     } catch (e) { return json(res, 500, { error: e.message }); }
   }
 
-  // POST /api/schedule
-  if (method === "POST" && pathname === "/api/schedule") {
-    const { faculty, subject, className, dept, day, location, timeStart, timeEnd, lecLab, elective, scheduleId } = body;
-    try {
-      const r = await db.query(
-        `INSERT INTO public.weekly_schedule (schedule_id, faculty, subject, class_name, dept, day, location, time_start, time_end, lec_lab, elective)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING id`,
-        [scheduleId ?? null, faculty, subject, className, dept, day, location ?? "", timeStart, timeEnd, lecLab ?? "", elective ?? ""]
-      );
-      return json(res, 200, { success: true, id: r.rows[0].id });
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
+  // ========== SUMMARY ROUTE ==========
 
-  // DELETE /api/schedule/:id
-  if (method === "DELETE" && pathname.match(/^\/api\/schedule\/\d+$/)) {
-    const id = parseInt(pathname.split("/").pop());
-    try {
-      await db.query("DELETE FROM public.weekly_schedule WHERE id = $1", [id]);
-      return json(res, 200, { success: true });
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  // GET /api/options
-  if (method === "GET" && pathname === "/api/options") {
-    const scheduleId = reqUrl.searchParams.get("scheduleId");
-    try {
-      const sidInt = scheduleId && scheduleId !== "undefined" && !isNaN(parseInt(scheduleId)) ? parseInt(scheduleId) : null;
-      const q = sidInt
-        ? await db.query("SELECT * FROM public.weekly_schedule WHERE schedule_id = $1", [sidInt])
-        : await db.query("SELECT * FROM public.weekly_schedule");
-      const rows = q.rows;
-      const faculty = [...new Set(rows.map(r => r.faculty))].sort();
-      const subjects = [...new Set(rows.map(r => r.subject))].sort();
-      const classes = [...new Set(rows.map(r => r.class_name))].sort();
-      const depts = [...new Set(rows.map(r => r.dept))].sort();
-      const locations = [...new Set(rows.map(r => r.location).filter(Boolean))].sort();
-      const facSubjects = {};
-      const facSubClasses = {};
-      const classInfo = {};
-      for (const r of rows) {
-        if (!facSubjects[r.faculty]) facSubjects[r.faculty] = new Set();
-        facSubjects[r.faculty].add(r.subject);
-        const key = `${r.faculty}|${r.subject}`;
-        if (!facSubClasses[key]) facSubClasses[key] = new Set();
-        facSubClasses[key].add(r.class_name);
-        if (!classInfo[r.class_name]) classInfo[r.class_name] = { dept: r.dept, locations: new Set() };
-        if (r.location) classInfo[r.class_name].locations.add(r.location);
-      }
-      return json(res, 200, {
-        faculty, subjects, classes, depts, locations,
-        facSubjects: Object.fromEntries(Object.entries(facSubjects).map(([k,v]) => [k, [...v]])),
-        facSubClasses: Object.fromEntries(Object.entries(facSubClasses).map(([k,v]) => [k, [...v]])),
-        classInfo: Object.fromEntries(Object.entries(classInfo).map(([k,v]) => [k, { dept: v.dept, locations: [...v.locations] }]))
-      });
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  // GET /api/faculty
-  if (method === "GET" && pathname === "/api/faculty") {
-    try {
-      const r = await db.query("SELECT DISTINCT faculty FROM public.weekly_schedule ORDER BY faculty");
-      return json(res, 200, r.rows.map(r => r.faculty));
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  // GET /api/summary
   if (method === "GET" && pathname === "/api/summary") {
     const scheduleId = reqUrl.searchParams.get("scheduleId");
     const start = reqUrl.searchParams.get("start");
@@ -365,8 +271,7 @@ async function handleApi(method, pathname, req, res) {
 
       const filterStart = start ? new Date(start + "T00:00:00") : new Date("2026-01-19T00:00:00");
       const filterEnd = end ? new Date(end + "T23:59:59") : new Date();
-      filterStart.setHours(0,0,0,0);
-      filterEnd.setHours(23,59,59,999);
+      filterStart.setHours(0,0,0,0); filterEnd.setHours(23,59,59,999);
 
       const DAY_NAMES = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
       function countWeekday(dayName) {
@@ -383,7 +288,6 @@ async function handleApi(method, pathname, req, res) {
         return m ? m[1] : cls;
       }
 
-      // Build unique weekly slot map from regular (no type) rows
       const map = {};
       for (const r of rows) {
         if (r.type && r.type.trim() !== "") continue;
@@ -408,24 +312,28 @@ async function handleApi(method, pathname, req, res) {
         if (item.clsSections.size > 0) displayClass = item.Class + [...item.clsSections].sort().join("");
         if (!result[item.dept]) result[item.dept] = {};
         const subKey = item.Faculty+"|||"+item.Subject+"|||"+item.Class;
-        result[item.dept][subKey] = { Faculty:item.Faculty, Subject:item.Subject, Class:displayClass, CreditHrs:item.CreditHrs, ToBeConducted:tbc, Missed:0, Makeup:0, Late:0, MissedDates:[], MakeupDates:[], LateDates:[], GrandTotal:0, _ms:new Set(), _mk:new Set(), _lt:new Set() };
+        result[item.dept][subKey] = {
+          Faculty:item.Faculty, Subject:item.Subject, Class:displayClass,
+          CreditHrs:item.CreditHrs, ToBeConducted:tbc,
+          Missed:0, Makeup:0, Late:0,
+          MissedDates:[], MakeupDates:[], LateDates:[],
+          GrandTotal:0, _ms:new Set(), _mk:new Set(), _lt:new Set()
+        };
       }
 
-      // Count entries within date range
       const labBuckets = {};
       for (const r of rows) {
         if (!r.type || r.type.trim()==="") continue;
         if (!r.entry_date) continue;
-        const edRaw = r.entry_date_str || (r.entry_date ? r.entry_date.toString().split("T")[0] : "");
+        const edRaw = r.entry_date_str || formatDate(r.entry_date);
         const ed = edRaw ? new Date(edRaw+"T00:00:00") : null;
-        if (!ed) continue;
-        if (ed < filterStart || ed > filterEnd) continue;
+        if (!ed || ed < filterStart || ed > filterEnd) continue;
         const isElective = (r.elective||"").toLowerCase()==="elective";
         const clsBase = normalizeClass(r.class_name, isElective).toUpperCase();
         const subKey = r.faculty+"|||"+r.subject+"|||"+clsBase;
         const rec = result[r.dept] && result[r.dept][subKey];
         if (!rec) continue;
-        const dtStr = r.entry_date_str || (r.entry_date ? r.entry_date.toString().split("T")[0] : "");
+        const dtStr = r.entry_date_str || formatDate(r.entry_date);
         const typeLow = (r.type||"").toLowerCase();
         const isLab = (r.lec_lab||"").toLowerCase().includes("lab")||(r.lec_lab||"").toLowerCase().includes("prac");
         if (isLab) {
@@ -460,6 +368,7 @@ async function handleApi(method, pathname, req, res) {
       for (const dept of Object.keys(result)) {
         for (const rec of Object.values(result[dept])) {
           rec.GrandTotal = rec.ToBeConducted - rec.Missed + rec.Makeup + rec.Late;
+          rec.MissedDates.sort(); rec.MakeupDates.sort(); rec.LateDates.sort();
           delete rec._ms; delete rec._mk; delete rec._lt;
         }
       }
@@ -467,710 +376,191 @@ async function handleApi(method, pathname, req, res) {
     } catch (e) { return json(res, 500, { error: e.message }); }
   }
 
+  // ========== ENTRIES ROUTE ==========
 
-  // POST /api/entries
   if (method === "POST" && pathname === "/api/entries") {
     const { Faculty, Subject, Class, Date: date, Location, Time, EndTime, Type, User, scheduleId } = body;
+    if (!Faculty || !Subject || !Class || !date || !Type) {
+      return json(res, 400, { success: false, message: "Missing required fields" });
+    }
     try {
-      // Find reference row to get dept and lec_lab
       const ref = await db.query(
-        `SELECT dept, lec_lab, day FROM public.weekly_schedule
-         WHERE faculty = $1 AND subject = $2 AND class_name = $3
-         AND (type IS NULL OR type = '')
-         AND (schedule_id = $4 OR schedule_id IS NULL) LIMIT 1`,
-        [Faculty, Subject, Class, scheduleId ?? null]
+        "SELECT dept, lec_lab FROM public.weekly_schedule WHERE faculty = $1 AND subject = $2 AND class_name = $3 AND (type IS NULL OR type = '') LIMIT 1",
+        [Faculty, Subject, Class]
       );
       const dept = ref.rows[0]?.dept || '';
       const lecLab = ref.rows[0]?.lec_lab || 'Lec';
-
-      // Calculate day from date
       const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
       const dayName = dayNames[new Date(date + 'T00:00:00').getDay()];
-
-      // Parse hours from Time and EndTime
-      function timeToHour(t) {
-        if (!t) return 9;
-        const m = t.match(/(\d+):(\d+)\s*(AM|PM)/i);
-        if (!m) return 9;
-        let h = parseInt(m[1]);
-        const ap = m[3].toUpperCase();
-        if (ap === 'PM' && h !== 12) h += 12;
-        if (ap === 'AM' && h === 12) h = 0;
-        return h;
-      }
-      function label(h) {
-        const t12 = (h % 12) || 12;
-        const ap = h >= 12 ? 'PM' : 'AM';
-        return (t12 < 10 ? '0' : '') + t12 + ':00 ' + ap;
-      }
-
       const startH = timeToHour(Time);
       const endH = timeToHour(EndTime);
+      const actualEndH = endH > startH ? endH : startH + 1;
 
-      // Insert one row per hour slot
-      for (let h = startH; h < endH; h++) {
+      for (let h = startH; h < actualEndH; h++) {
         await db.query(
-          `INSERT INTO public.weekly_schedule
-           (faculty, subject, class_name, dept, day, location, time_start, time_end, lec_lab, type, entry_date, user_email, schedule_id)
-           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`,
-          [Faculty, Subject, Class, dept, dayName, Location || '',
-           label(h), label(h+1), lecLab, Type, date, User || '', scheduleId ?? null]
+          "INSERT INTO public.weekly_schedule (faculty, subject, class_name, dept, day, location, time_start, time_end, lec_lab, type, entry_date, user_email, schedule_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",
+          [Faculty, Subject, Class, dept, dayName, Location || '', hourLabel(h), hourLabel(h+1), lecLab, Type, date, User || '', scheduleId ?? null]
         );
       }
-      return json(res, 200, { success: true });
+      return json(res, 200, { success: true, message: 'Saved ' + (actualEndH - startH) + ' hour(s) as ' + Type });
     } catch (e) { return json(res, 500, { error: e.message }); }
   }
 
-  // ── HOLIDAYS ──────────────────────────────────────────────────────────────
+  // ========== HOLIDAYS ROUTES ==========
 
   if (method === "GET" && pathname === "/api/holidays") {
     try {
-      const r = await db.query("SELECT id, date::text, trim(both '\r\n' from name) as name FROM public.holidays ORDER BY date");
+      const r = await db.query("SELECT id, date::text as date, trim(both '\r\n' from name) as name FROM public.holidays ORDER BY date");
       return json(res, 200, r.rows);
     } catch (e) { return json(res, 500, { error: e.message }); }
   }
 
   if (method === "POST" && pathname === "/api/holidays") {
     const { date, name } = body;
+    if (!date || !name) return json(res, 400, { success: false, message: "date and name required" });
     try {
-      const r = await db.query("INSERT INTO public.holidays (id, date, name) VALUES (nextval('public.holidays_id_seq'), $1, $2) RETURNING *", [date, name]);
-      return json(res, 200, { success: true, ...r.rows[0] });
+      const r = await db.query("INSERT INTO public.holidays (id, date, name) VALUES (nextval('public.holidays_id_seq'), $1, trim($2)) RETURNING id, date::text as date, name", [date, name]);
+      return json(res, 200, { success: true, holiday: r.rows[0] });
     } catch (e) { return json(res, 500, { error: e.message }); }
   }
 
-  if (method === "DELETE" && pathname.match(/^\/api\/holidays\/\d+$/)) {
-    const id = parseInt(pathname.split("/").pop());
+  if (method === "DELETE" && pathname === "/api/holidays") {
+    const id = reqUrl.searchParams.get("id");
+    if (!id) return json(res, 400, { success: false, message: "id required" });
     try {
       await db.query("DELETE FROM public.holidays WHERE id = $1", [id]);
       return json(res, 200, { success: true });
     } catch (e) { return json(res, 500, { error: e.message }); }
   }
 
-  // ── STUDENTS ──────────────────────────────────────────────────────────────
+  // ========== IMPORT / SAMPLE ROUTES ==========
 
-  if (method === "GET" && pathname === "/api/attendance/students") {
-    const scheduleId = reqUrl.searchParams.get("scheduleId");
-    const className = reqUrl.searchParams.get("className");
+  if (method === "POST" && pathname === "/api/import/schedule") {
+    const { rows, scheduleId } = body;
+    if (!rows || !Array.isArray(rows) || rows.length === 0) return json(res, 400, { success: false, message: "No rows to import" });
     try {
-      const r = await db.query(
-        "SELECT * FROM public.students WHERE schedule_id = $1 AND class_name = $2 ORDER BY roll_no",
-        [parseInt(scheduleId), className]
-      );
-      return json(res, 200, r.rows.map(s => ({
-        id: s.id, scheduleId: s.schedule_id, className: s.class_name,
-        rollNo: s.roll_no, name: s.name, email: s.email, createdAt: s.created_at
-      })));
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  if (method === "POST" && pathname === "/api/attendance/students") {
-    const { scheduleId, className, rollNo, name, email } = body;
-    try {
-      const r = await db.query(
-        "INSERT INTO public.students (schedule_id, class_name, roll_no, name, email) VALUES ($1,$2,$3,$4,$5) RETURNING *",
-        [scheduleId, className, rollNo, name, email ?? ""]
-      );
-      const s = r.rows[0];
-      return json(res, 200, { success: true, student: {
-        id: s.id, scheduleId: s.schedule_id, className: s.class_name,
-        rollNo: s.roll_no, name: s.name, email: s.email, createdAt: s.created_at
-      }});
-    } catch (e) {
-      if (e.message.includes("unique") || e.message.includes("duplicate"))
-        return json(res, 409, { success: false, error: "Student already exists" });
-      return json(res, 500, { error: e.message });
-    }
-  }
-
-  if (method === "DELETE" && pathname.match(/^\/api\/attendance\/students\/\d+$/)) {
-    const id = parseInt(pathname.split("/").pop());
-    try {
-      await db.query("DELETE FROM public.students WHERE id = $1", [id]);
-      return json(res, 200, { success: true });
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  // GET /api/attendance/students/bulk
-  if (method === "POST" && pathname.includes("/api/attendance/students/bulk")) {
-    return json(res, 200, { success: true, inserted: 0, skipped: 0 });
-  }
-
-  // GET /api/attendance/students/emails
-  if (method === "GET" && pathname === "/api/attendance/students/emails") {
-    const username = reqUrl.searchParams.get("username");
-    const className = reqUrl.searchParams.get("className");
-    try {
-      const r = await db.query(
-        `SELECT s.roll_no, s.name, s.email FROM public.students s
-         JOIN public.schedules sc ON sc.id = s.schedule_id
-         WHERE sc.user_id = $1 AND s.class_name = $2`,
-        [username, className]
-      );
-      return json(res, 200, r.rows.map(s => ({ rollNo: s.roll_no, name: s.name, email: s.email })));
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  // ── ATTENDANCE ────────────────────────────────────────────────────────────
-
-  if (method === "GET" && pathname === "/api/attendance") {
-    const scheduleId = reqUrl.searchParams.get("scheduleId");
-    const className = reqUrl.searchParams.get("className");
-    const date = reqUrl.searchParams.get("date");
-    try {
-      const r = await db.query(
-        "SELECT roll_no, status FROM public.attendance WHERE schedule_id=$1 AND class_name=$2 AND date=$3",
-        [parseInt(scheduleId), className, date]
-      );
-      return json(res, 200, r.rows.map(a => ({ rollNo: a.roll_no, status: a.status })));
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  if (method === "POST" && pathname === "/api/attendance/mark") {
-    const { scheduleId, className, date, sessionTime, records } = body;
-    try {
-      for (const rec of records) {
-        await db.query(
-          `INSERT INTO public.attendance (schedule_id, class_name, date, roll_no, status, session_time)
-           VALUES ($1,$2,$3,$4,$5,$6)
-           ON CONFLICT (schedule_id, class_name, date, session_time, roll_no)
-           DO UPDATE SET status = $5`,
-          [scheduleId, className, date, rec.rollNo, rec.status, sessionTime ?? ""]
-        );
-      }
-      return json(res, 200, { success: true });
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  if (method === "GET" && pathname === "/api/attendance/roster") {
-    const scheduleId = reqUrl.searchParams.get("scheduleId");
-    const className = reqUrl.searchParams.get("className");
-    try {
-      const [studentsR, attendanceR] = await Promise.all([
-        db.query("SELECT * FROM public.students WHERE schedule_id=$1 AND class_name=$2 ORDER BY roll_no", [parseInt(scheduleId), className]),
-        db.query("SELECT * FROM public.attendance WHERE schedule_id=$1 AND class_name=$2 ORDER BY date", [parseInt(scheduleId), className])
-      ]);
-      const dates = [...new Set(attendanceR.rows.map(a => a.date?.toISOString?.().split("T")[0] ?? a.date))].sort();
-      const rows = studentsR.rows.map(s => {
-        const records = {};
-        let presentCount = 0, absentCount = 0, leaveCount = 0;
-        for (const a of attendanceR.rows) {
-          const d = a.date?.toISOString?.().split("T")[0] ?? a.date;
-          if (a.roll_no === s.roll_no) {
-            records[d] = a.status;
-            if (a.status === "P") presentCount++;
-            else if (a.status === "A") absentCount++;
-            else if (a.status === "L") leaveCount++;
-          }
+      let imported = 0;
+      const dayOrder = { Mon: 0, Tue: 1, Wed: 2, Thu: 3, Fri: 4, Sat: 5, Sun: 6 };
+      for (const row of rows) {
+        const faculty = row.Faculty || row.faculty || "";
+        const subject = row.Subject || row.subject || "";
+        const className = row.Class || row.class_name || row["Class Name"] || "";
+        const dept = row.Deptt || row.dept || row.Department || "";
+        const day = row.Day || row.day || "";
+        const location = row.Location || row.location || row.Room || "";
+        const timeStart = row.Time || row.time_start || row["Start Time"] || "";
+        const timeEnd = row.EndTime || row.time_end || row["End Time"] || "";
+        const lecLab = row.LecLab || row.lec_lab || row["Lec/Lab"] || "Lec";
+        const elective = row.Elective || row.elective || "";
+        const userEmail = row.UserEmail || row.user_email || row["Email of User"] || "";
+        if (!faculty || !subject || !className || !day) continue;
+        const dayNum = dayOrder[day] || 0;
+        const timeMatch = timeStart.match(/(\d+):(\d+)\s*(AM|PM)/i);
+        let hourNum = 0;
+        if (timeMatch) {
+          let h = parseInt(timeMatch[1]);
+          if (timeMatch[3].toUpperCase() === 'PM' && h !== 12) h += 12;
+          if (timeMatch[3].toUpperCase() === 'AM' && h === 12) h = 0;
+          hourNum = h;
         }
-        const total = presentCount + absentCount + leaveCount;
-        return {
-          rollNo: s.roll_no, name: s.name, email: s.email,
-          records, presentCount, absentCount, leaveCount,
-          total, percentage: total ? Math.round((presentCount / total) * 100) : 0
-        };
-      });
-      return json(res, 200, { dates, rows });
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  if (method === "GET" && pathname === "/api/attendance/student-summary") {
-    const scheduleId = reqUrl.searchParams.get("scheduleId");
-    const regNo = reqUrl.searchParams.get("regNo");
-    try {
-      const studentR = await db.query(
-        "SELECT * FROM public.students WHERE schedule_id=$1 AND roll_no=$2",
-        [parseInt(scheduleId), regNo]
-      );
-      if (!studentR.rows.length) return json(res, 200, { found: false, rows: [] });
-      const student = studentR.rows[0];
-      const attR = await db.query(
-        "SELECT class_name, status, COUNT(*) as cnt FROM public.attendance WHERE schedule_id=$1 AND roll_no=$2 GROUP BY class_name, status",
-        [parseInt(scheduleId), regNo]
-      );
-      const byClass = {};
-      for (const row of attR.rows) {
-        if (!byClass[row.class_name]) byClass[row.class_name] = { present: 0, absent: 0, leave: 0 };
-        if (row.status === "P") byClass[row.class_name].present = parseInt(row.cnt);
-        else if (row.status === "A") byClass[row.class_name].absent = parseInt(row.cnt);
-        else if (row.status === "L") byClass[row.class_name].leave = parseInt(row.cnt);
-      }
-      const rows = Object.entries(byClass).map(([className, s]) => {
-        const total = s.present + s.absent + s.leave;
-        return { className, ...s, total, percentage: total ? Math.round((s.present / total) * 100) : 0 };
-      });
-      return json(res, 200, { found: true, studentName: student.name, regNo: student.roll_no, rows });
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  // ── EXAM ──────────────────────────────────────────────────────────────────
-
-  if (method === "GET" && pathname === "/api/exam/weights") {
-    const scheduleId = reqUrl.searchParams.get("scheduleId");
-    try {
-      const r = await db.query("SELECT * FROM public.exam_weights WHERE schedule_id=$1", [parseInt(scheduleId)]);
-      if (!r.rows.length) return json(res, 200, { quiz: 10, assignment: 10, mid: 20, final: 60 });
-      return json(res, 200, r.rows[0]);
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  if (method === "PUT" && pathname.match(/^\/api\/exam\/weights/)) {
-    const scheduleId = reqUrl.searchParams.get("scheduleId");
-    const { quiz, assignment, mid, final } = body;
-    try {
-      await db.query(
-        `INSERT INTO public.exam_weights (schedule_id, quiz, assignment, mid, final) VALUES ($1,$2,$3,$4,$5)
-         ON CONFLICT (schedule_id) DO UPDATE SET quiz=$2, assignment=$3, mid=$4, final=$5`,
-        [parseInt(scheduleId), quiz, assignment, mid, final]
-      );
-      return json(res, 200, { success: true });
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  if (method === "GET" && pathname === "/api/exam/marks") {
-    const scheduleId = reqUrl.searchParams.get("scheduleId");
-    const className = reqUrl.searchParams.get("className");
-    try {
-      const [studentsR, marksR] = await Promise.all([
-        db.query("SELECT * FROM public.students WHERE schedule_id=$1 AND class_name=$2 ORDER BY roll_no", [parseInt(scheduleId), className]),
-        db.query("SELECT * FROM public.exam_marks WHERE schedule_id=$1 AND class_name=$2", [parseInt(scheduleId), className])
-      ]);
-      const marksMap = {};
-      for (const m of marksR.rows) marksMap[m.roll_no] = m;
-      return json(res, 200, studentsR.rows.map(s => ({
-        id: marksMap[s.roll_no]?.id ?? null,
-        rollNo: s.roll_no, name: s.name,
-        quiz: marksMap[s.roll_no]?.quiz ?? null,
-        assignment: marksMap[s.roll_no]?.assignment ?? null,
-        mid: marksMap[s.roll_no]?.mid ?? null,
-        final: marksMap[s.roll_no]?.final ?? null,
-      })));
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  if (method === "POST" && pathname === "/api/exam/marks") {
-    const { scheduleId, className, rollNo, quiz, assignment, mid, final } = body;
-    try {
-      await db.query(
-        `INSERT INTO public.exam_marks (schedule_id, class_name, roll_no, quiz, assignment, mid, final)
-         VALUES ($1,$2,$3,$4,$5,$6,$7)
-         ON CONFLICT (schedule_id, class_name, roll_no)
-         DO UPDATE SET quiz=$4, assignment=$5, mid=$6, final=$7`,
-        [scheduleId, className, rollNo, quiz, assignment, mid, final]
-      );
-      return json(res, 200, { success: true });
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  // ── FINANCE ───────────────────────────────────────────────────────────────
-
-  if (method === "GET" && pathname === "/api/finance/schedules") {
-    try {
-      const r = await db.query("SELECT * FROM public.schedules ORDER BY created_at DESC");
-      return json(res, 200, r.rows.map(s => ({
-        id: s.id, userId: s.user_id, name: s.name,
-        startDate: s.start_date, endDate: s.end_date,
-        isPublic: s.is_public, createdAt: s.created_at
-      })));
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  if (method === "POST" && pathname === "/api/finance/login") {
-    const { username, password } = body;
-    try {
-      const r = await db.query(
-        "SELECT * FROM public.finance_accounts WHERE username=$1 AND password=$2",
-        [username, password]
-      );
-      if (!r.rows.length) return json(res, 200, { success: false, message: "Invalid credentials" });
-      return json(res, 200, { success: true, user: r.rows[0].username });
-    } catch (e) { return json(res, 500, { success: false, message: e.message }); }
-  }
-
-  if (method === "POST" && pathname === "/api/finance/register") {
-    const { username, password } = body;
-    try {
-      await db.query("INSERT INTO public.finance_accounts (username, password) VALUES ($1,$2)", [username, password]);
-      return json(res, 200, { success: true, user: username });
-    } catch (e) { return json(res, 500, { success: false, message: e.message }); }
-  }
-
-  if (method === "GET" && pathname === "/api/finance/staff") {
-    try {
-      const r = await db.query("SELECT * FROM public.support_staff ORDER BY name");
-      return json(res, 200, r.rows.map(s => ({
-        id: s.id, employeeId: s.employee_id, name: s.name,
-        designation: s.designation, department: s.department
-      })));
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  if (method === "POST" && pathname === "/api/finance/staff") {
-    const { employeeId, name, designation, department } = body;
-    try {
-      await db.query(
-        "INSERT INTO public.support_staff (employee_id, name, designation, department) VALUES ($1,$2,$3,$4)",
-        [employeeId, name, designation ?? "", department ?? ""]
-      );
-      return json(res, 200, { success: true });
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  if (method === "DELETE" && pathname.match(/^\/api\/finance\/staff\/\d+$/)) {
-    const id = parseInt(pathname.split("/").pop());
-    try {
-      await db.query("DELETE FROM public.support_staff WHERE id=$1", [id]);
-      return json(res, 200, { success: true });
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  if (method === "GET" && pathname.match(/^\/api\/finance\/persons\//)) {
-    const type = pathname.split("/")[4];
-    const scheduleId = reqUrl.searchParams.get("scheduleId");
-    try {
-      if (type === "faculty") {
-        const r = await db.query(
-          "SELECT DISTINCT faculty as person_id, faculty as person_name FROM public.weekly_schedule WHERE schedule_id=$1 ORDER BY faculty",
-          [parseInt(scheduleId)]
-        );
-        return json(res, 200, r.rows.map(r => ({ personId: r.person_id, personName: r.person_name })));
-      } else {
-        const r = await db.query(
-          "SELECT roll_no as person_id, name as person_name FROM public.students WHERE schedule_id=$1 ORDER BY name",
-          [parseInt(scheduleId)]
-        );
-        return json(res, 200, r.rows.map(r => ({ personId: r.person_id, personName: r.person_name })));
-      }
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  if (method === "GET" && pathname === "/api/finance/payments") {
-    const { personType, period, scheduleId } = Object.fromEntries(reqUrl.searchParams);
-    try {
-      const r = scheduleId
-        ? await db.query("SELECT * FROM public.finance_payments WHERE person_type=$1 AND period=$2 AND schedule_id=$3", [personType, period, parseInt(scheduleId)])
-        : await db.query("SELECT * FROM public.finance_payments WHERE person_type=$1 AND period=$2", [personType, period]);
-      return json(res, 200, r.rows.map(p => ({
-        id: p.id, personType: p.person_type, personId: p.person_id,
-        personName: p.person_name, scheduleId: p.schedule_id, period: p.period,
-        amount: p.amount, paidAmount: p.paid_amount, paidDate: p.paid_date, notes: p.notes
-      })));
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  if (method === "POST" && pathname === "/api/finance/payments/bulk") {
-    const { payments } = body;
-    try {
-      for (const p of payments) {
+        const sortKey = dayNum * 100 + hourNum;
         await db.query(
-          `INSERT INTO public.finance_payments (person_type, person_id, person_name, schedule_id, period, amount, paid_amount, paid_date, notes)
-           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
-           ON CONFLICT DO NOTHING`,
-          [p.personType, p.personId, p.personName, p.scheduleId ?? null, p.period, p.amount ?? 0, p.paidAmount ?? 0, p.paidDate ?? null, p.notes ?? ""]
+          "INSERT INTO public.weekly_schedule (faculty, subject, class_name, dept, day, location, time_start, time_end, lec_lab, elective, user_email, sort_key, schedule_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",
+          [faculty, subject, className, dept, day, location, timeStart, timeEnd, lecLab, elective, userEmail, sortKey, scheduleId ?? null]
         );
+        imported++;
       }
-      return json(res, 200, { success: true });
+      return json(res, 200, { success: true, imported });
     } catch (e) { return json(res, 500, { error: e.message }); }
   }
 
-  if (method === "GET" && pathname === "/api/finance/rates") {
-    const { personType, scheduleId } = Object.fromEntries(reqUrl.searchParams);
-    try {
-      const r = scheduleId && scheduleId !== "null"
-        ? await db.query("SELECT * FROM public.finance_rates WHERE person_type=$1 AND schedule_id=$2", [personType, parseInt(scheduleId)])
-        : await db.query("SELECT * FROM public.finance_rates WHERE person_type=$1 AND schedule_id IS NULL", [personType]);
-      return json(res, 200, r.rows.map(r => ({
-        id: r.id, personType: r.person_type, personId: r.person_id,
-        scheduleId: r.schedule_id, rate: r.rate
-      })));
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  if (method === "POST" && pathname === "/api/finance/rates/bulk") {
-    const { rates } = body;
-    try {
-      for (const r of rates) {
-        await db.query(
-          `INSERT INTO public.finance_rates (person_type, person_id, schedule_id, rate)
-           VALUES ($1,$2,$3,$4)
-           ON CONFLICT (person_type, person_id, schedule_id) DO UPDATE SET rate=$4`,
-          [r.personType, r.personId, r.scheduleId ?? null, r.rate]
-        );
-      }
-      return json(res, 200, { success: true });
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  if (method === "GET" && pathname === "/api/finance/summary") {
-    return json(res, 200, { byType: {}, overall: { totalDue: 0, totalPaid: 0, count: 0, paid: 0, partial: 0, unpaid: 0 } });
-  }
-
-  // ── FACULTY ACCESS ────────────────────────────────────────────────────────
-
-  if (method === "GET" && pathname === "/api/faculty-access") {
-    const scheduleId = reqUrl.searchParams.get("scheduleId");
-    try {
-      const r = await db.query(
-        "SELECT * FROM public.faculty_accounts WHERE schedule_id=$1 ORDER BY faculty_name",
-        [parseInt(scheduleId)]
-      );
-      return json(res, 200, r.rows.map(f => ({
-        id: f.id, scheduleId: f.schedule_id, facultyName: f.faculty_name,
-        username: f.username, password: f.password, email: f.email,
-        classes: [], subjects: [], createdAt: f.created_at
-      })));
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  if (method === "POST" && pathname === "/api/faculty-access/generate") {
-    const scheduleId = reqUrl.searchParams.get("scheduleId");
-    try {
-      const facultyR = await db.query(
-        "SELECT DISTINCT faculty FROM public.weekly_schedule WHERE schedule_id=$1",
-        [parseInt(scheduleId)]
-      );
-      let created = 0, skipped = 0;
-      for (const row of facultyR.rows) {
-        const username = row.faculty.toLowerCase().replace(/\s+/g, ".").replace(/[^a-z.]/g, "");
-        const password = Math.random().toString(36).slice(2, 10);
-        try {
-          await db.query(
-            "INSERT INTO public.faculty_accounts (schedule_id, faculty_name, username, password) VALUES ($1,$2,$3,$4)",
-            [parseInt(scheduleId), row.faculty, username, password]
-          );
-          created++;
-        } catch { skipped++; }
-      }
-      return json(res, 200, { created, skipped });
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  if (method === "POST" && pathname === "/api/faculty-access/login") {
-    const { username, password } = body;
-    try {
-      const r = await db.query(
-        `SELECT fa.*, s.name as schedule_title, s.start_date, s.end_date
-         FROM public.faculty_accounts fa
-         JOIN public.schedules s ON s.id = fa.schedule_id
-         WHERE fa.username=$1 AND fa.password=$2`,
-        [username, password]
-      );
-      if (!r.rows.length) {
-        res.writeHead(401, { "content-type": "application/json" });
-        return res.end(JSON.stringify({ error: "Invalid credentials" }));
-      }
-      return json(res, 200, r.rows.map(f => ({
-        accountId: f.id, username: f.username, facultyName: f.faculty_name,
-        scheduleId: f.schedule_id, scheduleTitle: f.schedule_title,
-        startDate: f.start_date, endDate: f.end_date
-      })));
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  if (method === "PATCH" && pathname.match(/^\/api\/faculty-access\/\d+$/)) {
-    const id = parseInt(pathname.split("/").pop());
-    const { email } = body;
-    try {
-      const r = await db.query(
-        "UPDATE public.faculty_accounts SET email=$1 WHERE id=$2 RETURNING *",
-        [email ?? "", id]
-      );
-      return json(res, 200, r.rows[0]);
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  if (method === "DELETE" && pathname.match(/^\/api\/faculty-access\/\d+$/)) {
-    const id = parseInt(pathname.split("/").pop());
-    try {
-      await db.query("DELETE FROM public.faculty_accounts WHERE id=$1", [id]);
-      return json(res, 200, { success: true });
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  if (method === "POST" && pathname === "/api/faculty-access/change-password") {
-    const { accountId, currentPassword, newPassword } = body;
-    try {
-      const r = await db.query("SELECT * FROM public.faculty_accounts WHERE id=$1 AND password=$2", [accountId, currentPassword]);
-      if (!r.rows.length) return json(res, 200, { success: false, error: "Current password is incorrect" });
-      await db.query("UPDATE public.faculty_accounts SET password=$1 WHERE id=$2", [newPassword, accountId]);
-      return json(res, 200, { success: true });
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  // GET /api/import/sample/schedule — CSV template
+  // MUST be before generic /sample catch-all
   if (method === "GET" && pathname === "/api/import/sample/schedule") {
     const csv = "Faculty,Subject,Class,Deptt,Day,Time,End Time,Location,Lec/Lab,Elective,Email of User\nDr. Example,Linear Algebra,2K24-BEE-14A,ECE,Mon,09:00 AM,10:00 AM,CR-01,Lec,,user@seecs.edu.pk\n";
-    res.writeHead(200, { "Content-Type": "text/csv", "Content-Disposition": "attachment; filename=SampleWeeklySchedule.csv" });
+    res.writeHead(200, { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": "attachment; filename=SampleWeeklySchedule.csv", "Access-Control-Allow-Origin": "*", "Cache-Control": "no-cache" });
     res.end(csv);
     return;
   }
-  // ── IMPORT SAMPLE ENDPOINTS (return empty) ────────────────────────────────
-  if (pathname.includes("/sample")) {
-    return json(res, 200, []);
-  }
 
-
-  // POST /api/meeting
-  if (method === "POST" && pathname === "/api/meeting") {
-    const { date, start, end, faculty } = body;
-    try {
-      const q = await db.query("SELECT * FROM public.weekly_schedule WHERE schedule_id IS NULL");
-      const rows = q.rows;
-      
-      // Parse time to minutes for comparison
-      function timeToMin(t) {
-        if (!t) return 0;
-        const [time, period] = t.split(' ');
-        let [h, m] = time.split(':').map(Number);
-        if (period === 'PM' && h !== 12) h += 12;
-        if (period === 'AM' && h === 12) h = 0;
-        return h * 60 + m;
-      }
-      
-      const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-      const dayName = dayNames[new Date(date + 'T00:00:00').getDay()];
-      const startMin = timeToMin(start);
-      const endMin = timeToMin(end);
-      
-      // Filter rows for this day
-      const dayRows = rows.filter(r => r.day === dayName && !r.type);
-      
-      // Find busy faculty in this time slot
-      const busyFaculty = {};
-      const allFaculty = [...new Set(rows.map(r => r.faculty))].sort();
-      
-      for (const r of dayRows) {
-        const rStart = timeToMin(r.time_start);
-        const rEnd = timeToMin(r.time_end);
-        // Check overlap
-        if (rStart < endMin && rEnd > startMin) {
-          if (!busyFaculty[r.faculty]) busyFaculty[r.faculty] = [];
-          busyFaculty[r.faculty].push({
-            subject: r.subject,
-            cls: r.class_name,
-            loc: r.location,
-            start: rStart,
-            end: rEnd,
-            type: r.lec_lab || "Lec"
-          });
-        }
-      }
-      
-      // Filter by requested faculty if provided
-      const targetFaculty = faculty && faculty.length > 0 ? faculty : allFaculty;
-      
-      const free = [];
-      const busy = [];
-      const summary = {};
-      
-      for (const f of targetFaculty) {
-        if (busyFaculty[f]) {
-          busy.push({ name: f, dept: rows.find(r => r.faculty === f)?.dept || '', records: busyFaculty[f] });
-          summary[f] = { free: 0, busy: 1 };
-        } else {
-          free.push({ name: f, dept: rows.find(r => r.faculty === f)?.dept || '' });
-          summary[f] = { free: 1, busy: 0 };
-        }
-      }
-      
-      return json(res, 200, {
-        date, dayName, start, end,
-        free, busy, summary
-      });
-    } catch (e) { return json(res, 500, { error: e.message }); }
-  }
-
-  // Unknown API route
-  // GET /api/import/sample/schedule — return CSV as sample
-  if (method === "GET" && pathname === "/api/import/sample/schedule") {
-    const csv = "Faculty,Subject,Class,Deptt,Day,Time,End Time,Location,Lec/Lab,Elective,Email of User\nDr. Example,Linear Algebra,2K24-BEE-14A,ECE,Mon,09:00 AM,10:00 AM,CR-01,Lec,,user@seecs.edu.pk\n";
-    res.writeHead(200, {
-      "Content-Type": "text/csv",
-      "Content-Disposition": "attachment; filename=SampleWeeklySchedule.csv"
-    });
+  if (method === "GET" && pathname === "/api/import/sample/students") {
+    const csv = "Class,Roll No,Name,Email\n2K25-BSCS-15A,001,Ahmed Ali,ahmed@example.com\n";
+    res.writeHead(200, { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": "attachment; filename=SampleStudents.csv", "Access-Control-Allow-Origin": "*", "Cache-Control": "no-cache" });
     res.end(csv);
     return;
   }
+
+  // Generic sample endpoints (MUST be after specific ones)
+  if (pathname.includes("/sample")) return json(res, 200, []);
 
   return json(res, 404, { error: "Not found" });
 }
 
-// ── Static file helpers ────────────────────────────────────────────────────
-function getAppName() {
-  try {
-    const appJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, "..", "app.json"), "utf-8"));
-    return appJson.expo?.name || "App Landing Page";
-  } catch { return "App Landing Page"; }
-}
-
-function serveManifest(platform, res) {
-  const manifestPath = path.join(STATIC_ROOT, platform, "manifest.json");
-  if (!fs.existsSync(manifestPath)) {
-    res.writeHead(404, { "content-type": "application/json" });
-    res.end(JSON.stringify({ error: `Manifest not found for platform: ${platform}` }));
-    return;
-  }
-  const manifest = fs.readFileSync(manifestPath, "utf-8");
-  res.writeHead(200, {
-    "content-type": "application/json",
-    "expo-protocol-version": "1",
-    "expo-sfv-version": "0",
+// ========== STATIC FILE SERVER ==========
+function serveStaticFile(req, res, filePath) {
+  const ext = path.extname(filePath).toLowerCase();
+  const contentType = MIME_TYPES[ext] || "application/octet-stream";
+  fs.readFile(filePath, (err, data) => {
+    if (err) {
+      if (err.code === "ENOENT") {
+        const indexPath = path.join(STATIC_ROOT, "index.html");
+        fs.readFile(indexPath, (err2, data2) => {
+          if (err2) { res.writeHead(404); res.end("Not Found"); }
+          else { res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" }); res.end(data2); }
+        });
+      } else { res.writeHead(500); res.end("Server Error"); }
+    } else {
+      res.writeHead(200, { "Content-Type": contentType, "Cache-Control": ext === ".html" ? "no-cache" : "public, max-age=31536000", "Access-Control-Allow-Origin": "*" });
+      res.end(data);
+    }
   });
-  res.end(manifest);
 }
 
-function serveLandingPage(req, res, template, appName) {
-  const protocol = req.headers["x-forwarded-proto"] || "https";
-  const host = req.headers["x-forwarded-host"] || req.headers["host"];
-  const html = template
-    .replace(/BASE_URL_PLACEHOLDER/g, `${protocol}://${host}`)
-    .replace(/EXPS_URL_PLACEHOLDER/g, host)
-    .replace(/APP_NAME_PLACEHOLDER/g, appName);
-  res.writeHead(200, { "content-type": "text/html; charset=utf-8" });
-  res.end(html);
+function staticBuildExists() {
+  try { return fs.existsSync(path.join(STATIC_ROOT, "index.html")); } catch { return false; }
 }
 
-function serveStaticFile(urlPath, res) {
-  const safePath = path.normalize(urlPath).replace(/^(\.\.(\/|\\|$))+/, "");
-  const filePath = path.join(STATIC_ROOT, safePath);
-  if (!filePath.startsWith(STATIC_ROOT)) { res.writeHead(403); res.end("Forbidden"); return; }
-  if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) { res.writeHead(404); res.end("Not Found"); return; }
-  const contentType = MIME_TYPES[path.extname(filePath).toLowerCase()] || "application/octet-stream";
-  res.writeHead(200, { "content-type": contentType });
-  res.end(fs.readFileSync(filePath));
-}
+// ========== SERVER STARTUP ==========
+const port = parseInt(process.env.PORT || "3000", 10);
 
-// ── Server ─────────────────────────────────────────────────────────────────
-let landingPageTemplate = "";
-try { landingPageTemplate = fs.readFileSync(TEMPLATE_PATH, "utf-8"); } catch { landingPageTemplate = "<html><body>Classes Record</body></html>"; }
-const appName = getAppName();
+async function fixSequences() {
+  const tables = ['users', 'schedules', 'holidays', 'attendance', 'weekly_schedule', 'faculty_accounts', 'finance_accounts', 'finance_payments', 'finance_rates', 'students', 'exam_marks', 'exam_weights', 'support_staff'];
+  for (const table of tables) {
+    try { await db.query("ALTER TABLE public." + table + " ALTER COLUMN id SET DEFAULT nextval('public." + table + "_id_seq')"); console.log('✓ Sequence fixed: ' + table); }
+    catch (e) { console.log('→ Skipped: ' + table); }
+  }
+  try {
+    await db.query("SELECT setval('public.users_id_seq', COALESCE((SELECT MAX(id) FROM public.users), 0) + 1, false)");
+    await db.query("SELECT setval('public.schedules_id_seq', COALESCE((SELECT MAX(id) FROM public.schedules), 0) + 1, false)");
+    await db.query("SELECT setval('public.holidays_id_seq', COALESCE((SELECT MAX(id) FROM public.holidays), 0) + 1, false)");
+    await db.query("SELECT setval('public.weekly_schedule_id_seq', COALESCE((SELECT MAX(id) FROM public.weekly_schedule), 0) + 1, false)");
+    console.log('✓ Sequence values updated');
+  } catch (e) { console.log('→ Seq update skipped'); }
+}
 
 const server = http.createServer(async (req, res) => {
-  const url = new URL(req.url || "/", `http://${req.headers.host}`);
+  const url = new URL(req.url || "/", 'http://' + (req.headers.host || 'localhost'));
   let pathname = url.pathname;
-
-  if (basePath && pathname.startsWith(basePath)) {
-    pathname = pathname.slice(basePath.length) || "/";
-  }
-
+  if (basePath && pathname.startsWith(basePath)) pathname = pathname.slice(basePath.length) || "/";
   if (pathname.startsWith("/api/")) {
-    try {
-      await handleApi(req.method, pathname, req, res);
-    } catch (e) {
-      json(res, 500, { error: String(e) });
-    }
+    try { await handleApi(req.method, pathname, req, res); } catch (e) { json(res, 500, { error: String(e) }); }
     return;
   }
-
-  if (pathname === "/" || pathname === "/manifest") {
-    const platform = req.headers["expo-platform"];
-    if (platform === "ios" || platform === "android") return serveManifest(platform, res);
-    if (pathname === "/") return serveLandingPage(req, res, landingPageTemplate, appName);
+  if (pathname === "/health" || pathname === "/ping") {
+    res.writeHead(200, { "Content-Type": "application/json" }); res.end(JSON.stringify({ status: "ok" })); return;
   }
-
-  serveStaticFile(pathname, res);
+  if ((pathname === "/" || pathname === "/index.html") && !staticBuildExists() && fs.existsSync(TEMPLATE_PATH)) {
+    fs.readFile(TEMPLATE_PATH, "utf-8", (err, html) => {
+      if (err) { res.writeHead(500); res.end("Error"); }
+      else { res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" }); res.end(html); }
+    }); return;
+  }
+  let filePath = path.join(STATIC_ROOT, pathname === "/" ? "index.html" : pathname);
+  filePath = path.resolve(filePath);
+  if (!filePath.startsWith(path.resolve(STATIC_ROOT))) { res.writeHead(403); res.end("Forbidden"); return; }
+  serveStaticFile(req, res, filePath);
 });
 
-const port = parseInt(process.env.PORT || "3000", 10);
-server.listen(port, "0.0.0.0", () => {
-  console.log(`Server running on port ${port}`);
+server.listen(port, "0.0.0.0", async () => {
+  console.log('Server running on port ' + port);
+  await fixSequences();
 });

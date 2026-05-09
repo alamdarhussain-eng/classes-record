@@ -1,4 +1,3 @@
-// v2 - login gate removed
 import React, { useState, useMemo, useEffect, useCallback } from "react";
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
@@ -250,6 +249,28 @@ export default function EntryScreen() {
     loginBtnTxt: { color: "#fff", fontFamily: "Inter_700Bold", fontSize: 16 },
     divider: { height: 1, backgroundColor: colors.border, marginVertical: 12 },
   });
+
+  if (!user) {
+    return (
+      <View style={s.loginCard}>
+        <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", gap: 6, marginBottom: 24 }} onPress={() => router.replace("/")}>
+          <Feather name="home" size={16} color={colors.primary} />
+          <Text style={{ color: colors.primary, fontFamily: "Inter_600SemiBold", fontSize: 13 }}>Home</Text>
+        </TouchableOpacity>
+        <Feather name="lock" size={48} color={colors.primary} style={s.loginIcon} />
+        <Text style={s.loginTitle}>Login Required</Text>
+        <Text style={s.loginSub}>Enter your credentials to record entries</Text>
+        <TextInput style={s.loginInput} placeholder="Username" placeholderTextColor={colors.mutedForeground} value={loginUsername} onChangeText={setLoginUsername} autoCapitalize="none" />
+        <TextInput style={s.loginInput} placeholder="Password" placeholderTextColor={colors.mutedForeground} value={loginPassword} onChangeText={setLoginPassword} secureTextEntry />
+        {loginError ? <Text style={s.loginError}>{loginError}</Text> : null}
+        <TouchableOpacity style={s.loginBtn} onPress={handleLogin} disabled={loginLoading}>
+          {loginLoading ? <ActivityIndicator color="#fff" /> : <Text style={s.loginBtnTxt}>Login</Text>}
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  const canSave = !!(faculty && subject && cls && date && startTime && endTime) && !saveMutation.isPending;
 
   return (
     <View style={s.container}>

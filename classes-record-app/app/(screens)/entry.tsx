@@ -250,7 +250,7 @@ export default function EntryScreen() {
     divider: { height: 1, backgroundColor: colors.border, marginVertical: 12 },
   });
 
-    return (
+  return (
     <View style={s.container}>
       <View style={s.header}>
         <View style={{ flexDirection: "row", gap: 8, marginBottom: 10 }}>

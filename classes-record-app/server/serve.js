@@ -433,9 +433,10 @@ async function handleApi(method, pathname, req, res) {
           continue;
         }
         const sk = r.faculty+"|||"+r.subject+"|||"+clsBase+"|||"+dtStr+"|||"+(r.time_start||"");
-        if (typeLow==="missed" && !rec._ms.has(sk)) { rec.Missed++; rec._ms.add(sk); if(!rec.MissedDates.includes(dtStr)) rec.MissedDates.push(dtStr); }
-        else if (typeLow==="makeup" && !rec._mk.has(sk)) { rec.Makeup++; rec._mk.add(sk); if(!rec.MakeupDates.includes(dtStr)) rec.MakeupDates.push(dtStr); }
-        else if (typeLow==="late" && !rec._lt.has(sk)) { rec.Late++; rec._lt.add(sk); if(!rec.LateDates.includes(dtStr)) rec.LateDates.push(dtStr); }
+        const dtShort = dtStr.split('T')[0];
+        if (typeLow==="missed" && !rec._ms.has(sk)) { rec.Missed++; rec._ms.add(sk); if(!rec.MissedDates.includes(dtShort)) rec.MissedDates.push(dtShort); }
+        else if (typeLow==="makeup" && !rec._mk.has(sk)) { rec.Makeup++; rec._mk.add(sk); if(!rec.MakeupDates.includes(dtShort)) rec.MakeupDates.push(dtShort); }
+        else if (typeLow==="late" && !rec._lt.has(sk)) { rec.Late++; rec._lt.add(sk); if(!rec.LateDates.includes(dtShort)) rec.LateDates.push(dtShort); }
       }
 
       for (const [k, times] of Object.entries(labBuckets)) {
@@ -448,9 +449,10 @@ async function handleApi(method, pathname, req, res) {
           const p=(times[i-1]||"00:00").split(":"),c=(times[i]||"00:00").split(":");
           if (parseInt(c[0])*60+parseInt(c[1]) !== parseInt(p[0])*60+parseInt(p[1])+60) blocks++;
         }
-        if (obj.tp==="missed") { rec.Missed+=blocks; if(!rec.MissedDates.includes(obj.dt)) rec.MissedDates.push(obj.dt); }
-        else if (obj.tp==="makeup") { rec.Makeup+=blocks; if(!rec.MakeupDates.includes(obj.dt)) rec.MakeupDates.push(obj.dt); }
-        else if (obj.tp==="late") { rec.Late+=blocks; if(!rec.LateDates.includes(obj.dt)) rec.LateDates.push(obj.dt); }
+        const dtShort2 = obj.dt.split('T')[0];
+        if (obj.tp==="missed") { rec.Missed+=blocks; if(!rec.MissedDates.includes(dtShort2)) rec.MissedDates.push(dtShort2); }
+        else if (obj.tp==="makeup") { rec.Makeup+=blocks; if(!rec.MakeupDates.includes(dtShort2)) rec.MakeupDates.push(dtShort2); }
+        else if (obj.tp==="late") { rec.Late+=blocks; if(!rec.LateDates.includes(dtShort2)) rec.LateDates.push(dtShort2); }
       }
 
       for (const dept of Object.keys(result)) {

@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: classes-record-frontend
+    env: static
+    buildCommand: pnpm install && pnpm exec expo export --platform web
+    staticPublishPath: ./dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

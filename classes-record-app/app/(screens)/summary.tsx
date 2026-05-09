@@ -29,7 +29,7 @@ const MON_NUM: Record<string, string> = {
 function shortDate(d: string): string {
   const parts = d.split("-");
   if (parts.length !== 3) return d;
-  return `${parts[0]}-${MON_NUM[parts[1]] ?? parts[1]}`;
+  return `${parseInt(parts[2])}-${MON_NUM[parts[1]] ?? parts[1]}`;
 }
 
 interface FlatRow extends SummaryRecord { dept: string; }
@@ -436,17 +436,17 @@ export default function SummaryScreen() {
                     <View style={{ paddingHorizontal: 12, paddingBottom: 8, gap: 2 }}>
                       {r.MissedDates.length > 0 && (
                         <Text style={{ fontSize: 11, color: "#D32F2F", fontFamily: "Inter_400Regular" }}>
-                          Missed: {r.MissedDates.map(shortDate).join("  ")}
+                          Missed: {r.MissedDates.map(shortDate).join(", ")}
                         </Text>
                       )}
                       {r.MakeupDates.length > 0 && (
                         <Text style={{ fontSize: 11, color: "#388E3C", fontFamily: "Inter_400Regular" }}>
-                          Makeup: {r.MakeupDates.map(shortDate).join("  ")}
+                          Makeup: {r.MakeupDates.map(shortDate).join(", ")}
                         </Text>
                       )}
                       {r.LateDates.length > 0 && (
                         <Text style={{ fontSize: 11, color: "#FF8F00", fontFamily: "Inter_400Regular" }}>
-                          Late: {r.LateDates.map(shortDate).join("  ")}
+                          Late: {r.LateDates.map(shortDate).join(", ")}
                         </Text>
                       )}
                     </View>

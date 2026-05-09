@@ -100,7 +100,7 @@ async function handleApi(method, pathname, req, res) {
       expiry.setDate(expiry.getDate() + 30);
       const expiryDate = expiry.toISOString().split("T")[0];
       await db.query(
-        "INSERT INTO public.users (username, password, pin) VALUES ($1, $2, $3) RETURNING id",
+        "INSERT INTO public.users (id, username, password, pin) VALUES (nextval('public.users_id_seq'), $1, $2, $3) RETURNING id",
         [username.trim(), password.trim(), pin ?? ""]
       );
       return json(res, 200, { success: true, expiryDate });

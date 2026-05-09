@@ -1073,23 +1073,15 @@ async function handleApi(method, pathname, req, res) {
   }
 
   // Unknown API route
-  // GET /api/import/sample/schedule
+  // GET /api/import/sample/schedule — return CSV as sample
   if (method === "GET" && pathname === "/api/import/sample/schedule") {
-    try {
-      const headers = [["Faculty","Subject","Class","Deptt","Day","Time","End Time","Location","Lec/Lab","Elective","Email of User"],
-                       ["Dr. Example","Linear Algebra","2K24-BEE-14A","ECE","Mon","09:00 AM","10:00 AM","CR-01","Lec","","user@seecs.edu.pk"]];
-      const wb = XLSX.utils.book_new();
-      const ws = XLSX.utils.aoa_to_sheet(headers);
-      XLSX.utils.book_append_sheet(wb, ws, "WeeklySchedule");
-      const buf = XLSX.write(wb, { type: "buffer", bookType: "xlsx" });
-      res.writeHead(200, {
-        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "Content-Disposition": "attachment; filename=SampleWeeklySchedule.xlsx",
-        "Content-Length": buf.length
-      });
-      res.end(buf);
-      return;
-    } catch(e) { return json(res, 500, { error: e.message }); }
+    const csv = "Faculty,Subject,Class,Deptt,Day,Time,End Time,Location,Lec/Lab,Elective,Email of User\nDr. Example,Linear Algebra,2K24-BEE-14A,ECE,Mon,09:00 AM,10:00 AM,CR-01,Lec,,user@seecs.edu.pk\n";
+    res.writeHead(200, {
+      "Content-Type": "text/csv",
+      "Content-Disposition": "attachment; filename=SampleWeeklySchedule.csv"
+    });
+    res.end(csv);
+    return;
   }
 
   return json(res, 404, { error: "Not found" });

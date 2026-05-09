@@ -27,11 +27,12 @@ const MON_NUM: Record<string, string> = {
 };
 
 function shortDate(d: string): string {
-  // Handle ISO format like 2026-02-03T00:00:00.000Z or YYYY-MM-DD
-  const clean = d.split("T")[0];
+  const clean = (d || "").split("T")[0];
   const parts = clean.split("-");
-  if (parts.length !== 3) return d;
-  return `${parseInt(parts[2])}-${MON_NUM[parts[1]] ?? parts[1]}`;
+  if (parts.length === 3 && MON_NUM[parts[1]]) {
+    return `${parseInt(parts[2])}-${MON_NUM[parts[1]]}`;
+  }
+  return clean;
 }
 
 interface FlatRow extends SummaryRecord { dept: string; }

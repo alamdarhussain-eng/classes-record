@@ -90,6 +90,8 @@ async function handleApi(method, pathname, req, res) {
 
   // POST /api/auth/register
   if (method === "POST" && pathname === "/api/auth/register") {
+    // Fix sequence if needed
+    await db.query("SELECT setval('public.users_id_seq', COALESCE((SELECT MAX(id) FROM public.users), 0) + 1, false)").catch(() => {});
     const { username, password, pin } = body;
     if (!username || !password) return json(res, 400, { success: false, message: "Username and password required" });
     if (password.length < 4) return json(res, 400, { success: false, message: "Password must be at least 4 characters" });
@@ -98,7 +100,7 @@ async function handleApi(method, pathname, req, res) {
       expiry.setDate(expiry.getDate() + 30);
       const expiryDate = expiry.toISOString().split("T")[0];
       await db.query(
-        "INSERT INTO public.users (username, password, pin) VALUES ($1, $2, $3)",
+        "INSERT INTO public.users (username, password, pin) VALUES ($1, $2, $3) RETURNING id",
         [username.trim(), password.trim(), pin ?? ""]
       );
       return json(res, 200, { success: true, expiryDate });

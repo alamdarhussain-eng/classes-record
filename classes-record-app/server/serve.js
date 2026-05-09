@@ -363,55 +363,106 @@ async function handleApi(method, pathname, req, res) {
         : await db.query("SELECT * FROM public.weekly_schedule WHERE schedule_id IS NULL");
       const rows = q.rows;
 
-      // Group by Faculty+Subject+Class
-      const groups = {};
+      const filterStart = start ? new Date(start + "T00:00:00") : new Date("2026-01-19T00:00:00");
+      const filterEnd = end ? new Date(end + "T23:59:59") : new Date();
+      filterStart.setHours(0,0,0,0);
+      filterEnd.setHours(23,59,59,999);
+
+      const DAY_NAMES = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+      function countWeekday(dayName) {
+        const dayIdx = DAY_NAMES.indexOf(dayName);
+        if (dayIdx < 0) return 0;
+        let d = new Date(filterStart), c = 0;
+        while (d <= filterEnd) { if (d.getDay() === dayIdx) c++; d.setDate(d.getDate()+1); }
+        return c;
+      }
+      function normalizeClass(cls, isElective) {
+        if (!isElective) return cls;
+        cls = (cls||"").toUpperCase().trim();
+        const m = cls.match(/^(2K\d{2}-[A-Z]+-\d+)[A-Z]+$/);
+        return m ? m[1] : cls;
+      }
+
+      // Build unique weekly slot map from regular (no type) rows
+      const map = {};
       for (const r of rows) {
-        const key = `${r.faculty}|||${r.subject}|||${r.class_name}`;
-        if (!groups[key]) {
-          groups[key] = {
-            Faculty: r.faculty,
-            Subject: r.subject,
-            Class: r.class_name,
-            CreditHrs: r.lec_lab || "Lec",
-            dept: r.dept,
-            ToBeConducted: 0,
-            Missed: 0,
-            Makeup: 0,
-            Late: 0,
-            MissedDates: [],
-            MakeupDates: [],
-            LateDates: [],
-            GrandTotal: 0,
-          };
-        }
-        const g = groups[key];
-        if (!r.type || r.type === "") {
-          g.ToBeConducted++;
-        } else if (r.type === "Missed") {
-          g.Missed++;
-          if (r.entry_date) g.MissedDates.push(r.entry_date);
-        } else if (r.type === "Makeup") {
-          g.Makeup++;
-          if (r.entry_date) g.MakeupDates.push(r.entry_date);
-        } else if (r.type === "Late") {
-          g.Late++;
-          if (r.entry_date) g.LateDates.push(r.entry_date);
-        }
+        if (r.type && r.type.trim() !== "") continue;
+        if (!r.faculty || !r.subject || !r.class_name || !r.dept) continue;
+        if (!r.day || !r.time_start) continue;
+        const isElective = (r.elective||"").toLowerCase() === "elective";
+        const clsBase = normalizeClass(r.class_name, isElective).toUpperCase();
+        const key = r.dept+"|||"+r.faculty+"|||"+r.subject+"|||"+clsBase;
+        if (!map[key]) map[key] = { dept:r.dept, Faculty:r.faculty, Subject:r.subject, Class:clsBase, CreditHrs:r.lec_lab||"Lec", lecSlots:new Set(), labDays:new Set(), clsSections:new Set() };
+        const isLab = (r.lec_lab||"").toLowerCase().includes("lab")||(r.lec_lab||"").toLowerCase().includes("prac");
+        if (isElective) { const sm = r.class_name.toUpperCase().match(/\d+([A-Z])$/); if(sm) map[key].clsSections.add(sm[1]); }
+        if (isLab) map[key].labDays.add(r.day);
+        else map[key].lecSlots.add(r.day+"|||"+r.time_start);
       }
 
-      // Calculate GrandTotal
       const result = {};
-      for (const [key, g] of Object.entries(groups)) {
-        g.GrandTotal = g.ToBeConducted - g.Missed + g.Makeup;
-        const dept = g.dept;
-        if (!result[dept]) result[dept] = {};
-        const subKey = `${g.Faculty}|||${g.Subject}|||${g.Class}`;
-        if (!result[dept][subKey]) result[dept][subKey] = g;
+      for (const [key, item] of Object.entries(map)) {
+        let tbc = 0;
+        item.lecSlots.forEach(slot => { tbc += countWeekday(slot.split("|||")[0]); });
+        item.labDays.forEach(day => { tbc += countWeekday(day); });
+        let displayClass = item.Class;
+        if (item.clsSections.size > 0) displayClass = item.Class + [...item.clsSections].sort().join("");
+        if (!result[item.dept]) result[item.dept] = {};
+        const subKey = item.Faculty+"|||"+item.Subject+"|||"+item.Class;
+        result[item.dept][subKey] = { Faculty:item.Faculty, Subject:item.Subject, Class:displayClass, CreditHrs:item.CreditHrs, ToBeConducted:tbc, Missed:0, Makeup:0, Late:0, MissedDates:[], MakeupDates:[], LateDates:[], GrandTotal:0, _ms:new Set(), _mk:new Set(), _lt:new Set() };
       }
 
+      // Count entries within date range
+      const labBuckets = {};
+      for (const r of rows) {
+        if (!r.type || r.type.trim()==="") continue;
+        if (!r.entry_date) continue;
+        const ed = new Date(r.entry_date+"T00:00:00");
+        if (ed < filterStart || ed > filterEnd) continue;
+        const isElective = (r.elective||"").toLowerCase()==="elective";
+        const clsBase = normalizeClass(r.class_name, isElective).toUpperCase();
+        const subKey = r.faculty+"|||"+r.subject+"|||"+clsBase;
+        const rec = result[r.dept] && result[r.dept][subKey];
+        if (!rec) continue;
+        const dtStr = r.entry_date;
+        const typeLow = (r.type||"").toLowerCase();
+        const isLab = (r.lec_lab||"").toLowerCase().includes("lab")||(r.lec_lab||"").toLowerCase().includes("prac");
+        if (isLab) {
+          const lk = JSON.stringify({dept:r.dept,fac:r.faculty,sub:r.subject,cls:clsBase,dt:dtStr,tp:typeLow});
+          if (!labBuckets[lk]) labBuckets[lk]=[];
+          labBuckets[lk].push(r.time_start||"");
+          continue;
+        }
+        const sk = r.faculty+"|||"+r.subject+"|||"+clsBase+"|||"+dtStr+"|||"+(r.time_start||"");
+        if (typeLow==="missed" && !rec._ms.has(sk)) { rec.Missed++; rec._ms.add(sk); if(!rec.MissedDates.includes(dtStr)) rec.MissedDates.push(dtStr); }
+        else if (typeLow==="makeup" && !rec._mk.has(sk)) { rec.Makeup++; rec._mk.add(sk); if(!rec.MakeupDates.includes(dtStr)) rec.MakeupDates.push(dtStr); }
+        else if (typeLow==="late" && !rec._lt.has(sk)) { rec.Late++; rec._lt.add(sk); if(!rec.LateDates.includes(dtStr)) rec.LateDates.push(dtStr); }
+      }
+
+      for (const [k, times] of Object.entries(labBuckets)) {
+        times.sort();
+        const obj = JSON.parse(k);
+        const rec = result[obj.dept] && result[obj.dept][obj.fac+"|||"+obj.sub+"|||"+obj.cls];
+        if (!rec) continue;
+        let blocks=1;
+        for (let i=1;i<times.length;i++) {
+          const p=(times[i-1]||"00:00").split(":"),c=(times[i]||"00:00").split(":");
+          if (parseInt(c[0])*60+parseInt(c[1]) !== parseInt(p[0])*60+parseInt(p[1])+60) blocks++;
+        }
+        if (obj.tp==="missed") { rec.Missed+=blocks; if(!rec.MissedDates.includes(obj.dt)) rec.MissedDates.push(obj.dt); }
+        else if (obj.tp==="makeup") { rec.Makeup+=blocks; if(!rec.MakeupDates.includes(obj.dt)) rec.MakeupDates.push(obj.dt); }
+        else if (obj.tp==="late") { rec.Late+=blocks; if(!rec.LateDates.includes(obj.dt)) rec.LateDates.push(obj.dt); }
+      }
+
+      for (const dept of Object.keys(result)) {
+        for (const rec of Object.values(result[dept])) {
+          rec.GrandTotal = rec.ToBeConducted - rec.Missed + rec.Makeup + rec.Late;
+          delete rec._ms; delete rec._mk; delete rec._lt;
+        }
+      }
       return json(res, 200, result);
     } catch (e) { return json(res, 500, { error: e.message }); }
   }
+
 
   // POST /api/entries
   if (method === "POST" && pathname === "/api/entries") {

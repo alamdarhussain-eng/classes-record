@@ -57,14 +57,14 @@ export function ExcelImportButton({ label, description, onImport, onSuccess, var
           importResult.locations != null && `${importResult.locations} locations`,
         ].filter(Boolean).join(" · ");
 
-        Alert.alert("Import Successful ✓", details || "Data imported successfully");
+        if (typeof window !== "undefined") window.alert("✓ " + (details || "Data imported successfully")); else Alert.alert("Import Successful ✓", details || "Data imported successfully");
         onSuccess?.();
       } else {
-        Alert.alert("Import Failed", importResult.error ?? "Unknown error");
+        if (typeof window !== "undefined") window.alert("✗ Import Failed: " + (importResult.error ?? "Unknown error")); else Alert.alert("Import Failed", importResult.error ?? "Unknown error");
       }
     } catch (err) {
       setLoading(false);
-      Alert.alert("Error", "Could not pick or upload file");
+      if (typeof window !== "undefined") window.alert("Error uploading file"); else Alert.alert("Error", "Could not pick or upload file");
     }
   }
 

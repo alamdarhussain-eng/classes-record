@@ -120,3 +120,73 @@ export async function importSchedule(rows: any[], scheduleId?: number) {
   });
   return res.json();
 }
+
+async function buildFormData(uri: string, name: string, mimeType: string): Promise<FormData> {
+  const formData = new FormData();
+  if (typeof document !== "undefined") {
+    const blobRes = await fetch(uri);
+    const blob = await blobRes.blob();
+    formData.append("file", blob, name);
+  } else {
+    formData.append("file", { uri, name, type: mimeType } as unknown as Blob);
+  }
+  return formData;
+}
+
+export async function importScheduleExcel(uri: string, name: string, mimeType: string, scheduleId?: number) {
+  const formData = await buildFormData(uri, name, mimeType);
+  const url = scheduleId != null
+    ? `${API_BASE}/import/schedule/xlsx?scheduleId=${scheduleId}`
+    : `${API_BASE}/import/schedule/xlsx`;
+  const res = await fetch(url, { method: "POST", body: formData });
+  return res.json();
+}
+
+export async function importOptionsExcel(uri: string, name: string, mimeType: string) {
+  const formData = await buildFormData(uri, name, mimeType);
+  const res = await fetch(`${API_BASE}/import/options/xlsx`, { method: "POST", body: formData });
+  return res.json();
+}
+
+export async function importEntriesExcel(uri: string, name: string, mimeType: string) {
+  const formData = await buildFormData(uri, name, mimeType);
+  const res = await fetch(`${API_BASE}/import/entries/xlsx`, { method: "POST", body: formData });
+  return res.json();
+}
+
+export async function importStudentsExcel(scheduleId: number, className: string, uri: string, name: string, mimeType: string) {
+  const formData = await buildFormData(uri, name, mimeType);
+  const res = await fetch(`${API_BASE}/import/students/xlsx?scheduleId=${scheduleId}&className=${encodeURIComponent(className)}`, { method: "POST", body: formData });
+  return res.json();
+}
+
+async function buildFormData(uri: string, name: string, mimeType: string): Promise<FormData> {
+  const formData = new FormData();
+  if (typeof document !== "undefined") {
+    const blobRes = await fetch(uri);
+    const blob = await blobRes.blob();
+    formData.append("file", blob, name);
+  } else {
+    formData.append("file", { uri, name, type: mimeType } as unknown as Blob);
+  }
+  return formData;
+}
+
+
+export async function importOptionsExcel(uri: string, name: string, mimeType: string) {
+  const formData = await buildFormData(uri, name, mimeType);
+  const res = await fetch(`${API_BASE}/import/options/xlsx`, { method: "POST", body: formData });
+  return res.json();
+}
+
+export async function importEntriesExcel(uri: string, name: string, mimeType: string) {
+  const formData = await buildFormData(uri, name, mimeType);
+  const res = await fetch(`${API_BASE}/import/entries/xlsx`, { method: "POST", body: formData });
+  return res.json();
+}
+
+export async function importStudentsExcel(scheduleId: number, className: string, uri: string, name: string, mimeType: string) {
+  const formData = await buildFormData(uri, name, mimeType);
+  const res = await fetch(`${API_BASE}/import/students/xlsx?scheduleId=${scheduleId}&className=${encodeURIComponent(className)}`, { method: "POST", body: formData });
+  return res.json();
+}

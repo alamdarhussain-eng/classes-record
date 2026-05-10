@@ -535,6 +535,51 @@ async function handleApi(method, pathname, req, res) {
     } catch(e) { return json(res, 500, {error:e.message}); }
   }
 
+
+  // POST /api/import/schedule/xlsx
+  if (method === "POST" && pathname === "/api/import/schedule/xlsx") {
+    const scheduleId = reqUrl.searchParams.get("scheduleId");
+    const sidInt = scheduleId && !isNaN(parseInt(scheduleId)) ? parseInt(scheduleId) : null;
+    try {
+      const XLSX = require("xlsx");
+      const chunks = [];
+      for await (const chunk of req) chunks.push(chunk);
+      const buf = Buffer.concat(chunks);
+      const boundary = (req.headers["content-type"]||"").split("boundary=")[1];
+      if (!boundary) return json(res, 400, {success:false,message:"No boundary"});
+      const parts = buf.toString("binary").split("--"+boundary);
+      let fileBuf = null;
+      for (const part of parts) {
+        if (part.includes("filename=")) {
+          const idx = part.indexOf("\r\n\r\n");
+          if (idx>-1) fileBuf = Buffer.from(part.slice(idx+4,part.lastIndexOf("\r\n")),"binary");
+        }
+      }
+      if (!fileBuf) return json(res, 400, {success:false,message:"No file"});
+      const wb = XLSX.read(fileBuf, {type:"buffer"});
+      const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], {defval:""});
+      const DO = {Mon:0,Tue:1,Wed:2,Thu:3,Fri:4,Sat:5,Sun:6};
+      let imported = 0;
+      for (const r of rows) {
+        const fac=r.Faculty||r.faculty||"", sub=r.Subject||r.subject||"";
+        const cls=r.Class||r.class_name||r["Class Name"]||"";
+        const dept=r.Deptt||r.dept||r.Department||"";
+        const day=(r.Day||r.day||"").trim();
+        if (!fac||!sub||!cls||!day) continue;
+        const ts=r.Time||r["Start Time"]||"", te=r["End Time"]||r.EndTime||"";
+        const ll=r["Lec/Lab"]||r.LecLab||r.lec_lab||"Lec";
+        const el=r.Elective||r.elective||"";
+        const em=r["Email of User"]||r.UserEmail||r.user_email||"";
+        const tm=ts.match(/(\d+):(\d+)\s*(AM|PM)/i);
+        let h=0; if(tm){h=parseInt(tm[1]);if(tm[3].toUpperCase()==="PM"&&h!==12)h+=12;if(tm[3].toUpperCase()==="AM"&&h===12)h=0;}
+        await db.query("INSERT INTO public.weekly_schedule (faculty,subject,class_name,dept,day,location,time_start,time_end,lec_lab,elective,user_email,sort_key,schedule_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",
+          [fac,sub,cls,dept,day,r.Location||r.location||"",ts,te,ll,el,em,((DO[day]||0)*100+h),sidInt]);
+        imported++;
+      }
+      return json(res, 200, {success:true,imported});
+    } catch(e) { return json(res, 500, {error:e.message}); }
+  }
+
   return json(res, 404, { error: "Not found" });
 }
 

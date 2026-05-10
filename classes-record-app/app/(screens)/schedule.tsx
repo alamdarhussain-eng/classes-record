@@ -528,7 +528,7 @@ export default function ScheduleScreen() {
                                 } : undefined}
                                 onDelete={scheduleId ? () => {
                                   if (typeof window !== "undefined" && window.confirm("Delete " + r.Subject + " from " + (r.Day || "") + "?")) {
-                                    deleteRow.mutate(r.id!);
+                                    deleteMutation.mutate(r.id!);
                                   }
                                 } : undefined}
                               />

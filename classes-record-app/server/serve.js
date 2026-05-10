@@ -221,6 +221,34 @@ async function handleApi(method, pathname, req, res) {
     } catch (e) { return json(res, 500, { error: e.message }); }
   }
 
+  if (method === "POST" && pathname === "/api/schedule/entry") {
+    const { Faculty, Subject, Class, Dept, Day, Location, Time, EndTime, LecLab, Elective, User, scheduleId } = body;
+    if (!Faculty || !Subject || !Class || !Day || !Time) return json(res, 400, { error: "Missing required fields" });
+    try {
+      function timeToHour2(t) {
+        if (!t) return 9;
+        const m = String(t).match(/(\d+):(\d+)\s*(AM|PM)/i);
+        if (!m) return 9;
+        let h = parseInt(m[1]);
+        if (m[3].toUpperCase() === "PM" && h !== 12) h += 12;
+        if (m[3].toUpperCase() === "AM" && h === 12) h = 0;
+        return h;
+      }
+      const startH = timeToHour2(Time);
+      const endH = timeToHour2(EndTime);
+      const actualEndH = endH > startH ? endH : startH + 1;
+      const sid = scheduleId != null && !isNaN(parseInt(scheduleId)) ? parseInt(scheduleId) : null;
+      for (let h = startH; h < actualEndH; h++) {
+        function hourLabel2(n) { const h12 = n % 12 || 12; const ap = n >= 12 ? "PM" : "AM"; return (h12 < 10 ? "0" : "") + h12 + ":00 " + ap; }
+        await db.query(
+          "INSERT INTO public.weekly_schedule (faculty, subject, class_name, dept, day, location, time_start, time_end, lec_lab, elective, user_email, sort_key, schedule_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",
+          [Faculty, Subject, Class, Dept || "", Day, Location || "", hourLabel2(h), hourLabel2(h+1), LecLab || "Lec", Elective || "", User || "", h * 60, sid]
+        );
+      }
+      return json(res, 200, { success: true, inserted: actualEndH - startH });
+    } catch(e) { return json(res, 500, { error: e.message }); }
+  }
+
   if (method === "DELETE" && pathname.startsWith("/api/schedule/") && !pathname.startsWith("/api/schedules/")) {
     const id = parseInt(pathname.split("/").pop());
     if (!isNaN(id)) {

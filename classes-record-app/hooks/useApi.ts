@@ -121,7 +121,7 @@ export async function addScheduleEntry(data: { faculty: string; subject: string;
   const res = await fetch(`${API_BASE}/schedule/entry`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+    body: JSON.stringify({ Faculty: data.faculty, Subject: data.subject, Class: data.className, Dept: data.dept, Day: data.day, Location: data.location, Time: data.timeStart, EndTime: data.timeEnd, LecLab: data.lecLab, Elective: data.elective || "", User: data.userEmail || "", scheduleId: data.scheduleId }),
   });
   return res.json();
 }

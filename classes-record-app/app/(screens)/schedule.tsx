@@ -84,7 +84,9 @@ function MiniCard({ row, colors }: { row: ScheduleRow; colors: ReturnType<typeof
         </Text>
       ) : null}
       {isMakeup ? (
-        <Text style={{ fontSize: 9, fontFamily: "Inter_600SemiBold", color: "#4CAF50" }}>MAKEUP</Text>
+        <Text style={{ fontSize: 9, fontFamily: "Inter_600SemiBold", color: "#4CAF50" }}>
+          {row.EntryDate ? `MAKEUP · ${row.EntryDate.split("T")[0]}` : "MAKEUP"}
+        </Text>
       ) : null}
     </View>
   );

@@ -224,6 +224,74 @@ export default function ScheduleScreen() {
     return map;
   }, [rows, classFilter, facFilter]);
 
+  async function handleDownloadExcel() {
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const filtered = rows.filter((r) => {
+      if (classFilter && r.Class !== classFilter) return false;
+      if (facFilter && r.Faculty !== facFilter) return false;
+      if (r.Type === "Missed" || r.Type === "Late") return false;
+      if (r.Type === "Makeup" && r.EntryDate) {
+        const d = new Date(r.EntryDate); d.setHours(0, 0, 0, 0);
+        if (d < today) return false;
+      }
+      return true;
+    });
+    // Deduplicate by faculty+subject+class+day+time
+    const seen = new Set<string>();
+    const unique = filtered.filter((r) => {
+      const key = [r.Faculty, r.Subject, r.Class, r.Day, r.Time].join("|");
+      if (seen.has(key)) return false;
+      seen.add(key); return true;
+    });
+    const header = ["Faculty","Subject","Class","Deptt","Day","Time","End Time","Location","Lec/Lab","Elective","Email of User"];
+    const csvRows = unique.map((r) => [
+      r.Faculty || "", r.Subject || "", r.Class || "", r.Deptt || "",
+      r.Day || "", r.Time || "", r.EndTime || "",
+      r.Location || "", r.LecLab || "Lec", r.Elective || "", r.User || ""
+    ].map((v) => `"${String(v).replace(/"/g, '""')}"`).join(","));
+    const csv = [header.join(","), ...csvRows].join("
+");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "WeeklySchedule.csv"; a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  async function handleDownloadExcel() {
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const filtered = rows.filter((r) => {
+      if (classFilter && r.Class !== classFilter) return false;
+      if (facFilter && r.Faculty !== facFilter) return false;
+      if (r.Type === "Missed" || r.Type === "Late") return false;
+      if (r.Type === "Makeup" && r.EntryDate) {
+        const d = new Date(r.EntryDate); d.setHours(0, 0, 0, 0);
+        if (d < today) return false;
+      }
+      return true;
+    });
+    // Deduplicate by faculty+subject+class+day+time
+    const seen = new Set<string>();
+    const unique = filtered.filter((r) => {
+      const key = [r.Faculty, r.Subject, r.Class, r.Day, r.Time].join("|");
+      if (seen.has(key)) return false;
+      seen.add(key); return true;
+    });
+    const header = ["Faculty","Subject","Class","Deptt","Day","Time","End Time","Location","Lec/Lab","Elective","Email of User"];
+    const csvRows = unique.map((r) => [
+      r.Faculty || "", r.Subject || "", r.Class || "", r.Deptt || "",
+      r.Day || "", r.Time || "", r.EndTime || "",
+      r.Location || "", r.LecLab || "Lec", r.Elective || "", r.User || ""
+    ].map((v) => `"${String(v).replace(/"/g, '""')}"`).join(","));
+    const csv = [header.join(","), ...csvRows].join("
+");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "WeeklySchedule.csv"; a.click();
+    URL.revokeObjectURL(url);
+  }
+
   async function handleDownload() {
     const today = new Date(); today.setHours(0, 0, 0, 0);
 
@@ -453,6 +521,12 @@ export default function ScheduleScreen() {
               <Feather name="download" size={15} color="#fff" />
               <Text style={s.actionBtnTxt}>Download</Text>
             </TouchableOpacity>
+            {scheduleId ? (
+              <TouchableOpacity style={s.actionBtn} onPress={handleDownloadExcel}>
+                <Feather name="file-text" size={15} color={colors.primary} />
+                <Text style={s.actionBtnTxt}>Export CSV</Text>
+              </TouchableOpacity>
+            ) : null}
           </View>
         </View>
         <View style={s.titleRow}>

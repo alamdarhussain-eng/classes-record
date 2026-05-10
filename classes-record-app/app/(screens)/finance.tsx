@@ -393,7 +393,7 @@ export default function FinanceScreen() {
   const s = StyleSheet.create({
     container: { flex: 1, backgroundColor: colors.background },
     header: {
-      backgroundColor: "#00695C",
+      backgroundColor: "#1565C0",
       paddingTop: insets.top + (Platform.OS === "web" ? 67 : 0),
       paddingBottom: 12, paddingHorizontal: 16,
     },
@@ -415,7 +415,7 @@ export default function FinanceScreen() {
       paddingHorizontal: 14, paddingVertical: 12,
       fontFamily: "Inter_400Regular", fontSize: 14, color: colors.foreground, marginBottom: 12,
     },
-    loginBtn: { backgroundColor: "#00695C", borderRadius: 10, paddingVertical: 13, alignItems: "center", marginTop: 4 },
+    loginBtn: { backgroundColor: "#1565C0", borderRadius: 10, paddingVertical: 13, alignItems: "center", marginTop: 4 },
     loginBtnTxt: { color: "#fff", fontSize: 15, fontFamily: "Inter_700Bold" },
     switchRow: { flexDirection: "row", justifyContent: "center", marginTop: 14, gap: 4 },
     switchTxt: { fontSize: 13, fontFamily: "Inter_400Regular", color: colors.mutedForeground },
@@ -437,12 +437,12 @@ export default function FinanceScreen() {
     semBtnTxt: { flex: 1, fontSize: 13, fontFamily: "Inter_600SemiBold", color: "#00695C" },
     modeToggle: { flexDirection: "row", borderRadius: 8, borderWidth: 1, borderColor: "#00695C", overflow: "hidden" },
     modeBtn: { paddingHorizontal: 14, paddingVertical: 8, backgroundColor: colors.muted },
-    modeBtnActive: { backgroundColor: "#00695C" },
+    modeBtnActive: { backgroundColor: "#1565C0" },
     modeBtnTxt: { fontSize: 12, fontFamily: "Inter_600SemiBold", color: "#00695C" },
     modeBtnTxtActive: { color: "#fff" },
     monthChipsRow: { paddingHorizontal: 10, paddingBottom: 8, gap: 6 },
     monthChip: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 20, borderWidth: 1, borderColor: colors.border, backgroundColor: colors.muted },
-    monthChipActive: { backgroundColor: "#00695C", borderColor: "#00695C" },
+    monthChipActive: { backgroundColor: "#1565C0", borderColor: "#00695C" },
     monthChipTxt: { fontSize: 12, fontFamily: "Inter_500Medium", color: colors.foreground },
     monthChipTxtActive: { color: "#fff", fontFamily: "Inter_700Bold" },
     scheduleBtn: {
@@ -459,7 +459,7 @@ export default function FinanceScreen() {
     summaryLabel: { fontSize: 11, fontFamily: "Inter_400Regular", color: colors.mutedForeground, marginTop: 2 },
     summaryRow: { flexDirection: "row", justifyContent: "space-between", marginTop: 4 },
     // Payment table
-    tableHead: { flexDirection: "row", backgroundColor: "#00695C", paddingHorizontal: 8, paddingVertical: 7 },
+    tableHead: { flexDirection: "row", backgroundColor: "#1565C0", paddingHorizontal: 8, paddingVertical: 7 },
     thNum: { width: 28, fontSize: 10, fontFamily: "Inter_700Bold", color: "#fff" },
     thName: { flex: 1, fontSize: 10, fontFamily: "Inter_700Bold", color: "#fff" },
     thAmt: { width: 68, fontSize: 10, fontFamily: "Inter_700Bold", color: "#fff", textAlign: "center" },
@@ -479,7 +479,7 @@ export default function FinanceScreen() {
     statusBadge: { width: 56, borderRadius: 8, paddingVertical: 3, alignItems: "center" },
     statusBadgeTxt: { fontSize: 9, fontFamily: "Inter_700Bold" },
     saveAllBtn: {
-      margin: 12, backgroundColor: "#00695C", borderRadius: 10,
+      margin: 12, backgroundColor: "#1565C0", borderRadius: 10,
       paddingVertical: 12, alignItems: "center", flexDirection: "row", justifyContent: "center", gap: 8,
     },
     saveAllBtnTxt: { color: "#fff", fontFamily: "Inter_700Bold", fontSize: 14 },
@@ -490,7 +490,7 @@ export default function FinanceScreen() {
       borderRadius: 8, paddingHorizontal: 10, paddingVertical: 8,
       fontFamily: "Inter_400Regular", fontSize: 12, color: colors.foreground,
     },
-    addBtn: { backgroundColor: "#00695C", borderRadius: 8, paddingHorizontal: 14, alignItems: "center", justifyContent: "center", paddingVertical: 8 },
+    addBtn: { backgroundColor: "#1565C0", borderRadius: 8, paddingHorizontal: 14, alignItems: "center", justifyContent: "center", paddingVertical: 8 },
     bulkRow: { flexDirection: "row", gap: 8, padding: 10, backgroundColor: colors.card, borderBottomWidth: 1, borderBottomColor: colors.border, alignItems: "center" },
     bulkBtn: { flex: 1, flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: colors.muted, borderRadius: 8, paddingHorizontal: 12, paddingVertical: 9, borderWidth: 1, borderColor: colors.border },
     bulkBtnTxt: { fontFamily: "Inter_500Medium", fontSize: 13, color: colors.foreground },
@@ -503,7 +503,7 @@ export default function FinanceScreen() {
     // Public lookup
     lookupRow: { flexDirection: "row", gap: 8, padding: 12, backgroundColor: colors.card, borderBottomWidth: 1, borderBottomColor: colors.border },
     lookupInput: { flex: 1, backgroundColor: colors.muted, borderRadius: 8, borderWidth: 1, borderColor: colors.border, paddingHorizontal: 12, paddingVertical: 9, fontFamily: "Inter_400Regular", fontSize: 14, color: colors.foreground },
-    lookupBtn: { backgroundColor: "#00695C", borderRadius: 8, paddingHorizontal: 16, justifyContent: "center" },
+    lookupBtn: { backgroundColor: "#1565C0", borderRadius: 8, paddingHorizontal: 16, justifyContent: "center" },
     lookupBtnTxt: { color: "#fff", fontFamily: "Inter_700Bold", fontSize: 14 },
     noData: { alignItems: "center", marginTop: 60, paddingHorizontal: 32 },
     noDataTxt: { fontSize: 14, fontFamily: "Inter_400Regular", color: colors.mutedForeground, textAlign: "center", marginTop: 10 },
@@ -733,7 +733,7 @@ export default function FinanceScreen() {
             Period · {periodDisplay}
           </Text>
         </View>
-        <View style={{ marginHorizontal: 14, backgroundColor: "#00695C", borderRadius: 16, padding: 18, marginBottom: 16 }}>
+        <View style={{ marginHorizontal: 14, backgroundColor: "#1565C0", borderRadius: 16, padding: 18, marginBottom: 16 }}>
           <Text style={{ fontSize: 12, fontFamily: "Inter_600SemiBold", color: "rgba(255,255,255,0.7)", textTransform: "uppercase", marginBottom: 4 }}>Overall</Text>
           <Text style={{ fontSize: 28, fontFamily: "Inter_700Bold", color: "#fff" }}>Rs {fmt(overall.totalPaid)}</Text>
           <Text style={{ fontSize: 13, fontFamily: "Inter_400Regular", color: "rgba(255,255,255,0.8)", marginTop: 2 }}>collected of Rs {fmt(overall.totalDue)} due</Text>
@@ -827,7 +827,7 @@ export default function FinanceScreen() {
     const balance = totalDue - totalPaid;
     return (
       <View style={{ backgroundColor: colors.card, borderRadius: 14, borderWidth: 1, borderColor: colors.border, overflow: "hidden", marginTop: 8 }}>
-        <View style={{ backgroundColor: "#00695C", padding: 14 }}>
+        <View style={{ backgroundColor: "#1565C0", padding: 14 }}>
           <Text style={{ color: "#fff", fontSize: 16, fontFamily: "Inter_700Bold" }}>{lookupResult.personName}</Text>
           <Text style={{ color: "rgba(255,255,255,0.8)", fontSize: 12, fontFamily: "Inter_400Regular", marginTop: 2 }}>{lookupResult.rollNo}</Text>
         </View>
@@ -865,7 +865,7 @@ export default function FinanceScreen() {
           <View style={{ backgroundColor: colors.card, borderRadius: 16, padding: 24, width: "100%", alignItems: "center" }}>
             <Feather name="alert-circle" size={32} color={colors.destructive} style={{ marginBottom: 10 }} />
             <Text style={{ fontSize: 15, fontFamily: "Inter_400Regular", color: colors.foreground, textAlign: "center", marginBottom: 20 }}>{errorMsg}</Text>
-            <TouchableOpacity onPress={() => setErrorMsg("")} style={{ backgroundColor: "#00695C", borderRadius: 10, paddingVertical: 11, paddingHorizontal: 32 }}>
+            <TouchableOpacity onPress={() => setErrorMsg("")} style={{ backgroundColor: "#1565C0", borderRadius: 10, paddingVertical: 11, paddingHorizontal: 32 }}>
               <Text style={{ color: "#fff", fontSize: 15, fontFamily: "Inter_700Bold" }}>OK</Text>
             </TouchableOpacity>
           </View>
@@ -1125,7 +1125,7 @@ export default function FinanceScreen() {
             </View>
 
             {/* Column header */}
-            <View style={{ flexDirection: "row", backgroundColor: "#00695C", paddingHorizontal: 14, paddingVertical: 7 }}>
+            <View style={{ flexDirection: "row", backgroundColor: "#1565C0", paddingHorizontal: 14, paddingVertical: 7 }}>
               <Text style={{ flex: 1, fontSize: 10, fontFamily: "Inter_700Bold", color: "#fff" }}>Name / ID</Text>
               <Text style={{ width: 100, fontSize: 10, fontFamily: "Inter_700Bold", color: "#fff", textAlign: "center" }}>
                 {showRatesModal === "student" ? "Fee (Rs)" : "Monthly Pay (Rs)"}
@@ -1170,7 +1170,7 @@ export default function FinanceScreen() {
                 <Text style={{ fontSize: 14, fontFamily: "Inter_600SemiBold", color: colors.foreground }}>Close</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={{ flex: 2, backgroundColor: "#00695C", borderRadius: 10, paddingVertical: 12, alignItems: "center", flexDirection: "row", justifyContent: "center", gap: 8 }}
+                style={{ flex: 2, backgroundColor: "#1565C0", borderRadius: 10, paddingVertical: 12, alignItems: "center", flexDirection: "row", justifyContent: "center", gap: 8 }}
                 onPress={() => showRatesModal && handleSaveRates(showRatesModal)}
                 disabled={savingRates}
               >

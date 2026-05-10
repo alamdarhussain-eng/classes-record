@@ -176,7 +176,7 @@ export default function AdminPanelScreen() {
 
   const s = StyleSheet.create({
     container: { flex: 1, backgroundColor: colors.background },
-    header: { backgroundColor: "#4A148C", paddingTop: insets.top + (Platform.OS === "web" ? 67 : 16), paddingBottom: 20, paddingHorizontal: 20 },
+    header: { backgroundColor: "#1565C0", paddingTop: insets.top + (Platform.OS === "web" ? 67 : 16), paddingBottom: 20, paddingHorizontal: 20 },
     headerRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 10 },
     homeBtn: { flexDirection: "row", alignItems: "center", gap: 5, backgroundColor: "rgba(255,255,255,0.2)", borderRadius: 20, paddingHorizontal: 12, paddingVertical: 6 },
     homeBtnTxt: { color: "#fff", fontSize: 13, fontFamily: "Inter_600SemiBold" },
@@ -185,7 +185,7 @@ export default function AdminPanelScreen() {
     toolbar: { flexDirection: "row", gap: 8, margin: 14, alignItems: "center" },
     searchBox: { flex: 1, flexDirection: "row", alignItems: "center", gap: 8, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.border, borderRadius: 10, paddingHorizontal: 12, paddingVertical: 9 },
     searchInput: { flex: 1, fontSize: 14, fontFamily: "Inter_400Regular", color: colors.foreground },
-    iconBtn: { flexDirection: "row", alignItems: "center", gap: 5, backgroundColor: "#4A148C", borderRadius: 10, paddingHorizontal: 12, paddingVertical: 10 },
+    iconBtn: { flexDirection: "row", alignItems: "center", gap: 5, backgroundColor: "#1565C0", borderRadius: 10, paddingHorizontal: 12, paddingVertical: 10 },
     iconBtnTxt: { color: "#fff", fontSize: 13, fontFamily: "Inter_600SemiBold" },
     card: { marginHorizontal: 14, marginBottom: 10, backgroundColor: colors.card, borderRadius: 14, borderWidth: 1, borderColor: colors.border, padding: 14 },
     cardTop: { flexDirection: "row", alignItems: "center", marginBottom: 8 },
@@ -233,9 +233,9 @@ export default function AdminPanelScreen() {
       <View style={[s.container, { justifyContent: "center", padding: 28 }]}>
         <View style={{ alignItems: "center", marginBottom: 32 }}>
           <View style={{ width: 72, height: 72, borderRadius: 36, backgroundColor: "#EDE7F6", alignItems: "center", justifyContent: "center", marginBottom: 16 }}>
-            <Feather name="shield" size={36} color="#4A148C" />
+            <Feather name="shield" size={36} color="#1565C0" />
           </View>
-          <Text style={{ fontSize: 24, fontFamily: "Inter_700Bold", color: "#4A148C", marginBottom: 6 }}>Admin Panel</Text>
+          <Text style={{ fontSize: 24, fontFamily: "Inter_700Bold", color: "#1565C0", marginBottom: 6 }}>Admin Panel</Text>
           <Text style={{ fontSize: 14, fontFamily: "Inter_400Regular", color: "#666", textAlign: "center" }}>Enter admin credentials to continue</Text>
         </View>
         <Text style={{ fontSize: 11, fontFamily: "Inter_600SemiBold", color: "#666", marginBottom: 6, textTransform: "uppercase" }}>Admin Username</Text>
@@ -258,7 +258,7 @@ export default function AdminPanelScreen() {
         />
         {authError ? <Text style={{ color: "#B71C1C", fontSize: 13, fontFamily: "Inter_400Regular", marginBottom: 12 }}>{authError}</Text> : <View style={{ height: 20 }} />}
         <TouchableOpacity
-          style={{ backgroundColor: "#4A148C", borderRadius: 12, paddingVertical: 14, alignItems: "center", marginTop: 4 }}
+          style={{ backgroundColor: "#1565C0", borderRadius: 12, paddingVertical: 14, alignItems: "center", marginTop: 4 }}
           onPress={() => {
             if (authUser.trim() === ADMIN_USERNAME && authPass === ADMIN_PASSWORD) {
               setAuthed(true);
@@ -271,7 +271,7 @@ export default function AdminPanelScreen() {
           <Text style={{ color: "#fff", fontSize: 16, fontFamily: "Inter_700Bold" }}>Sign In</Text>
         </TouchableOpacity>
         <TouchableOpacity style={{ marginTop: 16, alignItems: "center" }} onPress={() => router.back()}>
-          <Text style={{ color: "#4A148C", fontSize: 14, fontFamily: "Inter_600SemiBold" }}>← Go Back</Text>
+          <Text style={{ color: "#1565C0", fontSize: 14, fontFamily: "Inter_600SemiBold" }}>← Go Back</Text>
         </TouchableOpacity>
       </View>
     );
@@ -306,7 +306,7 @@ export default function AdminPanelScreen() {
       </View>
 
       {loading ? (
-        <ActivityIndicator size="large" color="#4A148C" style={{ marginTop: 40 }} />
+        <ActivityIndicator size="large" color="#1565C0" style={{ marginTop: 40 }} />
       ) : filtered.length === 0 ? (
         <View style={{ alignItems: "center", marginTop: 60 }}>
           <Feather name="users" size={48} color={colors.mutedForeground} />
@@ -322,7 +322,7 @@ export default function AdminPanelScreen() {
               <View key={u.id} style={[s.card, u.isLocked && { borderColor: "#B71C1C" }]}>
                 <View style={s.cardTop}>
                   <View style={s.avatar}>
-                    <Text style={{ fontSize: 16, fontFamily: "Inter_700Bold", color: "#4A148C" }}>{u.username.charAt(0).toUpperCase()}</Text>
+                    <Text style={{ fontSize: 16, fontFamily: "Inter_700Bold", color: "#1565C0" }}>{u.username.charAt(0).toUpperCase()}</Text>
                   </View>
                   <View style={{ flex: 1 }}>
                     <Text style={s.username}>{u.username}</Text>
@@ -342,8 +342,8 @@ export default function AdminPanelScreen() {
                 <Text style={s.infoTxt}>Registered: {fmtDate(u.registeredAt)}</Text>
                 <Text style={s.infoTxt}>Expiry: <Text style={{ fontFamily: "Inter_600SemiBold", color: u.expiryDate ? (new Date(u.expiryDate) < new Date() ? "#B71C1C" : "#2E7D32") : "#1565C0" }}>{u.expiryDate ? fmtDate(u.expiryDate) : "No Expiry Set"}</Text></Text>
                 <View style={s.actionRow}>
-                  <TouchableOpacity style={[s.actionBtn, { borderColor: "#4A148C", backgroundColor: "#EDE7F6" }]} onPress={() => { setExpiryTarget(u); setExpiryDays("30"); setExpiryCustomDate(""); setExpiryMode("days"); }} disabled={actionLoading}>
-                    <Feather name="check-circle" size={12} color="#4A148C" /><Text style={[s.actionBtnTxt, { color: "#4A148C" }]}>Activate</Text>
+                  <TouchableOpacity style={[s.actionBtn, { borderColor: "#1565C0", backgroundColor: "#EDE7F6" }]} onPress={() => { setExpiryTarget(u); setExpiryDays("30"); setExpiryCustomDate(""); setExpiryMode("days"); }} disabled={actionLoading}>
+                    <Feather name="check-circle" size={12} color="#1565C0" /><Text style={[s.actionBtnTxt, { color: "#1565C0" }]}>Activate</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={[s.actionBtn, { borderColor: u.isLocked ? "#2E7D32" : "#E65100", backgroundColor: u.isLocked ? "#E8F5E9" : "#FFF3E0" }]} onPress={() => handleToggleLock(u)} disabled={actionLoading}>
                     <Feather name={u.isLocked ? "unlock" : "lock"} size={12} color={u.isLocked ? "#2E7D32" : "#E65100"} /><Text style={[s.actionBtnTxt, { color: u.isLocked ? "#2E7D32" : "#E65100" }]}>{u.isLocked ? "Unlock" : "Lock"}</Text>
@@ -369,8 +369,8 @@ export default function AdminPanelScreen() {
             <Text style={s.modalSub}>Set duration for <Text style={{ fontFamily: "Inter_700Bold", color: colors.foreground }}>{expiryTarget?.username}</Text></Text>
             <View style={s.modeRow}>
               {(["days", "date"] as const).map(m => (
-                <TouchableOpacity key={m} style={[s.modeBtn, { borderColor: expiryMode === m ? "#4A148C" : colors.border, backgroundColor: expiryMode === m ? "#EDE7F6" : colors.background }]} onPress={() => setExpiryMode(m)}>
-                  <Text style={{ fontSize: 13, fontFamily: "Inter_600SemiBold", color: expiryMode === m ? "#4A148C" : colors.mutedForeground }}>{m === "days" ? "By Days" : "By Date"}</Text>
+                <TouchableOpacity key={m} style={[s.modeBtn, { borderColor: expiryMode === m ? "#1565C0" : colors.border, backgroundColor: expiryMode === m ? "#EDE7F6" : colors.background }]} onPress={() => setExpiryMode(m)}>
+                  <Text style={{ fontSize: 13, fontFamily: "Inter_600SemiBold", color: expiryMode === m ? "#1565C0" : colors.mutedForeground }}>{m === "days" ? "By Days" : "By Date"}</Text>
                 </TouchableOpacity>
               ))}
             </View>
@@ -380,7 +380,7 @@ export default function AdminPanelScreen() {
                 <TextInput style={s.modalInput} placeholder="e.g. 30" placeholderTextColor={colors.mutedForeground} value={expiryDays} onChangeText={setExpiryDays} keyboardType="number-pad" autoFocus />
                 <View style={s.quickRow}>
                   {[30, 90, 180, 365].map(d => (
-                    <TouchableOpacity key={d} onPress={() => setExpiryDays(String(d))} style={{ flex: 1, backgroundColor: expiryDays === String(d) ? "#4A148C" : colors.secondary, borderRadius: 8, paddingVertical: 7, alignItems: "center" }}>
+                    <TouchableOpacity key={d} onPress={() => setExpiryDays(String(d))} style={{ flex: 1, backgroundColor: expiryDays === String(d) ? "#1565C0" : colors.secondary, borderRadius: 8, paddingVertical: 7, alignItems: "center" }}>
                       <Text style={{ fontSize: 12, fontFamily: "Inter_600SemiBold", color: expiryDays === String(d) ? "#fff" : colors.mutedForeground }}>{d}d</Text>
                     </TouchableOpacity>
                   ))}
@@ -394,7 +394,7 @@ export default function AdminPanelScreen() {
             )}
             <View style={s.modalRow}>
               <TouchableOpacity style={s.cancelBtn} onPress={() => setExpiryTarget(null)} disabled={actionLoading}><Text style={s.cancelTxt}>Cancel</Text></TouchableOpacity>
-              <TouchableOpacity style={[s.confirmBtn, { backgroundColor: "#4A148C" }]} onPress={handleSetExpiry} disabled={actionLoading}>
+              <TouchableOpacity style={[s.confirmBtn, { backgroundColor: "#1565C0" }]} onPress={handleSetExpiry} disabled={actionLoading}>
                 {actionLoading ? <ActivityIndicator color="#fff" size="small" /> : <Text style={s.confirmTxt}>Activate</Text>}
               </TouchableOpacity>
             </View>
@@ -414,7 +414,7 @@ export default function AdminPanelScreen() {
             <TextInput style={s.modalInput} placeholder="Re-enter" placeholderTextColor={colors.mutedForeground} value={confirmPassword} onChangeText={setConfirmPassword} secureTextEntry />
             <View style={s.modalRow}>
               <TouchableOpacity style={s.cancelBtn} onPress={() => setPasswordTarget(null)} disabled={actionLoading}><Text style={s.cancelTxt}>Cancel</Text></TouchableOpacity>
-              <TouchableOpacity style={[s.confirmBtn, { backgroundColor: "#4A148C" }]} onPress={handleChangePassword} disabled={actionLoading}>
+              <TouchableOpacity style={[s.confirmBtn, { backgroundColor: "#1565C0" }]} onPress={handleChangePassword} disabled={actionLoading}>
                 {actionLoading ? <ActivityIndicator color="#fff" size="small" /> : <Text style={s.confirmTxt}>Update</Text>}
               </TouchableOpacity>
             </View>

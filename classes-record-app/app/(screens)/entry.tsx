@@ -198,8 +198,8 @@ export default function EntryScreen() {
   const s = StyleSheet.create({
     container: { flex: 1, backgroundColor: colors.background },
     header: {
-      backgroundColor: typeColors[type], paddingTop: insets.top + (Platform.OS === "web" ? 67 : 0),
-      paddingBottom: 16, paddingHorizontal: 16, borderBottomWidth: 1, borderBottomColor: colors.border,
+      backgroundColor: "#1565C0", paddingTop: insets.top + (Platform.OS === "web" ? 67 : 0),
+      paddingBottom: 16, paddingHorizontal: 16, borderBottomWidth: 1, borderBottomColor: "rgba(255,255,255,0.15)",
     },
     homeBtn: {
       flexDirection: "row", alignItems: "center", gap: 6,
@@ -207,8 +207,8 @@ export default function EntryScreen() {
       paddingHorizontal: 12, paddingVertical: 6, alignSelf: "flex-start", marginBottom: 10,
     },
     homeBtnTxt: { color: typeTextColors[type], fontFamily: "Inter_600SemiBold", fontSize: 13 },
-    headerTitle: { fontSize: 22, fontFamily: "Inter_700Bold", color: typeTextColors[type] },
-    headerSub: { fontSize: 13, fontFamily: "Inter_400Regular", color: typeTextColors[type], opacity: 0.8, marginTop: 2 },
+    headerTitle: { fontSize: 22, fontFamily: "Inter_700Bold", color: "#fff" },
+    headerSub: { fontSize: 13, fontFamily: "Inter_400Regular", color: "rgba(255,255,255,0.8)", marginTop: 2 },
     scroll: { padding: 16 },
     label: { fontSize: 12, fontFamily: "Inter_600SemiBold", color: colors.mutedForeground, marginBottom: 6, marginTop: 16, textTransform: "uppercase", letterSpacing: 0.5 },
     pickerBtn: {

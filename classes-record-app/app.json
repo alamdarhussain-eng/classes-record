@@ -21,7 +21,8 @@
       "versionCode": 1
     },
     "web": {
-      "favicon": "./assets/images/icon.png"
+      "favicon": "./assets/images/icon.png",
+      "baseUrl": "/classes-record"
     },
     "plugins": [
       "expo-router",

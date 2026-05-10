@@ -221,6 +221,16 @@ async function handleApi(method, pathname, req, res) {
     } catch (e) { return json(res, 500, { error: e.message }); }
   }
 
+  if (method === "DELETE" && pathname.startsWith("/api/schedule/") && !pathname.startsWith("/api/schedules/")) {
+    const id = parseInt(pathname.split("/").pop());
+    if (!isNaN(id)) {
+      try {
+        await db.query("DELETE FROM public.weekly_schedule WHERE id = $1", [id]);
+        return json(res, 200, { success: true });
+      } catch(e) { return json(res, 500, { error: e.message }); }
+    }
+  }
+
   if (method === "DELETE" && pathname.startsWith("/api/schedules/")) {
     const id = pathname.split("/")[3];
     try {

@@ -112,6 +112,20 @@ export async function createUserSchedule(username: string, name: string, startDa
   return res.json();
 }
 
+export async function deleteScheduleRow(id: number) {
+  const res = await fetch(`${API_BASE}/schedule/${id}`, { method: "DELETE" });
+  return res.json();
+}
+
+export async function addScheduleEntry(data: { faculty: string; subject: string; className: string; dept: string; day: string; location: string; timeStart: string; timeEnd: string; lecLab: string; elective?: string; userEmail?: string; scheduleId?: number }) {
+  const res = await fetch(`${API_BASE}/schedule/entry`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  return res.json();
+}
+
 export async function importSchedule(rows: any[], scheduleId?: number) {
   const res = await fetch(`${API_BASE}/import/schedule`, {
     method: "POST",

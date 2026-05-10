@@ -102,7 +102,8 @@ function hourLabel(h) {
 // Route handler
 async function handleApi(method, pathname, req, res) {
   const reqUrl = new URL(req.url, 'http://' + (req.headers.host || 'localhost'));
-  const body = (method === "POST" || method === "PATCH") ? await readBody(req) : {};
+  const isMultipart = (req.headers["content-type"]||"").includes("multipart/form-data");
+  const body = (method === "POST" || method === "PATCH") && !isMultipart ? await readBody(req) : {};
 
   if (method === "OPTIONS") { cors(res); res.writeHead(204); res.end(); return; }
   cors(res);

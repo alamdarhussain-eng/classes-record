@@ -1,4 +1,3 @@
-// Build: 2026-05-09 17:25
 import React, { useState, useMemo, useCallback } from "react";
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
@@ -135,7 +134,7 @@ export default function SummaryScreen() {
 
     const dateSub = (dates: string[]) =>
       dates.length > 0
-        ? `<div style="font-size:8px;color:#999;margin-top:2px;line-height:1.4">${dates.map(shortDate).join(", ")}</div>`
+        ? `<div style="font-size:8px;color:#999;margin-top:2px;line-height:1.4">${dates.map(shortDate).join(" ")}</div>`
         : "";
 
     const tableRows = rows.map((r, i) => {

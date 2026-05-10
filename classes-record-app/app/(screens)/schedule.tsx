@@ -64,17 +64,29 @@ const EMPTY_FORM: AddForm = {
   lecLab: "Lec", elective: "",
 };
 
-function MiniCard({ row, colors }: { row: ScheduleRow; colors: ReturnType<typeof useColors> }) {
+function MiniCard({ row, colors, onCopy, onDelete, isCopied }: { row: ScheduleRow; colors: ReturnType<typeof useColors>; onCopy?: () => void; onDelete?: () => void; isCopied?: boolean }) {
   const isMakeup = row.Type === "Makeup";
   return (
-    <View style={{
-      backgroundColor: isMakeup ? colors.successBg : colors.secondary,
+    <TouchableOpacity onPress={onCopy} style={{
+      backgroundColor: isCopied ? "#FFF9C4" : isMakeup ? colors.successBg : colors.secondary,
       borderRadius: 6, padding: 4, marginBottom: 3,
-      borderLeftWidth: 3, borderLeftColor: isMakeup ? "#4CAF50" : colors.primary,
+      borderLeftWidth: 3, borderLeftColor: isCopied ? "#F9A825" : isMakeup ? "#4CAF50" : colors.primary,
     }}>
-      <Text numberOfLines={2} style={{ fontSize: 11, fontFamily: "Inter_600SemiBold", color: colors.foreground }}>
-        {row.Subject}
-      </Text>
+      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" }}>
+        <Text numberOfLines={2} style={{ fontSize: 11, fontFamily: "Inter_600SemiBold", color: colors.foreground, flex: 1 }}>
+          {row.Subject}
+        </Text>
+        {onCopy && onDelete && (
+          <View style={{ flexDirection: "row", gap: 4, marginLeft: 2 }}>
+            <TouchableOpacity onPress={onCopy} style={{ padding: 1 }}>
+              <Text style={{ fontSize: 9, color: "#1976D2" }}>📋</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onDelete} style={{ padding: 1 }}>
+              <Text style={{ fontSize: 9, color: "#D32F2F" }}>🗑</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
       <Text numberOfLines={1} style={{ fontSize: 10, fontFamily: "Inter_400Regular", color: colors.mutedForeground }}>
         {row.Class}
       </Text>
@@ -88,7 +100,7 @@ function MiniCard({ row, colors }: { row: ScheduleRow; colors: ReturnType<typeof
           {row.EntryDate ? `MAKEUP · ${row.EntryDate.split("T")[0]}` : "MAKEUP"}
         </Text>
       ) : null}
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -98,6 +110,7 @@ export default function ScheduleScreen() {
   const qc = useQueryClient();
   const router = useRouter();
   const { width: screenWidth } = useWindowDimensions();
+  const [clipboard, setClipboard] = React.useState<ScheduleRow | null>(null);
   const { scheduleId: scheduleIdParam, scheduleTitle } = useLocalSearchParams<{ scheduleId?: string; scheduleTitle?: string }>();
   const scheduleId = scheduleIdParam ? Number(scheduleIdParam) : undefined;
 
@@ -494,9 +507,31 @@ export default function ScheduleScreen() {
                     return (
                       <View key={d} style={s.gridDayCell}>
                         {entries.length === 0
-                          ? <Text style={s.freeDash}>—</Text>
+                          ? <TouchableOpacity onPress={() => {
+                              if (clipboard && scheduleId) {
+                                const h = slot.hour;
+                                const fmt2 = (n: number) => { const h12 = n % 12 || 12; const ap = n >= 12 ? "PM" : "AM"; return (h12 < 10 ? "0" : "") + h12 + ":00 " + ap; };
+                                addScheduleEntry({ faculty: clipboard.Faculty, subject: clipboard.Subject, className: clipboard.Class, dept: clipboard.Deptt || "", day: d, location: clipboard.Location || "", timeStart: fmt2(h), timeEnd: fmt2(h+1), lecLab: clipboard.LecLab || "Lec", elective: clipboard.Elective || "", userEmail: "", scheduleId }).then(() => { qc.invalidateQueries({ queryKey: ["schedule", scheduleId] }); if (typeof window !== "undefined") window.alert("✓ Pasted to " + d + " " + fmt2(h)); });
+                              }
+                            }}>
+                              <Text style={[s.freeDash, clipboard && scheduleId ? { color: colors.primary, fontSize: 14 } : {}]}>{clipboard && scheduleId ? "＋" : "—"}</Text>
+                            </TouchableOpacity>
                           : entries.map((r) => (
-                              <MiniCard key={r.id} row={r} colors={colors} />
+                              <MiniCard
+                                key={r.id}
+                                row={r}
+                                colors={colors}
+                                isCopied={clipboard?.id === r.id}
+                                onCopy={scheduleId ? () => {
+                                  if (clipboard?.id === r.id) { setClipboard(null); }
+                                  else { setClipboard(r); if (typeof window !== "undefined") window.alert("📋 Copied: " + r.Subject + " · " + r.Class); }
+                                } : undefined}
+                                onDelete={scheduleId ? () => {
+                                  if (typeof window !== "undefined" && window.confirm("Delete " + r.Subject + " from " + (r.Day || "") + "?")) {
+                                    deleteRow.mutate(r.id!);
+                                  }
+                                } : undefined}
+                              />
                             ))
                         }
                       </View>

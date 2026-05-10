@@ -160,7 +160,3 @@ export async function importStudentsExcel(scheduleId: number, className: string,
   return res.json();
 }
 
-
-export
-export
-export

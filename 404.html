@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Classes Record — Redirecting...</title>
+  <meta http-equiv="refresh" content="0;url=/classes-record/">
+  <script>
+    // Save the attempted path and redirect to app root
+    var path = window.location.pathname + window.location.search;
+    // Strip /classes-record prefix if present (for hard refresh case)
+    var route = path.replace(/^\/classes-record/, '') || '/';
+    sessionStorage.setItem('spa_redirect', route);
+    window.location.replace('https://alamdarhussain-eng.github.io/classes-record/');
+  </script>
+</head>
+<body style="font-family:sans-serif;text-align:center;padding:40px;background:#1a6fb5;color:white">
+  <h2>Classes Record</h2>
+  <p>Redirecting to app...</p>
+  <a href="https://alamdarhussain-eng.github.io/classes-record/" 
+     style="color:white;font-size:18px">Click here if not redirected</a>
+</body>
+</html>

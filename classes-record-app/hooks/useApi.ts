@@ -121,27 +121,22 @@ export async function importSchedule(rows: any[], scheduleId?: number) {
   return res.json();
 }
 
-async function buildFormData(uri: string, name: string, mimeType: string): Promise<FormData> {
+async function buildFormData(uri: string, name: string, mimeType: string, file?: File): Promise<FormData> {
   const formData = new FormData();
-  if (typeof document !== "undefined") {
-    if (uri.startsWith("blob:") || uri.startsWith("http")) {
-      const blobRes = await fetch(uri);
-      if (!blobRes.ok) throw new Error("Failed to fetch file: " + blobRes.status);
-      const blob = await blobRes.blob();
-      formData.append("file", new File([blob], name, { type: mimeType }), name);
-    } else {
-      const blobRes = await fetch(uri);
-      const blob = await blobRes.blob();
-      formData.append("file", blob, name);
-    }
+  if (file) {
+    formData.append("file", file, file.name);
+  } else if (typeof document !== "undefined") {
+    const blobRes = await fetch(uri);
+    const blob = await blobRes.blob();
+    formData.append("file", new File([blob], name, { type: mimeType }), name);
   } else {
     formData.append("file", { uri, name, type: mimeType } as unknown as Blob);
   }
   return formData;
 }
 
-export async function importScheduleExcel(uri: string, name: string, mimeType: string, scheduleId?: number) {
-  const formData = await buildFormData(uri, name, mimeType);
+export async function importScheduleExcel(uri: string, name: string, mimeType: string, scheduleId?: number, file?: File) {
+  const formData = await buildFormData(uri, name, mimeType, file);
   const url = scheduleId != null
     ? `${API_BASE}/import/schedule/xlsx?scheduleId=${scheduleId}`
     : `${API_BASE}/import/schedule/xlsx`;

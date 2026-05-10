@@ -630,7 +630,7 @@ export default function ScheduleScreen() {
           description="WeeklySchedule.xlsx — Faculty, Subject, Class, Day, Time, Location"
           icon="calendar"
           variant="primary"
-          onImport={(uri, name, mimeType) => importScheduleExcel(uri, name, mimeType, scheduleId)}
+          onImport={(uri, name, mimeType, file) => importScheduleExcel(uri, name, mimeType, scheduleId, file)}
           onSuccess={() => { setShowImport(false); qc.invalidateQueries({ queryKey: ["schedule", scheduleId] }); }}
           sampleUrl={`https://${process.env.EXPO_PUBLIC_DOMAIN}/api/import/sample/schedule`}
           sampleFileName="SampleWeeklySchedule.xlsx"

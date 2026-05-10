@@ -10,7 +10,7 @@ import { useColors } from "@/hooks/useColors";
 interface Props {
   label: string;
   description: string;
-  onImport: (uri: string, name: string, mimeType: string) => Promise<{ success: boolean; inserted?: number; faculty?: number; subjects?: number; classes?: number; locations?: number; error?: string }>;
+  onImport: (uri: string, name: string, mimeType: string, file?: File) => Promise<{ success: boolean; inserted?: number; faculty?: number; subjects?: number; classes?: number; locations?: number; error?: string }>;
   onSuccess?: () => void;
   variant?: "primary" | "outline" | "ghost";
   icon?: keyof typeof Feather.glyphMap;

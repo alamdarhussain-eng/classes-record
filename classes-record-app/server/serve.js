@@ -546,17 +546,26 @@ async function handleApi(method, pathname, req, res) {
       const chunks = [];
       for await (const chunk of req) chunks.push(chunk);
       const buf = Buffer.concat(chunks);
-      const boundary = (req.headers["content-type"]||"").split("boundary=")[1];
-      if (!boundary) return json(res, 400, {success:false,message:"No boundary"});
-      const parts = buf.toString("binary").split("--"+boundary);
+      const ct = req.headers["content-type"]||"";
       let fileBuf = null;
-      for (const part of parts) {
-        if (part.includes("filename=")) {
-          const idx = part.indexOf("\r\n\r\n");
-          if (idx>-1) fileBuf = Buffer.from(part.slice(idx+4,part.lastIndexOf("\r\n")),"binary");
+      if (ct.includes("multipart/form-data")) {
+        const boundary = ct.split("boundary=")[1]?.split(";")[0]?.trim();
+        if (!boundary) return json(res, 400, {success:false,message:"No boundary"});
+        const sep = Buffer.from("\r\n--"+boundary);
+        let pos = buf.indexOf(Buffer.from("--"+boundary));
+        while (pos !== -1) {
+          const hStart = pos + boundary.length + 2 + 2;
+          const hEnd = buf.indexOf(Buffer.from("\r\n\r\n"), hStart);
+          if (hEnd === -1) break;
+          const header = buf.slice(hStart, hEnd).toString();
+          const dStart = hEnd + 4;
+          const next = buf.indexOf(sep, dStart);
+          const dEnd = next === -1 ? buf.length : next;
+          if (header.includes("filename=")) { fileBuf = buf.slice(dStart, dEnd); break; }
+          pos = next === -1 ? -1 : next + sep.length;
         }
-      }
-      if (!fileBuf) return json(res, 400, {success:false,message:"No file"});
+      } else { fileBuf = buf; }
+      if (!fileBuf || fileBuf.length === 0) return json(res, 400, {success:false,message:"No file found"});
       const wb = XLSX.read(fileBuf, {type:"buffer"});
       const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], {defval:""});
       const DO = {Mon:0,Tue:1,Wed:2,Thu:3,Fri:4,Sat:5,Sun:6};

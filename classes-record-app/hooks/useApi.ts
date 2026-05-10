@@ -123,16 +123,19 @@ export async function importSchedule(rows: any[], scheduleId?: number) {
 
 async function buildFormData(uri: string, name: string, mimeType: string, file?: File): Promise<FormData> {
   const formData = new FormData();
-  if (file) {
+  if (file instanceof File) {
     formData.append("file", file, file.name);
   } else if (typeof document !== "undefined") {
-    try {
-      const blobRes = await fetch(uri);
-      const blob = await blobRes.blob();
-      formData.append("file", new File([blob], name, { type: mimeType }), name);
-    } catch {
-      throw new Error("Cannot read file. Please try again.");
-    }
+    // On web, use XMLHttpRequest to fetch blob which works with blob: URLs
+    const blob = await new Promise<Blob>((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open("GET", uri);
+      xhr.responseType = "blob";
+      xhr.onload = () => resolve(xhr.response);
+      xhr.onerror = () => reject(new Error("Failed to read file"));
+      xhr.send();
+    });
+    formData.append("file", new File([blob], name, { type: mimeType }), name);
   } else {
     formData.append("file", { uri, name, type: mimeType } as unknown as Blob);
   }

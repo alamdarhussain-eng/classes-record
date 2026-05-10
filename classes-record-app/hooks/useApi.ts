@@ -160,18 +160,6 @@ export async function importStudentsExcel(scheduleId: number, className: string,
   return res.json();
 }
 
-async function buildFormData(uri: string, name: string, mimeType: string): Promise<FormData> {
-  const formData = new FormData();
-  if (typeof document !== "undefined") {
-    const blobRes = await fetch(uri);
-    const blob = await blobRes.blob();
-    formData.append("file", blob, name);
-  } else {
-    formData.append("file", { uri, name, type: mimeType } as unknown as Blob);
-  }
-  return formData;
-}
-
 
 export async function importOptionsExcel(uri: string, name: string, mimeType: string) {
   const formData = await buildFormData(uri, name, mimeType);

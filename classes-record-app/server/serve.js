@@ -580,7 +580,21 @@ async function handleApi(method, pathname, req, res) {
         const ll=r["Lec/Lab"]||r.LecLab||r.lec_lab||"Lec";
         const el=r.Elective||r.elective||"";
         const em=r["Email of User"]||r.UserEmail||r.user_email||"";
-        const tsStr = typeof ts === "number" ? "" : String(ts||"");
+        function excelTimeToStr(t) {
+          if (typeof t === "number") {
+            const totalMin = Math.round(t * 24 * 60);
+            const h = Math.floor(totalMin / 60) % 24;
+            const m = totalMin % 60;
+            const ap = h >= 12 ? "PM" : "AM";
+            const h12 = h % 12 || 12;
+            return (h12 < 10 ? "0" : "") + h12 + ":" + (m < 10 ? "0" : "") + m + " " + ap;
+          }
+          return String(t||"");
+        }
+        const tsStr = excelTimeToStr(ts);
+        const teStr = excelTimeToStr(te);
+        if (teStr && te !== ts) te = teStr;
+        ts = tsStr;
         const tm=tsStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
         let h=0; if(tm){h=parseInt(tm[1]);if(tm[3].toUpperCase()==="PM"&&h!==12)h+=12;if(tm[3].toUpperCase()==="AM"&&h===12)h=0;}
         await db.query("INSERT INTO public.weekly_schedule (faculty,subject,class_name,dept,day,location,time_start,time_end,lec_lab,elective,user_email,sort_key,schedule_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",

@@ -124,9 +124,16 @@ export async function importSchedule(rows: any[], scheduleId?: number) {
 async function buildFormData(uri: string, name: string, mimeType: string): Promise<FormData> {
   const formData = new FormData();
   if (typeof document !== "undefined") {
-    const blobRes = await fetch(uri);
-    const blob = await blobRes.blob();
-    formData.append("file", blob, name);
+    if (uri.startsWith("blob:") || uri.startsWith("http")) {
+      const blobRes = await fetch(uri);
+      if (!blobRes.ok) throw new Error("Failed to fetch file: " + blobRes.status);
+      const blob = await blobRes.blob();
+      formData.append("file", new File([blob], name, { type: mimeType }), name);
+    } else {
+      const blobRes = await fetch(uri);
+      const blob = await blobRes.blob();
+      formData.append("file", blob, name);
+    }
   } else {
     formData.append("file", { uri, name, type: mimeType } as unknown as Blob);
   }

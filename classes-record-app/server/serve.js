@@ -400,8 +400,8 @@ async function handleApi(method, pathname, req, res) {
 
       for (let h = startH; h < actualEndH; h++) {
         await db.query(
-          "INSERT INTO public.weekly_schedule (faculty, subject, class_name, dept, day, location, time_start, time_end, lec_lab, type, entry_date, user_email, schedule_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",
-          [Faculty, Subject, Class, dept, dayName, Location || '', hourLabel(h), hourLabel(h+1), lecLab, Type, date, User || '', scheduleId ?? null]
+          "INSERT INTO public.weekly_schedule (faculty, subject, class_name, dept, day, location, time_start, time_end, lec_lab, type, entry_date, user_email, schedule_id, sort_key) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)",
+          [Faculty, Subject, Class, dept, dayName, Location || '', hourLabel(h), hourLabel(h+1), lecLab, Type, date, User || '', scheduleId ?? null, h * 60]
         );
       }
       return json(res, 200, { success: true, message: 'Saved ' + (actualEndH - startH) + ' hour(s) as ' + Type });

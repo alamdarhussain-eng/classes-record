@@ -90,6 +90,11 @@ function MiniCard({ row, colors, onCopy, onDelete, isCopied }: { row: ScheduleRo
       <Text numberOfLines={1} style={{ fontSize: 10, fontFamily: "Inter_400Regular", color: colors.mutedForeground }}>
         {row.Class}
       </Text>
+      {row.Faculty ? (
+        <Text numberOfLines={1} style={{ fontSize: 9, fontFamily: "Inter_400Regular", color: colors.mutedForeground }}>
+          {row.Faculty}
+        </Text>
+      ) : null}
       {row.Location ? (
         <Text numberOfLines={1} style={{ fontSize: 9, fontFamily: "Inter_400Regular", color: colors.primary }}>
           {row.Location}

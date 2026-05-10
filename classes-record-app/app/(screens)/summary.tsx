@@ -302,7 +302,7 @@ export default function SummaryScreen() {
               <Feather name="chevron-left" size={13} color="#fff" />
               <Text style={s.homeBtnTxt}>Back</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={s.homeBtn} onPress={() => router.replace("/")}>
+            <TouchableOpacity style={s.homeBtn} onPress={() => router.replace("/" as never)}>
               <Feather name="home" size={13} color="#fff" />
               <Text style={s.homeBtnTxt}>Home</Text>
             </TouchableOpacity>

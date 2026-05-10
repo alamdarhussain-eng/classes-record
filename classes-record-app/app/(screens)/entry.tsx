@@ -253,7 +253,7 @@ export default function EntryScreen() {
   if (!user) {
     return (
       <View style={s.loginCard}>
-        <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", gap: 6, marginBottom: 24 }} onPress={() => router.replace("/")}>
+        <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", gap: 6, marginBottom: 24 }} onPress={() => router.replace("/" as never)}>
           <Feather name="home" size={16} color={colors.primary} />
           <Text style={{ color: colors.primary, fontFamily: "Inter_600SemiBold", fontSize: 13 }}>Home</Text>
         </TouchableOpacity>
@@ -280,7 +280,7 @@ export default function EntryScreen() {
             <Feather name="chevron-left" size={14} color={typeTextColors[type]} />
             <Text style={s.homeBtnTxt}>Back</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[s.homeBtn, { marginBottom: 0 }]} onPress={() => router.replace("/")}>
+          <TouchableOpacity style={[s.homeBtn, { marginBottom: 0 }]} onPress={() => router.replace("/" as never)}>
             <Feather name="home" size={14} color={typeTextColors[type]} />
             <Text style={s.homeBtnTxt}>Home</Text>
           </TouchableOpacity>

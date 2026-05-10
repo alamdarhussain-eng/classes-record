@@ -98,7 +98,7 @@ export default function HolidaysScreen() {
             <Feather name="chevron-left" size={14} color="#fff" />
             <Text style={s.homeBtnTxt}>Back</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[s.homeBtn, { marginBottom: 0 }]} onPress={() => router.replace("/")}>
+          <TouchableOpacity style={[s.homeBtn, { marginBottom: 0 }]} onPress={() => router.replace("/" as never)}>
             <Feather name="home" size={14} color="#fff" />
             <Text style={s.homeBtnTxt}>Home</Text>
           </TouchableOpacity>

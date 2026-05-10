@@ -192,7 +192,7 @@ export default function TutorialScreen() {
               <Feather name="chevron-left" size={13} color="#fff" />
               <Text style={s.pillTxt}>Back</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={s.pill} onPress={() => router.replace("/")}>
+            <TouchableOpacity style={s.pill} onPress={() => router.replace("/" as never)}>
               <Feather name="home" size={13} color="#fff" />
               <Text style={s.pillTxt}>Home</Text>
             </TouchableOpacity>

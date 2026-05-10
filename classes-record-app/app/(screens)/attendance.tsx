@@ -745,7 +745,7 @@ export default function AttendanceScreen() {
             <Feather name="chevron-left" size={14} color="#fff" />
             <Text style={s.navBtnTxt}>Back</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={s.navBtn} onPress={() => router.replace("/")}>
+          <TouchableOpacity style={s.navBtn} onPress={() => router.replace("/" as never)}>
             <Feather name="home" size={13} color="#fff" />
             <Text style={s.navBtnTxt}>Home</Text>
           </TouchableOpacity>

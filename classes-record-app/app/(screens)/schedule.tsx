@@ -473,7 +473,7 @@ export default function ScheduleScreen() {
     <View style={s.container}>
       <View style={s.header}>
         <View style={s.topRow}>
-          <TouchableOpacity style={s.homeBtn} onPress={() => scheduleId ? router.back() : router.replace("/")}>
+          <TouchableOpacity style={s.homeBtn} onPress={() => scheduleId ? router.back() : router.replace("/" as never)}>
             <Feather name={scheduleId ? "arrow-left" : "home"} size={13} color="#fff" />
             <Text style={s.homeBtnTxt}>{scheduleId ? "Back" : "Home"}</Text>
           </TouchableOpacity>

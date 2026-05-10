@@ -161,20 +161,6 @@ export async function importStudentsExcel(scheduleId: number, className: string,
 }
 
 
-export async function importOptionsExcel(uri: string, name: string, mimeType: string) {
-  const formData = await buildFormData(uri, name, mimeType);
-  const res = await fetch(`${API_BASE}/import/options/xlsx`, { method: "POST", body: formData });
-  return res.json();
-}
-
-export async function importEntriesExcel(uri: string, name: string, mimeType: string) {
-  const formData = await buildFormData(uri, name, mimeType);
-  const res = await fetch(`${API_BASE}/import/entries/xlsx`, { method: "POST", body: formData });
-  return res.json();
-}
-
-export async function importStudentsExcel(scheduleId: number, className: string, uri: string, name: string, mimeType: string) {
-  const formData = await buildFormData(uri, name, mimeType);
-  const res = await fetch(`${API_BASE}/import/students/xlsx?scheduleId=${scheduleId}&className=${encodeURIComponent(className)}`, { method: "POST", body: formData });
-  return res.json();
-}
+export
+export
+export

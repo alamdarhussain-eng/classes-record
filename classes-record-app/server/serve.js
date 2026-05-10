@@ -210,10 +210,11 @@ async function handleApi(method, pathname, req, res) {
     } catch (e) { return json(res, 500, { error: e.message }); }
   }
 
-  if (method === "PATCH" && pathname.startsWith("/api/schedules/") && pathname.endsWith("/toggle-public")) {
-    const id = pathname.split("/")[3];
+  if (method === "PATCH" && pathname.match(/^\/api\/schedules\/\d+\/public$/)) {
+    const id = parseInt(pathname.split("/")[3]);
+    const { isPublic } = body;
     try {
-      const r = await db.query("UPDATE public.schedules SET is_public = NOT is_public WHERE id = $1 RETURNING *", [id]);
+      const r = await db.query("UPDATE public.schedules SET is_public = $1 WHERE id = $2 RETURNING *", [isPublic, id]);
       if (!r.rows.length) return json(res, 404, { success: false, message: "Schedule not found" });
       return json(res, 200, { success: true, isPublic: r.rows[0].is_public });
     } catch (e) { return json(res, 500, { error: e.message }); }
@@ -491,6 +492,48 @@ async function handleApi(method, pathname, req, res) {
 
   // Generic sample endpoints (MUST be after specific ones)
   if (pathname.includes("/sample")) return json(res, 200, []);
+
+
+  // POST /api/meeting
+  if (method === "POST" && pathname === "/api/meeting") {
+    const { date, start, end, faculty } = body;
+    try {
+      const q = await db.query("SELECT * FROM public.weekly_schedule WHERE schedule_id IS NULL");
+      const rows = q.rows;
+      function timeToMin(t) {
+        if (!t) return 0;
+        const m = t.match(/(\d+):(\d+)\s*(AM|PM)/i);
+        if (!m) return 0;
+        let h = parseInt(m[1]); const ap = m[3].toUpperCase();
+        if (ap==="PM" && h!==12) h+=12; if (ap==="AM" && h===12) h=0;
+        return h*60+parseInt(m[2]);
+      }
+      const dayNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+      const dayName = dayNames[new Date(date+"T00:00:00").getDay()];
+      const startMin = timeToMin(start), endMin = timeToMin(end);
+      const allFaculty = [...new Set(rows.map(r=>r.faculty))].sort();
+      const targets = (faculty && faculty.length>0) ? faculty : allFaculty;
+      const free=[], busy=[];
+      for (const name of targets) {
+        const dept = rows.find(r=>r.faculty===name)?.dept||"";
+        const busyRecs = rows.filter(r => {
+          if (r.faculty!==name) return false;
+          const rs=timeToMin(r.time_start), re=timeToMin(r.time_end);
+          if (rs>=endMin||re<=startMin) return false;
+          if (!r.type||r.type==="") return r.day===dayName;
+          if (r.entry_date) {
+            const ed=new Date(r.entry_date); ed.setHours(0,0,0,0);
+            const td=new Date(date+"T00:00:00"); td.setHours(0,0,0,0);
+            return ed.getTime()===td.getTime();
+          }
+          return false;
+        }).map(r=>({subject:r.subject,cls:r.class_name,loc:r.location,start:timeToMin(r.time_start),end:timeToMin(r.time_end),type:r.type||"Scheduled"}));
+        if (busyRecs.length===0) free.push({name,dept});
+        else busy.push({name,dept,records:busyRecs});
+      }
+      return json(res, 200, {date,dayName,start,end,free,busy,summary:{}});
+    } catch(e) { return json(res, 500, {error:e.message}); }
+  }
 
   return json(res, 404, { error: "Not found" });
 }

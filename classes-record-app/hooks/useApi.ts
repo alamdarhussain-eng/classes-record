@@ -126,9 +126,13 @@ async function buildFormData(uri: string, name: string, mimeType: string, file?:
   if (file) {
     formData.append("file", file, file.name);
   } else if (typeof document !== "undefined") {
-    const blobRes = await fetch(uri);
-    const blob = await blobRes.blob();
-    formData.append("file", new File([blob], name, { type: mimeType }), name);
+    try {
+      const blobRes = await fetch(uri);
+      const blob = await blobRes.blob();
+      formData.append("file", new File([blob], name, { type: mimeType }), name);
+    } catch {
+      throw new Error("Cannot read file. Please try again.");
+    }
   } else {
     formData.append("file", { uri, name, type: mimeType } as unknown as Blob);
   }

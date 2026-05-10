@@ -4,7 +4,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { Feather } from "@expo/vector-icons";
+
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useQuery } from "@tanstack/react-query";
 
@@ -12,94 +12,17 @@ import { useColors } from "@/hooks/useColors";
 import { fetchPublicSchedules } from "@/hooks/useApi";
 
 const TILES = [
-  {
-    route: "/(screens)/schedule",
-    icon: "calendar" as const,
-    title: "Weekly Schedule",
-    subtitle: "Mon–Fri timetable",
-    color: "#1565C0",
-    bg: "#E3F2FD",
-  },
-  {
-    route: "/(screens)/entry",
-    icon: "edit-3" as const,
-    title: "New Entry",
-    subtitle: "Missed · Late · Makeup",
-    color: "#E65100",
-    bg: "#FFF3E0",
-  },
-  {
-    route: "/(screens)/summary",
-    icon: "bar-chart-2" as const,
-    title: "Teaching Summary",
-    subtitle: "TBC · Deficit · Surplus",
-    color: "#2E7D32",
-    bg: "#E8F5E9",
-  },
-  {
-    route: "/(screens)/meeting",
-    icon: "users" as const,
-    title: "Meeting Availability",
-    subtitle: "Check who is free",
-    color: "#6A1B9A",
-    bg: "#F3E5F5",
-  },
-  {
-    route: "/(screens)/holidays",
-    icon: "sun" as const,
-    title: "Gazzetted Holidays",
-    subtitle: "Excluded from TBC count",
-    color: "#00695C",
-    bg: "#E0F2F1",
-  },
-  {
-    route: "/(screens)/my-schedules",
-    icon: "lock" as const,
-    title: "My Schedules",
-    subtitle: "Private · Login required",
-    color: "#AD1457",
-    bg: "#FCE4EC",
-  },
-  {
-    route: "/(screens)/finance",
-    icon: "dollar-sign" as const,
-    title: "Account & Finance",
-    subtitle: "Fees · Salary · Payments",
-    color: "#00695C",
-    bg: "#E0F2F1",
-  },
-  {
-    route: "/(screens)/tutorial",
-    icon: "book-open" as const,
-    title: "Tutorial",
-    subtitle: "Guide · Examples · PDF",
-    color: "#F57F17",
-    bg: "#FFFDE7",
-  },
-  {
-    route: "/(screens)/faculty-portal",
-    icon: "user-check" as const,
-    title: "Faculty Sign In",
-    subtitle: "Mark attendance · Exam marks",
-    color: "#00695C",
-    bg: "#E0F2F1",
-  },
-  {
-    route: "/(screens)/contact",
-    icon: "phone-call" as const,
-    title: "Contact Us",
-    subtitle: "Alamdar Hussain · Islamabad",
-    color: "#1565C0",
-    bg: "#E3F2FD",
-  },
-  {
-    route: "/(screens)/admin-panel",
-    icon: "shield" as const,
-    title: "Admin Panel",
-    subtitle: "Users · Passwords · CSV",
-    color: "#4A148C",
-    bg: "#EDE7F6",
-  },
+  { route: "/(screens)/schedule",      emoji: "📅", title: "Weekly Schedule",      subtitle: "Mon–Fri timetable",           color: "#1565C0", bg: "#E3F2FD" },
+  { route: "/(screens)/entry",         emoji: "✏️",  title: "New Entry",            subtitle: "Missed · Late · Makeup",      color: "#E65100", bg: "#FFF3E0" },
+  { route: "/(screens)/summary",       emoji: "📊", title: "Teaching Summary",     subtitle: "TBC · Deficit · Surplus",     color: "#2E7D32", bg: "#E8F5E9" },
+  { route: "/(screens)/meeting",       emoji: "👥", title: "Meeting Availability", subtitle: "Check who is free",           color: "#6A1B9A", bg: "#F3E5F5" },
+  { route: "/(screens)/holidays",      emoji: "🗓️", title: "Gazzetted Holidays",   subtitle: "Excluded from TBC count",     color: "#00695C", bg: "#E0F2F1" },
+  { route: "/(screens)/my-schedules",  emoji: "🔒", title: "My Schedules",         subtitle: "Private · Login required",    color: "#AD1457", bg: "#FCE4EC" },
+  { route: "/(screens)/finance",       emoji: "💰", title: "Account & Finance",    subtitle: "Fees · Salary · Payments",    color: "#F57F17", bg: "#FFFDE7" },
+  { route: "/(screens)/tutorial",      emoji: "📖", title: "Tutorial",             subtitle: "Guide · Examples · PDF",      color: "#283593", bg: "#E8EAF6" },
+  { route: "/(screens)/faculty-portal",emoji: "👤", title: "Faculty Sign In",      subtitle: "Attendance · Exam marks",     color: "#00695C", bg: "#E0F2F1" },
+  { route: "/(screens)/contact",       emoji: "📞", title: "Contact Us",           subtitle: "Alamdar Hussain · Islamabad", color: "#1565C0", bg: "#E3F2FD" },
+  { route: "/(screens)/admin-panel",   emoji: "🛡️", title: "Admin Panel",          subtitle: "Users · Passwords · CSV",     color: "#4A148C", bg: "#EDE7F6" },
 ];
 
 export default function DashboardScreen() {
@@ -141,16 +64,17 @@ export default function DashboardScreen() {
     },
     tile: {
       width: "47%",
-      borderRadius: 16,
-      padding: 20,
-      borderWidth: 1,
+      borderRadius: 18,
+      padding: 16,
+      borderWidth: 0.5,
       borderColor: colors.border,
       alignItems: "flex-start",
+      backgroundColor: colors.card,
       shadowColor: "#000",
       shadowOffset: { width: 0, height: 1 },
-      shadowOpacity: 0.06,
-      shadowRadius: 4,
-      elevation: 2,
+      shadowOpacity: 0.05,
+      shadowRadius: 3,
+      elevation: 1,
     },
     tileWide: {
       width: "100%",
@@ -158,16 +82,16 @@ export default function DashboardScreen() {
     iconCircle: {
       width: 52,
       height: 52,
-      borderRadius: 26,
+      borderRadius: 14,
       alignItems: "center",
       justifyContent: "center",
-      marginBottom: 14,
+      marginBottom: 12,
     },
     tileTitle: {
-      fontSize: 15,
-      fontFamily: "Inter_700Bold",
+      fontSize: 14,
+      fontFamily: "Inter_600SemiBold",
       color: colors.foreground,
-      marginBottom: 4,
+      marginBottom: 3,
     },
     tileSub: {
       fontSize: 12,
@@ -266,8 +190,8 @@ export default function DashboardScreen() {
                 onPress={() => router.push(tile.route as never)}
                 activeOpacity={0.75}
               >
-                <View style={[s.iconCircle, { backgroundColor: tile.color + "22" }]}>
-                  <Feather name={tile.icon} size={26} color={tile.color} />
+                <View style={[s.iconCircle, { backgroundColor: tile.bg }]}>
+                  <Text style={{ fontSize: 26 }}>{tile.emoji}</Text>
                 </View>
                 <Text style={s.tileTitle}>{tile.title}</Text>
                 <Text style={s.tileSub}>{tile.subtitle}</Text>
@@ -278,7 +202,7 @@ export default function DashboardScreen() {
 
         {/* ── Public Schedules section ── */}
         <View style={s.sectionHeader}>
-          <Feather name="globe" size={18} color="#1976D2" />
+          <Text style={{ fontSize: 18 }}>🌐</Text>
           <Text style={s.sectionTitle}>Public Schedules</Text>
         </View>
 
@@ -301,7 +225,7 @@ export default function DashboardScreen() {
               }
             >
               <View style={s.pubCardIcon}>
-                <Feather name="globe" size={20} color="#1976D2" />
+                <Text style={{ fontSize: 20 }}>🌐</Text>
               </View>
               <View style={{ flex: 1 }}>
                 <Text style={s.pubCardName}>{sch.name}</Text>

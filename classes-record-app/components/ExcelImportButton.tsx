@@ -38,16 +38,13 @@ export function ExcelImportButton({ label, description, onImport, onSuccess, var
       const asset = result.assets[0];
       setLoading(true);
 
-      console.log("URI:", asset.uri?.substring(0,60));
       const file = (asset as any).file as File | undefined;
-      console.log("FILE:", file?.name, file?.size);
       const importResult = await onImport(
         asset.uri,
         asset.name,
         asset.mimeType ?? "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         file
       );
-      console.log("RESULT:", JSON.stringify(importResult));
 
       setLoading(false);
 

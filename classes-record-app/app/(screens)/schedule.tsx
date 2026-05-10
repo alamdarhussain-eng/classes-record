@@ -516,7 +516,7 @@ export default function ScheduleScreen() {
                               if (clipboard && scheduleId) {
                                 const h = slot.hour;
                                 const fmt2 = (n: number) => { const h12 = n % 12 || 12; const ap = n >= 12 ? "PM" : "AM"; return (h12 < 10 ? "0" : "") + h12 + ":00 " + ap; };
-                                addScheduleEntry({ faculty: clipboard.Faculty, subject: clipboard.Subject, className: clipboard.Class, dept: clipboard.Deptt || "", day: d, location: clipboard.Location || "", timeStart: fmt2(h), timeEnd: fmt2(h+1), lecLab: clipboard.LecLab || "Lec", elective: clipboard.Elective || "", userEmail: "", scheduleId }).then(() => { qc.invalidateQueries({ queryKey: ["schedule", scheduleId] }); if (typeof window !== "undefined") window.alert("✓ Pasted to " + d + " " + fmt2(h)); });
+                                addScheduleEntry({ faculty: clipboard.Faculty, subject: clipboard.Subject, className: clipboard.Class, dept: clipboard.Deptt || "", day: d, location: clipboard.Location || "", timeStart: fmt2(h), timeEnd: fmt2(h+1), lecLab: clipboard.LecLab || "Lec", elective: clipboard.Elective || "", userEmail: "", scheduleId }).then(() => { qc.invalidateQueries({ queryKey: ["schedule", scheduleId] }); qc.refetchQueries({ queryKey: ["schedule", scheduleId] }); if (typeof window !== "undefined") window.alert("✓ Pasted to " + d + " " + fmt2(h)); });
                               }
                             }}>
                               <Text style={[s.freeDash, clipboard && scheduleId ? { color: colors.primary, fontSize: 14 } : {}]}>{clipboard && scheduleId ? "＋" : "—"}</Text>

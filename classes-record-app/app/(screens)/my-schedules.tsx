@@ -19,7 +19,8 @@ import {
 
 function fmtDate(iso: string | null | undefined): string {
   if (!iso) return "—";
-  const [y, m, d] = iso.split("-");
+  const clean = iso.split("T")[0];
+  const [y, m, d] = clean.split("-");
   const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
   return `${parseInt(d, 10)} ${months[parseInt(m, 10) - 1]} ${y}`;
 }

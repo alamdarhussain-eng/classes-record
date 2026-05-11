@@ -196,8 +196,12 @@ async function handleApi(method, pathname, req, res) {
     if (!requireAdmin(req, res)) return;
     try {
       const r = await db.query("SELECT id, username, password, pin FROM public.users WHERE username != $1 ORDER BY id DESC", [ADMIN_USERNAME]);
+      // Get schedule count for each user
+      const schedCounts = await db.query("SELECT user_id, COUNT(*) as cnt FROM public.schedules GROUP BY user_id");
+      const countMap = {};
+      schedCounts.rows.forEach(r => { countMap[r.user_id] = parseInt(r.cnt); });
       return json(res, 200, { success: true, users: r.rows.map(u => ({
-        ...u, isLocked: false, registeredAt: new Date().toISOString(), expiryDate: null, scheduleCount: 0
+        ...u, isLocked: false, registeredAt: null, expiryDate: null, scheduleCount: countMap[u.username] || 0
       }))});
     } catch (e) { return json(res, 500, { success: false, message: e.message }); }
   }

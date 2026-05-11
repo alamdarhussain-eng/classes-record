@@ -174,37 +174,6 @@ async function handleApi(method, pathname, req, res) {
 
   if (method === "POST" && pathname === "/api/admin/otp") {
     const { username, password } = body;
-    if (username?.trim().toLowerCase() !== ADMIN_USERNAME.toLowerCase() || password?.trim() !== ADMIN_PASSWORD) {
-      return json(res, 401, { success: false, message: "Invalid username or password" });
-    }
-    const otp = String(Math.floor(100000 + Math.random() * 900000));
-    otpStore[ADMIN_EMAIL] = { otp, expires: Date.now() + 5 * 60 * 1000 };
-    try {
-      await sendOtpEmail(otp);
-      return json(res, 200, { success: true, message: "OTP sent to " + ADMIN_EMAIL });
-    } catch(e) {
-      console.error("OTP email error:", e.message);
-      return json(res, 500, { success: false, message: "Failed to send OTP: " + e.message });
-    }
-  }
-
-  if (method === "POST" && pathname === "/api/admin/verify-otp") {
-    const { otp } = body;
-    const record = otpStore[ADMIN_EMAIL];
-    if (!record) return json(res, 400, { success: false, message: "No OTP requested. Please try again." });
-    if (Date.now() > record.expires) {
-      delete otpStore[ADMIN_EMAIL];
-      return json(res, 400, { success: false, message: "OTP expired. Please request a new one." });
-    }
-    if (record.otp !== String(otp).trim()) {
-      return json(res, 400, { success: false, message: "Incorrect OTP. Please try again." });
-    }
-    delete otpStore[ADMIN_EMAIL];
-    return json(res, 200, { success: true, message: "OTP verified successfully" });
-  }
-
-  if (method === "POST" && pathname === "/api/admin/otp") {
-    const { username, password } = body;
     if (username?.trim().toLowerCase() !== ADMIN_USERNAME.toLowerCase() || password?.trim() !== ADMIN_PASSWORD) return json(res, 401, { success:false, message:"Invalid username or password" });
     const otp = String(Math.floor(100000 + Math.random() * 900000));
     otpStore[ADMIN_EMAIL] = { otp, expires: Date.now() + 5*60*1000 };

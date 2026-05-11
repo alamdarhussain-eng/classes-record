@@ -45,11 +45,11 @@ export interface ScheduleOptions {
 
 export async function fetchOptions(scheduleId?: number): Promise<ScheduleOptions> {
   const rows = await fetchSchedule(scheduleId);
-  const base = rows.filter(r => !r.Type);
+  const base = rows.filter(r => !r.Type && r.Faculty !== "_locations_");
   const faculty = [...new Set(base.map(r => r.Faculty).filter(Boolean))].sort();
   const subjects = [...new Set(base.map(r => r.Subject).filter(Boolean))].sort();
   const classes = [...new Set(base.map(r => r.Class).filter(Boolean))].sort();
-  const locations = [...new Set(base.map(r => r.Location).filter(Boolean))].sort();
+  const locations = [...new Set(rows.filter(r => !r.Type).map(r => r.Location).filter(Boolean))].sort();
   const depts = [...new Set(base.map(r => r.Deptt).filter(Boolean))].sort();
   const facSubjects: Record<string, string[]> = {};
   const facSubClasses: Record<string, string[]> = {};

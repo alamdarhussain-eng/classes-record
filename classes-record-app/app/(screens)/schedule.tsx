@@ -176,9 +176,11 @@ export default function ScheduleScreen() {
   }, [options, form.faculty, form.subject]);
 
   const formLocations = useMemo(() => {
-    if (form.className && options?.classInfo?.[form.className]?.locations?.length)
-      return options.classInfo?.[form.className]?.locations ?? [];
-    return options?.locations ?? [];
+    // Always show all locations, but include class-specific ones first
+    const classLocs = (form.className && options?.classInfo?.[form.className]?.locations) ?? [];
+    const allLocs = options?.locations ?? [];
+    const combined = [...new Set([...classLocs, ...allLocs])];
+    return combined.length > 0 ? combined : allLocs;
   }, [options, form.className]);
 
   function setField<K extends keyof AddForm>(key: K, value: AddForm[K]) {

@@ -16,12 +16,14 @@ const TEMPLATE_PATH = path.resolve(__dirname, "templates", "landing-page.html");
 const basePath = (process.env.BASE_PATH || "/").replace(/\/+$/, "");
 const ADMIN_PASSWORD = "Administr@r@123";
 const nodemailer = require("nodemailer");
+if (typeof nodemailer.createTransporter !== "function" && nodemailer.default) { Object.assign(nodemailer, nodemailer.default); }
 const ADMIN_EMAIL = "alamdar.hussain@seecs.edu.pk";
 const GMAIL_USER = process.env.GMAIL_USER || "patoprincipalseecs@gmail.com";
 const GMAIL_PASS = process.env.GMAIL_APP_PASSWORD || "puqyouqtacohjjkj";
 const otpStore = {};
 async function sendOtpEmail(otp) {
-  const t = nodemailer.createTransporter({ service:"gmail", auth:{ user:GMAIL_USER, pass:GMAIL_PASS } });
+  const nm = nodemailer.default || nodemailer;
+  const t = nm.createTransport({ service:"gmail", auth:{ user:GMAIL_USER, pass:GMAIL_PASS } });
   await t.sendMail({
     from: '"Classes Record" <' + GMAIL_USER + '>',
     to: ADMIN_EMAIL,

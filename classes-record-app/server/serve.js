@@ -9,7 +9,10 @@ const fs = require("fs");
 const path = require("path");
 const { Pool } = require("pg");
 
-const db = new Pool({ connectionString: process.env.DATABASE_URL });
+const db = new Pool({ 
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false
+});
 
 const STATIC_ROOT = path.resolve(__dirname, "..", "static-build");
 const TEMPLATE_PATH = path.resolve(__dirname, "templates", "landing-page.html");

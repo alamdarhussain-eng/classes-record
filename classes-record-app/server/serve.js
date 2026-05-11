@@ -193,6 +193,12 @@ async function handleApi(method, pathname, req, res) {
     delete otpStore[ADMIN_EMAIL];
     return json(res, 200, { success:true, message:"Verified" });
   }
+  if (method === "GET" && pathname === "/api/admin/test") {
+    try {
+      const r = await db.query("SELECT COUNT(*) as cnt FROM public.users");
+      return json(res, 200, { success: true, count: r.rows[0].cnt });
+    } catch(e) { return json(res, 500, { error: String(e) }); }
+  }
   if (method === "GET" && pathname === "/api/admin/users") {
     if (!requireAdmin(req, res)) return;
     try {

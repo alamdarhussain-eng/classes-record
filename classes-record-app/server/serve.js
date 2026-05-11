@@ -199,7 +199,7 @@ async function handleApi(method, pathname, req, res) {
       // Get schedule count for each user
       const schedCounts = await db.query("SELECT user_id, COUNT(*) as cnt FROM public.schedules GROUP BY user_id");
       const countMap = {};
-      schedCounts.rows.forEach(r => { countMap[r.user_id] = parseInt(r.cnt); });
+      schedCounts.rows.forEach(s => { countMap[s.user_id] = parseInt(s.cnt); });
       return json(res, 200, { success: true, users: r.rows.map(u => ({
         ...u, isLocked: false, registeredAt: null, expiryDate: null, scheduleCount: countMap[u.username] || 0
       }))});

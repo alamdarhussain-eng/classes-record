@@ -15,28 +15,22 @@ const STATIC_ROOT = path.resolve(__dirname, "..", "static-build");
 const TEMPLATE_PATH = path.resolve(__dirname, "templates", "landing-page.html");
 const basePath = (process.env.BASE_PATH || "/").replace(/\/+$/, "");
 const ADMIN_PASSWORD = "Administr@r@123";
-const nodemailer = require("nodemailer");
-if (typeof nodemailer.createTransporter !== "function" && nodemailer.default) { Object.assign(nodemailer, nodemailer.default); }
 const ADMIN_EMAIL = "alamdar.hussain@seecs.edu.pk";
-const GMAIL_USER = process.env.GMAIL_USER || "patoprincipalseecs@gmail.com";
-const GMAIL_PASS = process.env.GMAIL_APP_PASSWORD || "puqyouqtacohjjkj";
+const RESEND_API_KEY = process.env.RESEND_API_KEY || "";
 const otpStore = {};
 async function sendOtpEmail(otp) {
-  const nm = nodemailer.default || nodemailer;
-  const t = nm.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: { user: GMAIL_USER, pass: GMAIL_PASS },
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + RESEND_API_KEY },
+    body: JSON.stringify({
+      from: "Classes Record <onboarding@resend.dev>",
+      to: [ADMIN_EMAIL],
+      subject: "Admin Login OTP - Classes Record",
+      html: '<div style="font-family:sans-serif;padding:24px;max-width:400px"><h2 style="color:#1565C0">Classes Record Admin OTP</h2><p>Your one-time login code:</p><div style="font-size:42px;font-weight:bold;letter-spacing:12px;color:#1565C0;background:#E3F2FD;padding:20px;border-radius:8px;text-align:center">' + otp + '</div><p style="color:#666;font-size:13px;margin-top:16px">Expires in <b>5 minutes</b>. Do not share.</p></div>'
+    })
   });
-  await t.sendMail({
-    from: '"Classes Record" <' + GMAIL_USER + '>',
-    to: ADMIN_EMAIL,
-    subject: "Admin Login OTP",
-    html: '<div style="font-family:sans-serif;padding:24px;max-width:400px"><h2 style="color:#1565C0">Classes Record Admin OTP</h2><p>Your one-time login code:</p><div style="font-size:42px;font-weight:bold;letter-spacing:12px;color:#1565C0;background:#E3F2FD;padding:20px;border-radius:8px;text-align:center">' + otp + '</div><p style="color:#666;font-size:13px;margin-top:16px">Expires in <b>5 minutes</b>. Do not share.</p></div>'
-  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Resend API error");
 }
 const ADMIN_USERNAME = "patoprincipalseecs@gmail.com";
 

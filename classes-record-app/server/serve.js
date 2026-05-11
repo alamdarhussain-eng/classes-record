@@ -15,12 +15,12 @@ const STATIC_ROOT = path.resolve(__dirname, "..", "static-build");
 const TEMPLATE_PATH = path.resolve(__dirname, "templates", "landing-page.html");
 const basePath = (process.env.BASE_PATH || "/").replace(/\/+$/, "");
 const ADMIN_PASSWORD = "Administr@r@123";
+const nodemailer = require("nodemailer");
 const ADMIN_EMAIL = "alamdar.hussain@seecs.edu.pk";
 const GMAIL_USER = process.env.GMAIL_USER || "patoprincipalseecs@gmail.com";
 const GMAIL_PASS = process.env.GMAIL_APP_PASSWORD || "puqyouqtacohjjkj";
 const otpStore = {};
 async function sendOtpEmail(otp) {
-  const nodemailer = require("nodemailer");
   const t = nodemailer.createTransporter({ service:"gmail", auth:{ user:GMAIL_USER, pass:GMAIL_PASS } });
   await t.sendMail({
     from: '"Classes Record" <' + GMAIL_USER + '>',

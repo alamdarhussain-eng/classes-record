@@ -39,29 +39,38 @@ export interface ScheduleOptions {
   locations: string[];
   depts: string[];
   facSubjects: Record<string, string[]>;
-  subClasses: Record<string, string[]>;
+  facSubClasses: Record<string, string[]>;
+  classInfo: Record<string, { dept: string; locations: string[] }>;
 }
 
 export async function fetchOptions(scheduleId?: number): Promise<ScheduleOptions> {
   const rows = await fetchSchedule(scheduleId);
-  const faculty = [...new Set(rows.filter(r => !r.Type).map(r => r.Faculty).filter(Boolean))].sort();
-  const subjects = [...new Set(rows.filter(r => !r.Type).map(r => r.Subject).filter(Boolean))].sort();
-  const classes = [...new Set(rows.filter(r => !r.Type).map(r => r.Class).filter(Boolean))].sort();
-  const locations = [...new Set(rows.filter(r => !r.Type).map(r => r.Location).filter(Boolean))].sort();
-  const depts = [...new Set(rows.filter(r => !r.Type).map(r => r.Deptt).filter(Boolean))].sort();
+  const base = rows.filter(r => !r.Type);
+  const faculty = [...new Set(base.map(r => r.Faculty).filter(Boolean))].sort();
+  const subjects = [...new Set(base.map(r => r.Subject).filter(Boolean))].sort();
+  const classes = [...new Set(base.map(r => r.Class).filter(Boolean))].sort();
+  const locations = [...new Set(base.map(r => r.Location).filter(Boolean))].sort();
+  const depts = [...new Set(base.map(r => r.Deptt).filter(Boolean))].sort();
   const facSubjects: Record<string, string[]> = {};
-  const subClasses: Record<string, string[]> = {};
-  rows.filter(r => !r.Type).forEach(r => {
+  const facSubClasses: Record<string, string[]> = {};
+  const classInfo: Record<string, { dept: string; locations: string[] }> = {};
+  base.forEach(r => {
     if (r.Faculty && r.Subject) {
       if (!facSubjects[r.Faculty]) facSubjects[r.Faculty] = [];
       if (!facSubjects[r.Faculty].includes(r.Subject)) facSubjects[r.Faculty].push(r.Subject);
     }
-    if (r.Subject && r.Class) {
-      if (!subClasses[r.Subject]) subClasses[r.Subject] = [];
-      if (!subClasses[r.Subject].includes(r.Class)) subClasses[r.Subject].push(r.Class);
+    if (r.Faculty && r.Subject && r.Class) {
+      const key = r.Faculty + "|||" + r.Subject;
+      if (!facSubClasses[key]) facSubClasses[key] = [];
+      if (!facSubClasses[key].includes(r.Class)) facSubClasses[key].push(r.Class);
+    }
+    if (r.Class) {
+      if (!classInfo[r.Class]) classInfo[r.Class] = { dept: r.Deptt || "", locations: [] };
+      if (r.Location && !classInfo[r.Class].locations.includes(r.Location))
+        classInfo[r.Class].locations.push(r.Location);
     }
   });
-  return { faculty, subjects, classes, locations, depts, facSubjects, subClasses };
+  return { faculty, subjects, classes, locations, depts, facSubjects, facSubClasses, classInfo };
 }
 
 export async function fetchSchedule(scheduleId?: number): Promise<ScheduleRow[]> {

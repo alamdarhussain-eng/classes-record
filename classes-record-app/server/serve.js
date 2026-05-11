@@ -15,6 +15,38 @@ const STATIC_ROOT = path.resolve(__dirname, "..", "static-build");
 const TEMPLATE_PATH = path.resolve(__dirname, "templates", "landing-page.html");
 const basePath = (process.env.BASE_PATH || "/").replace(/\/+$/, "");
 const ADMIN_PASSWORD = "Administr@r@123";
+const ADMIN_EMAIL = "alamdar.hussain@seecs.edu.pk";
+const GMAIL_USER = process.env.GMAIL_USER || "patoprincipalseecs@gmail.com";
+const GMAIL_PASS = process.env.GMAIL_APP_PASSWORD || "puqyouqtacohjjkj";
+const otpStore = {};
+async function sendOtpEmail(otp) {
+  const nodemailer = require("nodemailer");
+  const t = nodemailer.createTransporter({ service:"gmail", auth:{ user:GMAIL_USER, pass:GMAIL_PASS } });
+  await t.sendMail({
+    from: '"Classes Record" <' + GMAIL_USER + '>',
+    to: ADMIN_EMAIL,
+    subject: "Admin Login OTP",
+    html: '<div style="font-family:sans-serif;padding:24px;max-width:400px"><h2 style="color:#1565C0">Classes Record Admin OTP</h2><p>Your one-time login code:</p><div style="font-size:42px;font-weight:bold;letter-spacing:12px;color:#1565C0;background:#E3F2FD;padding:20px;border-radius:8px;text-align:center">' + otp + '</div><p style="color:#666;font-size:13px;margin-top:16px">Expires in <b>5 minutes</b>. Do not share.</p></div>'
+  });
+}
+const ADMIN_EMAIL = "alamdar.hussain@seecs.edu.pk";
+const GMAIL_USER = process.env.GMAIL_USER || "patoprincipalseecs@gmail.com";
+const GMAIL_PASS = process.env.GMAIL_APP_PASSWORD || "puqyouqtacohjjkj";
+const otpStore = {};
+
+async function sendOtpEmail(otp) {
+  const nodemailer = require("nodemailer");
+  const transporter = nodemailer.createTransporter({
+    service: "gmail",
+    auth: { user: GMAIL_USER, pass: GMAIL_PASS },
+  });
+  await transporter.sendMail({
+    from: '"Classes Record" <' + GMAIL_USER + '>',
+    to: ADMIN_EMAIL,
+    subject: "Admin Login OTP - Classes Record",
+    html: '<div style="font-family:sans-serif;max-width:420px;margin:0 auto;padding:24px;border:1px solid #e0e0e0;border-radius:10px"><h2 style="color:#1565C0;margin-top:0">Classes Record — Admin OTP</h2><p style="color:#333">Your one-time login code is:</p><div style="font-size:40px;font-weight:bold;letter-spacing:10px;color:#1565C0;padding:20px;background:#E3F2FD;border-radius:8px;text-align:center">' + otp + '</div><p style="color:#666;font-size:13px;margin-top:16px">⏱ This code expires in <strong>5 minutes</strong>.<br>Do not share this code with anyone.</p><hr style="border:none;border-top:1px solid #eee;margin:16px 0"><p style="color:#999;font-size:11px">If you did not request this, ignore this email.</p></div>',
+  });
+}
 const ADMIN_USERNAME = "patoprincipalseecs@gmail.com";
 
 // MIME types
@@ -158,6 +190,54 @@ async function handleApi(method, pathname, req, res) {
     } catch (e) { return json(res, 500, { success: false, message: e.message }); }
   }
 
+  if (method === "POST" && pathname === "/api/admin/otp") {
+    const { username, password } = body;
+    if (username !== ADMIN_USERNAME || password !== ADMIN_PASSWORD) {
+      return json(res, 401, { success: false, message: "Invalid username or password" });
+    }
+    const otp = String(Math.floor(100000 + Math.random() * 900000));
+    otpStore[ADMIN_EMAIL] = { otp, expires: Date.now() + 5 * 60 * 1000 };
+    try {
+      await sendOtpEmail(otp);
+      return json(res, 200, { success: true, message: "OTP sent to " + ADMIN_EMAIL });
+    } catch(e) {
+      console.error("OTP email error:", e.message);
+      return json(res, 500, { success: false, message: "Failed to send OTP: " + e.message });
+    }
+  }
+
+  if (method === "POST" && pathname === "/api/admin/verify-otp") {
+    const { otp } = body;
+    const record = otpStore[ADMIN_EMAIL];
+    if (!record) return json(res, 400, { success: false, message: "No OTP requested. Please try again." });
+    if (Date.now() > record.expires) {
+      delete otpStore[ADMIN_EMAIL];
+      return json(res, 400, { success: false, message: "OTP expired. Please request a new one." });
+    }
+    if (record.otp !== String(otp).trim()) {
+      return json(res, 400, { success: false, message: "Incorrect OTP. Please try again." });
+    }
+    delete otpStore[ADMIN_EMAIL];
+    return json(res, 200, { success: true, message: "OTP verified successfully" });
+  }
+
+  if (method === "POST" && pathname === "/api/admin/otp") {
+    const { username, password } = body;
+    if (username !== ADMIN_USERNAME || password !== ADMIN_PASSWORD) return json(res, 401, { success:false, message:"Invalid username or password" });
+    const otp = String(Math.floor(100000 + Math.random() * 900000));
+    otpStore[ADMIN_EMAIL] = { otp, expires: Date.now() + 5*60*1000 };
+    try { await sendOtpEmail(otp); return json(res, 200, { success:true, message:"OTP sent to " + ADMIN_EMAIL }); }
+    catch(e) { return json(res, 500, { success:false, message:"Email error: " + e.message }); }
+  }
+  if (method === "POST" && pathname === "/api/admin/verify-otp") {
+    const { otp } = body;
+    const r = otpStore[ADMIN_EMAIL];
+    if (!r) return json(res, 400, { success:false, message:"No OTP requested" });
+    if (Date.now() > r.expires) { delete otpStore[ADMIN_EMAIL]; return json(res, 400, { success:false, message:"OTP expired" }); }
+    if (r.otp !== String(otp).trim()) return json(res, 400, { success:false, message:"Incorrect OTP" });
+    delete otpStore[ADMIN_EMAIL];
+    return json(res, 200, { success:true, message:"Verified" });
+  }
   if (method === "GET" && pathname === "/api/admin/users") {
     if (!requireAdmin(req, res)) return;
     try {

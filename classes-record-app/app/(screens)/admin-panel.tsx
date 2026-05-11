@@ -74,6 +74,10 @@ export default function AdminPanelScreen() {
   const [authUser, setAuthUser] = useState("");
   const [authPass, setAuthPass] = useState("");
   const [authError, setAuthError] = useState("");
+  const [otpStep, setOtpStep] = useState(false);
+  const [otpCode, setOtpCode] = useState("");
+  const [otpLoading, setOtpLoading] = useState(false);
+  const [otpSentMsg, setOtpSentMsg] = useState("");
   const [users, setUsers] = useState<ManagedUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
@@ -82,6 +86,10 @@ export default function AdminPanelScreen() {
   const [successMsg, setSuccessMsg] = useState("");
   const [deleteTarget, setDeleteTarget] = useState<ManagedUser | null>(null);
   const [passwordTarget, setPasswordTarget] = useState<ManagedUser | null>(null);
+  const [otpStep, setOtpStep] = useState(false);
+  const [otpCode, setOtpCode] = useState("");
+  const [otpLoading, setOtpLoading] = useState(false);
+  const [otpSentMsg, setOtpSentMsg] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [expiryTarget, setExpiryTarget] = useState<ManagedUser | null>(null);
@@ -256,19 +264,50 @@ export default function AdminPanelScreen() {
           onChangeText={setAuthPass}
           secureTextEntry
         />
+        {otpStep && (
+          <>
+            <Text style={{ fontSize: 11, fontFamily: "Inter_600SemiBold", color: "#666", marginBottom: 6, marginTop: 8, textTransform: "uppercase" }}>Enter OTP</Text>
+            {otpSentMsg ? <Text style={{ color: "#2E7D32", fontSize: 13, fontFamily: "Inter_400Regular", marginBottom: 8 }}>{otpSentMsg}</Text> : null}
+            <TextInput
+              style={{ backgroundColor: "#F5F5F5", borderWidth: 1, borderColor: "#1565C0", borderRadius: 12, padding: 14, fontSize: 24, fontFamily: "Inter_700Bold", marginBottom: 8, color: "#1565C0", textAlign: "center", letterSpacing: 8 }}
+              placeholder="000000"
+              placeholderTextColor="#ccc"
+              value={otpCode}
+              onChangeText={setOtpCode}
+              keyboardType="number-pad"
+              maxLength={6}
+            />
+            <TouchableOpacity onPress={() => { setOtpStep(false); setOtpCode(""); setOtpSentMsg(""); setAuthError(""); }}>
+              <Text style={{ color: "#1565C0", fontSize: 13, fontFamily: "Inter_400Regular", textAlign: "center", marginBottom: 8 }}>← Back to credentials</Text>
+            </TouchableOpacity>
+          </>
+        )}
         {authError ? <Text style={{ color: "#B71C1C", fontSize: 13, fontFamily: "Inter_400Regular", marginBottom: 12 }}>{authError}</Text> : <View style={{ height: 20 }} />}
         <TouchableOpacity
           style={{ backgroundColor: "#1565C0", borderRadius: 12, paddingVertical: 14, alignItems: "center", marginTop: 4 }}
-          onPress={() => {
-            if (authUser.trim() === ADMIN_USERNAME && authPass === ADMIN_PASSWORD) {
-              setAuthed(true);
-              setAuthError("");
+          onPress={async () => {
+            if (otpStep) {
+              setOtpLoading(true); setAuthError("");
+              try {
+                const r = await fetch(`https://classes-record.onrender.com/api/admin/verify-otp`, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ otp: otpCode }) });
+                const d = await r.json();
+                if (d.success) { setAuthed(true); setAuthError(""); }
+                else { setAuthError(d.message || "Invalid OTP"); }
+              } catch { setAuthError("Network error"); }
+              setOtpLoading(false);
             } else {
-              setAuthError("Invalid admin username or password");
+              setOtpLoading(true); setAuthError("");
+              try {
+                const r = await fetch(`https://classes-record.onrender.com/api/admin/otp`, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ username: authUser.trim(), password: authPass }) });
+                const d = await r.json();
+                if (d.success) { setOtpStep(true); setOtpSentMsg("✓ OTP sent to alamdar.hussain@seecs.edu.pk"); }
+                else { setAuthError(d.message || "Invalid credentials"); }
+              } catch { setAuthError("Network error"); }
+              setOtpLoading(false);
             }
           }}
         >
-          <Text style={{ color: "#fff", fontSize: 16, fontFamily: "Inter_700Bold" }}>Sign In</Text>
+          <Text style={{ color: "#fff", fontSize: 16, fontFamily: "Inter_700Bold" }}>{otpLoading ? "Please wait..." : otpStep ? "Verify OTP" : "Send OTP"}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={{ marginTop: 16, alignItems: "center" }} onPress={() => router.back()}>
           <Text style={{ color: "#1565C0", fontSize: 14, fontFamily: "Inter_600SemiBold" }}>← Go Back</Text>

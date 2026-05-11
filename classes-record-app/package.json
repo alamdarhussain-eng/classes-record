@@ -63,6 +63,7 @@
     "expo-screen-orientation": "^9.0.9",
     "expo-sharing": "^55.0.18",
     "pg": "^8.20.0",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "nodemailer": "^6.9.13"
   }
 }

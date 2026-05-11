@@ -29,24 +29,6 @@ async function sendOtpEmail(otp) {
     html: '<div style="font-family:sans-serif;padding:24px;max-width:400px"><h2 style="color:#1565C0">Classes Record Admin OTP</h2><p>Your one-time login code:</p><div style="font-size:42px;font-weight:bold;letter-spacing:12px;color:#1565C0;background:#E3F2FD;padding:20px;border-radius:8px;text-align:center">' + otp + '</div><p style="color:#666;font-size:13px;margin-top:16px">Expires in <b>5 minutes</b>. Do not share.</p></div>'
   });
 }
-const ADMIN_EMAIL = "alamdar.hussain@seecs.edu.pk";
-const GMAIL_USER = process.env.GMAIL_USER || "patoprincipalseecs@gmail.com";
-const GMAIL_PASS = process.env.GMAIL_APP_PASSWORD || "puqyouqtacohjjkj";
-const otpStore = {};
-
-async function sendOtpEmail(otp) {
-  const nodemailer = require("nodemailer");
-  const transporter = nodemailer.createTransporter({
-    service: "gmail",
-    auth: { user: GMAIL_USER, pass: GMAIL_PASS },
-  });
-  await transporter.sendMail({
-    from: '"Classes Record" <' + GMAIL_USER + '>',
-    to: ADMIN_EMAIL,
-    subject: "Admin Login OTP - Classes Record",
-    html: '<div style="font-family:sans-serif;max-width:420px;margin:0 auto;padding:24px;border:1px solid #e0e0e0;border-radius:10px"><h2 style="color:#1565C0;margin-top:0">Classes Record — Admin OTP</h2><p style="color:#333">Your one-time login code is:</p><div style="font-size:40px;font-weight:bold;letter-spacing:10px;color:#1565C0;padding:20px;background:#E3F2FD;border-radius:8px;text-align:center">' + otp + '</div><p style="color:#666;font-size:13px;margin-top:16px">⏱ This code expires in <strong>5 minutes</strong>.<br>Do not share this code with anyone.</p><hr style="border:none;border-top:1px solid #eee;margin:16px 0"><p style="color:#999;font-size:11px">If you did not request this, ignore this email.</p></div>',
-  });
-}
 const ADMIN_USERNAME = "patoprincipalseecs@gmail.com";
 
 // MIME types

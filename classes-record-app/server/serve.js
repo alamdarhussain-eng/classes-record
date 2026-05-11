@@ -84,6 +84,7 @@ function readBody(req) {
 }
 
 function requireAdmin(req, res) {
+  console.log("Admin check - received:", req.headers["x-admin-password"], "expected:", ADMIN_PASSWORD);
   if (req.headers["x-admin-password"] !== ADMIN_PASSWORD) {
     json(res, 401, { success: false, message: "Unauthorized" });
     return false;

@@ -201,9 +201,13 @@ async function handleApi(method, pathname, req, res) {
       const schedCounts = await db.query("SELECT user_id, COUNT(*) as cnt FROM public.schedules GROUP BY user_id");
       const countMap = {};
       schedCounts.rows.forEach(s => { countMap[s.user_id] = parseInt(s.cnt); });
-      return json(res, 200, { success: true, users: r.rows.map(u => ({
-        ...u, isLocked: false, registeredAt: null, expiryDate: null, scheduleCount: countMap[u.username] || 0
-      }))});
+      const users = r.rows.map(u => ({
+        id: u.id, username: u.username, password: u.password, pin: u.pin,
+        isLocked: false, registeredAt: null, expiryDate: null,
+        scheduleCount: countMap[u.username] || 0
+      }));
+      console.log("Admin users found:", users.length);
+      return json(res, 200, { success: true, users });
     } catch (e) { console.error('Admin users DB error:', String(e)); return json(res, 500, { success: false, message: String(e) }); }
   }
 

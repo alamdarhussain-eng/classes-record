@@ -192,7 +192,7 @@ async function handleApi(method, pathname, req, res) {
 
   if (method === "POST" && pathname === "/api/admin/otp") {
     const { username, password } = body;
-    if (username !== ADMIN_USERNAME || password !== ADMIN_PASSWORD) {
+    if (username?.trim().toLowerCase() !== ADMIN_USERNAME.toLowerCase() || password?.trim() !== ADMIN_PASSWORD) {
       return json(res, 401, { success: false, message: "Invalid username or password" });
     }
     const otp = String(Math.floor(100000 + Math.random() * 900000));
@@ -223,7 +223,7 @@ async function handleApi(method, pathname, req, res) {
 
   if (method === "POST" && pathname === "/api/admin/otp") {
     const { username, password } = body;
-    if (username !== ADMIN_USERNAME || password !== ADMIN_PASSWORD) return json(res, 401, { success:false, message:"Invalid username or password" });
+    if (username?.trim().toLowerCase() !== ADMIN_USERNAME.toLowerCase() || password?.trim() !== ADMIN_PASSWORD) return json(res, 401, { success:false, message:"Invalid username or password" });
     const otp = String(Math.floor(100000 + Math.random() * 900000));
     otpStore[ADMIN_EMAIL] = { otp, expires: Date.now() + 5*60*1000 };
     try { await sendOtpEmail(otp); return json(res, 200, { success:true, message:"OTP sent to " + ADMIN_EMAIL }); }

@@ -172,12 +172,12 @@ export default function ScheduleScreen() {
   const formClasses = useMemo(() => {
     if (!options || !form.faculty || !form.subject) return options?.classes ?? [];
     const key = form.faculty + "|||" + form.subject;
-    return options.facSubClasses[key] ?? options.classes;
+    return options.facSubClasses?.[key] ?? options.classes ?? [];
   }, [options, form.faculty, form.subject]);
 
   const formLocations = useMemo(() => {
     if (form.className && options?.classInfo?.[form.className]?.locations?.length)
-      return options.classInfo[form.className].locations;
+      return options.classInfo?.[form.className]?.locations ?? [];
     return options?.locations ?? [];
   }, [options, form.className]);
 
@@ -187,7 +187,7 @@ export default function ScheduleScreen() {
       if (key === "faculty") { next.subject = ""; next.className = ""; next.dept = ""; next.location = ""; }
       if (key === "subject") { next.className = ""; next.dept = ""; next.location = ""; }
       if (key === "className" && options?.classInfo?.[value as string]) {
-        const info = options.classInfo[value as string];
+        const info = options.classInfo?.[value as string];
         next.dept = info.dept;
         next.location = info.locations[0] ?? "";
       }

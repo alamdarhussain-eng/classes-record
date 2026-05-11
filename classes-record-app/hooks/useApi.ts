@@ -32,6 +32,38 @@ export interface SummaryRecord {
   GrandTotal: number;
 }
 
+export interface ScheduleOptions {
+  faculty: string[];
+  subjects: string[];
+  classes: string[];
+  locations: string[];
+  depts: string[];
+  facSubjects: Record<string, string[]>;
+  subClasses: Record<string, string[]>;
+}
+
+export async function fetchOptions(scheduleId?: number): Promise<ScheduleOptions> {
+  const rows = await fetchSchedule(scheduleId);
+  const faculty = [...new Set(rows.filter(r => !r.Type).map(r => r.Faculty).filter(Boolean))].sort();
+  const subjects = [...new Set(rows.filter(r => !r.Type).map(r => r.Subject).filter(Boolean))].sort();
+  const classes = [...new Set(rows.filter(r => !r.Type).map(r => r.Class).filter(Boolean))].sort();
+  const locations = [...new Set(rows.filter(r => !r.Type).map(r => r.Location).filter(Boolean))].sort();
+  const depts = [...new Set(rows.filter(r => !r.Type).map(r => r.Deptt).filter(Boolean))].sort();
+  const facSubjects: Record<string, string[]> = {};
+  const subClasses: Record<string, string[]> = {};
+  rows.filter(r => !r.Type).forEach(r => {
+    if (r.Faculty && r.Subject) {
+      if (!facSubjects[r.Faculty]) facSubjects[r.Faculty] = [];
+      if (!facSubjects[r.Faculty].includes(r.Subject)) facSubjects[r.Faculty].push(r.Subject);
+    }
+    if (r.Subject && r.Class) {
+      if (!subClasses[r.Subject]) subClasses[r.Subject] = [];
+      if (!subClasses[r.Subject].includes(r.Class)) subClasses[r.Subject].push(r.Class);
+    }
+  });
+  return { faculty, subjects, classes, locations, depts, facSubjects, subClasses };
+}
+
 export async function fetchSchedule(scheduleId?: number): Promise<ScheduleRow[]> {
   const url = scheduleId != null
     ? `${API_BASE}/schedule?scheduleId=${scheduleId}`

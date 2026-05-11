@@ -730,7 +730,7 @@ const server = http.createServer(async (req, res) => {
   let pathname = url.pathname;
   if (basePath && pathname.startsWith(basePath)) pathname = pathname.slice(basePath.length) || "/";
   if (pathname.startsWith("/api/")) {
-    try { await handleApi(req.method, pathname, req, res); } catch (e) { json(res, 500, { error: String(e) }); }
+    try { await handleApi(req.method, pathname, req, res); } catch (e) { console.error('handleApi error:', e); json(res, 500, { success: false, message: String(e) }); }
     return;
   }
   if (pathname === "/health" || pathname === "/ping") {

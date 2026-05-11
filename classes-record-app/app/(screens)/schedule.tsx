@@ -214,6 +214,7 @@ export default function ScheduleScreen() {
       }
       if (!DAYS.includes(day)) return;
       if (r.Type === "Missed" || r.Type === "Late") return;
+      if ((r.SortKey ?? 0) < 0) return; // skip unscheduled
       if (r.Type === "Makeup" && r.EntryDate) {
         const d = new Date(r.EntryDate); d.setHours(0, 0, 0, 0);
         if (d < today) return;
@@ -230,6 +231,7 @@ export default function ScheduleScreen() {
       if (classFilter && r.Class !== classFilter) return false;
       if (facFilter && r.Faculty !== facFilter) return false;
       if (r.Type === "Missed" || r.Type === "Late") return false;
+      if ((r.SortKey ?? 0) < 0) return false;
       if (r.Type === "Makeup" && r.EntryDate) {
         const d = new Date(r.EntryDate); d.setHours(0, 0, 0, 0);
         if (d < today) return false;
@@ -264,6 +266,7 @@ export default function ScheduleScreen() {
       if (classFilter && r.Class !== classFilter) return false;
       if (facFilter && r.Faculty !== facFilter) return false;
       if (r.Type === "Missed" || r.Type === "Late") return false;
+      if ((r.SortKey ?? 0) < 0) return false;
       if (r.Type === "Makeup" && r.EntryDate) {
         const d = new Date(r.EntryDate); d.setHours(0, 0, 0, 0);
         if (d < today) return false;

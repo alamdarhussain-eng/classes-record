@@ -204,7 +204,7 @@ async function handleApi(method, pathname, req, res) {
       return json(res, 200, { success: true, users: r.rows.map(u => ({
         ...u, isLocked: false, registeredAt: null, expiryDate: null, scheduleCount: countMap[u.username] || 0
       }))});
-    } catch (e) { return json(res, 500, { success: false, message: e.message }); }
+    } catch (e) { console.error('Admin users DB error:', String(e)); return json(res, 500, { success: false, message: String(e) }); }
   }
 
   // ========== SCHEDULES ROUTES ==========

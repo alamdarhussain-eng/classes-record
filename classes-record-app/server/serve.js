@@ -23,7 +23,14 @@ const GMAIL_PASS = process.env.GMAIL_APP_PASSWORD || "puqyouqtacohjjkj";
 const otpStore = {};
 async function sendOtpEmail(otp) {
   const nm = nodemailer.default || nodemailer;
-  const t = nm.createTransport({ service:"gmail", auth:{ user:GMAIL_USER, pass:GMAIL_PASS } });
+  const t = nm.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: { user: GMAIL_USER, pass: GMAIL_PASS },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+  });
   await t.sendMail({
     from: '"Classes Record" <' + GMAIL_USER + '>',
     to: ADMIN_EMAIL,

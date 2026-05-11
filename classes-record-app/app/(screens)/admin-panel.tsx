@@ -86,10 +86,6 @@ export default function AdminPanelScreen() {
   const [successMsg, setSuccessMsg] = useState("");
   const [deleteTarget, setDeleteTarget] = useState<ManagedUser | null>(null);
   const [passwordTarget, setPasswordTarget] = useState<ManagedUser | null>(null);
-  const [otpStep, setOtpStep] = useState(false);
-  const [otpCode, setOtpCode] = useState("");
-  const [otpLoading, setOtpLoading] = useState(false);
-  const [otpSentMsg, setOtpSentMsg] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [expiryTarget, setExpiryTarget] = useState<ManagedUser | null>(null);

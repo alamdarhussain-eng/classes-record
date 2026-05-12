@@ -225,6 +225,7 @@ async function handleApi(method, pathname, req, res) {
       return json(res, 200, r.rows.map(s => ({
         id: s.id, userId: s.user_id, name: s.name,
         startDate: s.start_date, endDate: s.end_date,
+        startHour: s.start_hour ?? 9, endHour: s.end_hour ?? 17, activeDays: s.active_days ?? 'Mon,Tue,Wed,Thu,Fri',
         isPublic: s.is_public, createdAt: s.created_at
       })));
     } catch (e) { return json(res, 500, { error: e.message }); }
@@ -238,26 +239,40 @@ async function handleApi(method, pathname, req, res) {
       return json(res, 200, r.rows.map(s => ({
         id: s.id, userId: s.user_id, name: s.name,
         startDate: s.start_date, endDate: s.end_date,
+        startHour: s.start_hour ?? 9, endHour: s.end_hour ?? 17, activeDays: s.active_days ?? 'Mon,Tue,Wed,Thu,Fri',
         isPublic: s.is_public, createdAt: s.created_at
       })));
     } catch (e) { return json(res, 500, { error: e.message }); }
   }
 
   if (method === "POST" && pathname === "/api/schedules") {
-    const { username, name, startDate, endDate } = body;
+    const { username, name, startDate, endDate, startHour, endHour, activeDays } = body;
     if (!username || !name) return json(res, 400, { success: false, message: "username and name required" });
     try {
       const r = await db.query(
-        "INSERT INTO public.schedules (id, user_id, name, start_date, end_date) VALUES (nextval('public.schedules_id_seq'), $1, $2, $3, $4) RETURNING *",
-        [username, name, startDate ?? null, endDate ?? null]
+        "INSERT INTO public.schedules (id, user_id, name, start_date, end_date, start_hour, end_hour, active_days) VALUES (nextval('public.schedules_id_seq'), $1, $2, $3, $4, $5, $6, $7) RETURNING *",
+        [username, name, startDate ?? null, endDate ?? null, startHour ?? 9, endHour ?? 17, activeDays ?? 'Mon,Tue,Wed,Thu,Fri']
       );
       const s = r.rows[0];
       return json(res, 200, { success: true, schedule: {
         id: s.id, userId: s.user_id, name: s.name,
         startDate: s.start_date, endDate: s.end_date,
+        startHour: s.start_hour ?? 9, endHour: s.end_hour ?? 17, activeDays: s.active_days ?? 'Mon,Tue,Wed,Thu,Fri',
         isPublic: s.is_public, createdAt: s.created_at
       }});
     } catch (e) { return json(res, 500, { error: e.message }); }
+  }
+
+  if (method === "PATCH" && pathname.match(/^\/api\/schedules\/\d+\/settings$/)) {
+    const id = parseInt(pathname.split("/")[3]);
+    const { startHour, endHour, activeDays } = body;
+    try {
+      await db.query(
+        "UPDATE public.schedules SET start_hour = $1, end_hour = $2, active_days = $3 WHERE id = $4",
+        [startHour ?? 9, endHour ?? 17, activeDays ?? 'Mon,Tue,Wed,Thu,Fri', id]
+      );
+      return json(res, 200, { success: true });
+    } catch(e) { return json(res, 500, { error: e.message }); }
   }
 
   if (method === "PATCH" && pathname.match(/^\/api\/schedules\/\d+\/public$/)) {
@@ -721,6 +736,14 @@ function staticBuildExists() {
 const port = parseInt(process.env.PORT || "3000", 10);
 
 async function fixSequences() {
+  // Add new columns if they don't exist
+  try {
+    await db.query("ALTER TABLE public.schedules ADD COLUMN IF NOT EXISTS start_hour INTEGER DEFAULT 9");
+    await db.query("ALTER TABLE public.schedules ADD COLUMN IF NOT EXISTS end_hour INTEGER DEFAULT 17");
+    await db.query("ALTER TABLE public.schedules ADD COLUMN IF NOT EXISTS active_days TEXT DEFAULT 'Mon,Tue,Wed,Thu,Fri'");
+    console.log("\u2713 Schedule columns ensured");
+  } catch(e) { console.log("Column migration warning:", e.message); }
+
   const tables = ['users', 'schedules', 'holidays', 'attendance', 'weekly_schedule', 'faculty_accounts', 'finance_accounts', 'finance_payments', 'finance_rates', 'students', 'exam_marks', 'exam_weights', 'support_staff'];
   for (const table of tables) {
     try { await db.query("ALTER TABLE public." + table + " ALTER COLUMN id SET DEFAULT nextval('public." + table + "_id_seq')"); console.log('✓ Sequence fixed: ' + table); }

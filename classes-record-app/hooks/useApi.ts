@@ -17,6 +17,13 @@ export interface ScheduleRow {
   Elective: string;
 }
 
+export interface UserSchedule {
+  id: number; userId: string; name: string;
+  startDate?: string; endDate?: string;
+  startHour: number; endHour: number; activeDays: string;
+  isPublic: boolean; createdAt: string;
+}
+
 export interface SummaryRecord {
   Faculty: string;
   Subject: string;
@@ -144,11 +151,20 @@ export async function fetchUserSchedules(username: string) {
   return res.json();
 }
 
-export async function createUserSchedule(username: string, name: string, startDate?: string, endDate?: string) {
+export async function updateScheduleSettings(id: number, startHour: number, endHour: number, activeDays: string) {
+  const res = await fetch(`${API_BASE}/schedules/${id}/settings`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ startHour, endHour, activeDays }),
+  });
+  return res.json();
+}
+
+export async function createUserSchedule(username: string, name: string, startDate?: string, endDate?: string, startHour?: number, endHour?: number, activeDays?: string) {
   const res = await fetch(`${API_BASE}/schedules`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, name, startDate, endDate }),
+    body: JSON.stringify({ username, name, startDate, endDate, startHour, endHour, activeDays }),
   });
   return res.json();
 }

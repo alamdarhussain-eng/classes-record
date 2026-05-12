@@ -13,8 +13,8 @@ export default function ScheduleDashboardScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const { scheduleId, scheduleTitle, creatorName, isPublic, startDate, endDate } =
-    useLocalSearchParams<{ scheduleId: string; scheduleTitle: string; creatorName?: string; isPublic?: string; startDate?: string; endDate?: string }>();
+  const { scheduleId, scheduleTitle, creatorName, isPublic, startDate, endDate, startHour, endHour, activeDays } =
+    useLocalSearchParams<{ scheduleId: string; scheduleTitle: string; creatorName?: string; isPublic?: string; startDate?: string; endDate?: string; startHour?: string; endHour?: string; activeDays?: string }>();
 
   const publicMode = isPublic === "1";
 
@@ -27,7 +27,8 @@ export default function ScheduleDashboardScreen() {
   );
 
   const dateParams = startDate ? `&startDate=${startDate}&endDate=${endDate ?? ""}` : "";
-  const q = `scheduleId=${scheduleId}&scheduleTitle=${encodeURIComponent(scheduleTitle ?? "")}${publicMode ? "&isPublic=1" : ""}${dateParams}`;
+  const timeParams = `&startHour=${startHour ?? "9"}&endHour=${endHour ?? "17"}&activeDays=${encodeURIComponent(activeDays ?? "Mon,Tue,Wed,Thu,Fri")}`;
+  const q = `scheduleId=${scheduleId}&scheduleTitle=${encodeURIComponent(scheduleTitle ?? "")}${publicMode ? "&isPublic=1" : ""}${dateParams}${timeParams}`;
 
   const ALL_TILES = [
     {

@@ -70,6 +70,9 @@ export default function MySchedulesScreen() {
   const [newName, setNewName] = useState("");
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
+  const [startHour, setStartHour] = useState<number>(9);
+  const [endHour, setEndHour] = useState<number>(17);
+  const [activeDays, setActiveDays] = useState<string[]>(["Mon","Tue","Wed","Thu","Fri"]);
   const [pickerTarget, setPickerTarget] = useState<"start" | "end" | null>(null);
 
   const [deleteTarget, setDeleteTarget] = useState<UserSchedule | null>(null);
@@ -82,8 +85,8 @@ export default function MySchedulesScreen() {
   });
 
   const createMutation = useMutation({
-    mutationFn: ({ name, sd, ed }: { name: string; sd?: string; ed?: string }) =>
-      createUserSchedule(user!, name, sd, ed),
+    mutationFn: ({ name, sd, ed, sh, eh, ad }: { name: string; sd?: string; ed?: string; sh?: number; eh?: number; ad?: string }) =>
+      createUserSchedule(user!, name, sd, ed, sh, eh, ad),
     onSuccess: (data) => {
       if (data.error) { setErrorMsg(data.error); return; }
       qc.invalidateQueries({ queryKey: ["userSchedules", user] });
@@ -437,7 +440,7 @@ export default function MySchedulesScreen() {
                 <View key={sch.id} style={[s.card, sch.isPublic && { borderColor: "#1976D2", borderWidth: 1.5 }]}>
                   <TouchableOpacity
                     style={{ flex: 1, flexDirection: "row", alignItems: "center" }}
-                    onPress={() => router.push(`/(screens)/schedule-dashboard?scheduleId=${sch.id}&scheduleTitle=${encodeURIComponent(sch.name)}&startDate=${sch.startDate ?? ""}&endDate=${sch.endDate ?? ""}` as never)}
+                    onPress={() => router.push(`/(screens)/schedule-dashboard?scheduleId=${sch.id}&scheduleTitle=${encodeURIComponent(sch.name)}&startDate=${sch.startDate ?? ""}&endDate=${sch.endDate ?? ""}&startHour=${sch.startHour ?? 9}&endHour=${sch.endHour ?? 17}&activeDays=${encodeURIComponent(sch.activeDays ?? "Mon,Tue,Wed,Thu,Fri")}` as never)}
                     activeOpacity={0.75}
                   >
                     <View style={s.cardIcon}>
@@ -600,7 +603,7 @@ export default function MySchedulesScreen() {
               style={s.sheetBtn}
               onPress={() => {
                 if (newName.trim()) {
-                  createMutation.mutate({ name: newName, sd: toIso(startDate), ed: toIso(endDate) });
+                  createMutation.mutate({ name: newName, sd: toIso(startDate), ed: toIso(endDate), sh: startHour, eh: endHour, ad: activeDays.join(',') });
                 }
               }}
               disabled={createMutation.isPending || !newName.trim()}

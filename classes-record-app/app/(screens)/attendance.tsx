@@ -117,13 +117,17 @@ export default function AttendanceScreen() {
   const { user } = useAuth();
   const scrollRef = useRef<ScrollView>(null);
 
-  const { scheduleId: rawId, scheduleTitle, isPublic, startDate, endDate, facultyName } =
+  const { scheduleId: rawId, scheduleTitle, isPublic, startDate, endDate, facultyName, startHour: shP, endHour: ehP, activeDays: adP } =
     useLocalSearchParams<{
       scheduleId: string; scheduleTitle: string;
       isPublic?: string; startDate?: string; endDate?: string; facultyName?: string;
+      startHour?: string; endHour?: string; activeDays?: string;
     }>();
 
   const scheduleId = Number(rawId);
+  const attStartHour = shP ? Number(shP) : 9;
+  const attEndHour   = ehP ? Number(ehP) : 17;
+  const ACTIVE_DAYS = adP ? decodeURIComponent(adP).split(",").filter(d => ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].includes(d)) : ["Mon","Tue","Wed","Thu","Fri"];
   const publicMode = isPublic === "1";
   const facultyMode = !!facultyName;
   const teacherMode = !publicMode && !!user;

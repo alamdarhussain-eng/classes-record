@@ -24,11 +24,6 @@ const DAY_FULL: Record<string, string> = {
 };
 const HOURS = Array.from({ length: 9 }, (_, i) => i + 9);
 const TIME_SLOTS = HOURS.map((h) => {
-  const fmt = (n: number) =>
-    n < 12 ? `${n.toString().padStart(2, "0")}:00 AM`
-    : n === 12 ? "12:00 PM"
-    : `${(n - 12).toString().padStart(2, "0")}:00 PM`;
-  return { label: `${fmt(h)}–${fmt(h + 1)}`, shortLabel: fmt(h), hour: h };
 });
 
 function normalizeDay(d: string): string {
@@ -116,8 +111,25 @@ export default function ScheduleScreen() {
   const router = useRouter();
   const { width: screenWidth } = useWindowDimensions();
   const [clipboard, setClipboard] = React.useState<ScheduleRow | null>(null);
-  const { scheduleId: scheduleIdParam, scheduleTitle } = useLocalSearchParams<{ scheduleId?: string; scheduleTitle?: string }>();
+  const { scheduleId: scheduleIdParam, scheduleTitle, startHour: startHourParam, endHour: endHourParam, activeDays: activeDaysParam } = useLocalSearchParams<{ scheduleId?: string; scheduleTitle?: string; startHour?: string; endHour?: string; activeDays?: string }>();
   const scheduleId = scheduleIdParam ? Number(scheduleIdParam) : undefined;
+  const [showSettings, setShowSettings] = React.useState(false);
+  const [settingsHourStart, setSettingsHourStart] = React.useState<number>(9);
+  const [settingsHourEnd, setSettingsHourEnd] = React.useState<number>(17);
+  const [settingsDays, setSettingsDays] = React.useState<string[]>(["Mon","Tue","Wed","Thu","Fri"]);
+  React.useEffect(() => {
+    setSettingsHourStart(startHourParam ? Number(startHourParam) : 9);
+    setSettingsHourEnd(endHourParam ? Number(endHourParam) : 17);
+    setSettingsDays(activeDaysParam ? decodeURIComponent(activeDaysParam).split(",").filter(d => ALL_DAYS.includes(d)) : ["Mon","Tue","Wed","Thu","Fri"]);
+  }, [startHourParam, endHourParam, activeDaysParam]);
+  const startHour = startHourParam ? Number(startHourParam) : 9;
+  const endHour   = endHourParam   ? Number(endHourParam)   : 17;
+  const DAYS = activeDaysParam
+    ? decodeURIComponent(activeDaysParam).split(",").filter(d => ALL_DAYS.includes(d))
+    : ["Mon","Tue","Wed","Thu","Fri"];
+  const HOURS = Array.from({ length: endHour - startHour }, (_, i) => i + startHour);
+  const TIME_SLOTS = TIME_SLOTS_FOR(startHour, endHour);
+  const DAY_FULL: Record<string,string> = { Mon:"Monday", Tue:"Tuesday", Wed:"Wednesday", Thu:"Thursday", Fri:"Friday", Sat:"Saturday", Sun:"Sunday" };
 
   useFocusEffect(
     useCallback(() => {
@@ -277,7 +289,7 @@ export default function ScheduleScreen() {
     });
 
     const gridMap: Record<number, Record<string, ScheduleRow[]>> = {};
-    HOURS.forEach((h) => { gridMap[h] = { Mon: [], Tue: [], Wed: [], Thu: [], Fri: [] }; });
+    HOURS.forEach((h) => { gridMap[h] = Object.fromEntries(DAYS.map(d => [d, []])); });
     filtered.forEach((r) => {
       let day = normalizeDay(r.Day);
       if (!day && r.Type === "Makeup" && r.EntryDate) {
@@ -501,7 +513,7 @@ export default function ScheduleScreen() {
         </View>
         <View style={s.titleRow}>
           <Text style={s.headerTitle}>{scheduleTitle ? decodeURIComponent(scheduleTitle) : "Weekly Schedule"}</Text>
-          <Text style={s.headerSub}>{scheduleId ? "Private schedule — Mon to Fri timetable" : "All 5 days — Mon to Fri timetable"}</Text>
+          <Text style={s.headerSub}>{scheduleId ? `Private schedule — ${DAYS.join(", ")}` : `${DAYS.join(", ")} timetable`}</Text>
         </View>
         <View style={s.filtersRow}>
           <TouchableOpacity style={[s.filterBtn, classFilter && s.filterBtnActive]} onPress={() => setActivePicker("filterClass")}>
@@ -760,6 +772,90 @@ export default function ScheduleScreen() {
         onSelect={(v) => { setFacFilter(v); setActivePicker(null); }}
         onClose={() => setActivePicker(null)}
       />
+      {/* ── Settings Modal: Hours & Days ── */}
+      <Modal visible={showSettings} transparent animationType="slide">
+        <View style={{ flex:1, justifyContent:"flex-end", backgroundColor:"rgba(0,0,0,0.4)" }}>
+          <View style={{ backgroundColor:"#fff", borderTopLeftRadius:20, borderTopRightRadius:20, padding:24, maxHeight:"80%" }}>
+            <Text style={{ fontSize:18, fontFamily:"Inter_700Bold", color:"#1565C0", marginBottom:4 }}>Schedule Settings</Text>
+            <Text style={{ fontSize:13, color:"#666", marginBottom:20 }}>Adjust time range and active days</Text>
+
+            <Text style={{ fontSize:12, fontFamily:"Inter_600SemiBold", color:"#444", marginBottom:8, textTransform:"uppercase" }}>Start Hour</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom:16 }}>
+              <View style={{ flexDirection:"row", gap:6 }}>
+                {[7,8,9,10,11,12,13,14,15,16,17,18,19,20].map(h => {
+                  const lbl = h===12?"12 PM":h<12?`${h} AM`:`${h-12} PM`;
+                  const on = settingsHourStart===h;
+                  return (
+                    <TouchableOpacity key={h} onPress={() => { setSettingsHourStart(h); if(settingsHourEnd<=h) setSettingsHourEnd(h+1); }}
+                      style={{ paddingHorizontal:12, paddingVertical:7, borderRadius:8,
+                        backgroundColor:on?"#1565C0":"#F0F4F8", borderWidth:1, borderColor:on?"#1565C0":"#DDD" }}>
+                      <Text style={{ fontSize:13, color:on?"#fff":"#333", fontFamily:"Inter_500Medium" }}>{lbl}</Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            </ScrollView>
+
+            <Text style={{ fontSize:12, fontFamily:"Inter_600SemiBold", color:"#444", marginBottom:8, textTransform:"uppercase" }}>End Hour</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom:16 }}>
+              <View style={{ flexDirection:"row", gap:6 }}>
+                {[8,9,10,11,12,13,14,15,16,17,18,19,20,21].filter(h=>h>settingsHourStart).map(h => {
+                  const lbl = h===12?"12 PM":h<12?`${h} AM`:`${h-12} PM`;
+                  const on = settingsHourEnd===h;
+                  return (
+                    <TouchableOpacity key={h} onPress={() => setSettingsHourEnd(h)}
+                      style={{ paddingHorizontal:12, paddingVertical:7, borderRadius:8,
+                        backgroundColor:on?"#1565C0":"#F0F4F8", borderWidth:1, borderColor:on?"#1565C0":"#DDD" }}>
+                      <Text style={{ fontSize:13, color:on?"#fff":"#333", fontFamily:"Inter_500Medium" }}>{lbl}</Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            </ScrollView>
+
+            <Text style={{ fontSize:12, fontFamily:"Inter_600SemiBold", color:"#444", marginBottom:8, textTransform:"uppercase" }}>Active Days</Text>
+            <View style={{ flexDirection:"row", flexWrap:"wrap", gap:8, marginBottom:24 }}>
+              {["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map(d => {
+                const on = settingsDays.includes(d);
+                return (
+                  <TouchableOpacity key={d}
+                    onPress={() => setSettingsDays(prev => on ? prev.filter(x=>x!==d) : [...prev, d])}
+                    style={{ paddingHorizontal:14, paddingVertical:8, borderRadius:8,
+                      backgroundColor:on?"#1565C0":"#F0F4F8", borderWidth:1, borderColor:on?"#1565C0":"#DDD" }}>
+                    <Text style={{ fontSize:14, color:on?"#fff":"#333", fontFamily:"Inter_600SemiBold" }}>{d}</Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+
+            <View style={{ flexDirection:"row", gap:10 }}>
+              <TouchableOpacity onPress={() => setShowSettings(false)}
+                style={{ flex:1, padding:14, borderRadius:12, borderWidth:1, borderColor:"#DDD", alignItems:"center" }}>
+                <Text style={{ fontFamily:"Inter_600SemiBold", color:"#666" }}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={async () => {
+                  if (scheduleId) {
+                    const { updateScheduleSettings } = await import("@/hooks/useApi");
+                    await updateScheduleSettings(scheduleId, settingsHourStart, settingsHourEnd, settingsDays.join(","));
+                    setShowSettings(false);
+                    if (typeof window !== "undefined") {
+                      const url = new URL(window.location.href);
+                      url.searchParams.set("startHour", String(settingsHourStart));
+                      url.searchParams.set("endHour", String(settingsHourEnd));
+                      url.searchParams.set("activeDays", settingsDays.join(","));
+                      window.location.href = url.toString();
+                    }
+                  }
+                }}
+                style={{ flex:2, padding:14, borderRadius:12, backgroundColor:"#1565C0", alignItems:"center" }}>
+                <Text style={{ fontFamily:"Inter_700Bold", color:"#fff" }}>Save & Apply</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
     </View>
   );
 }

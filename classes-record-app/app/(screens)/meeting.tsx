@@ -6,7 +6,7 @@ import {
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Feather } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useRouter, useFocusEffect } from "expo-router";
+import { useRouter, useFocusEffect, useLocalSearchParams } from "expo-router";
 import * as ScreenOrientation from "expo-screen-orientation";
 import { printOrShareHtml } from "@/utils/printHtml";
 
@@ -14,12 +14,14 @@ import { useColors } from "@/hooks/useColors";
 import { fetchMeeting, fetchSchedule, fetchOptions, MeetingResult, ScheduleOptions } from "@/hooks/useApi";
 import { PickerModal } from "@/components/PickerModal";
 
-const HOUR_LABELS = Array.from({ length: 9 }, (_, i) => {
-  const h = i + 9;
-  if (h < 12) return `${h.toString().padStart(2, "0")}:00 AM`;
-  if (h === 12) return "12:00 PM";
-  return `${(h - 12).toString().padStart(2, "0")}:00 PM`;
-});
+function buildHourLabels(startH: number, endH: number): string[] {
+  return Array.from({ length: endH - startH }, (_, i) => {
+    const h = i + startH;
+    if (h < 12) return `${h.toString().padStart(2, "0")}:00 AM`;
+    if (h === 12) return "12:00 PM";
+    return `${(h - 12).toString().padStart(2, "0")}:00 PM`;
+  });
+}
 
 function todayStr() {
   const d = new Date();
@@ -38,6 +40,11 @@ export default function MeetingScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const router = useRouter();
+  const { startHour: shP, endHour: ehP, activeDays: adP } = useLocalSearchParams<{ startHour?: string; endHour?: string; activeDays?: string }>();
+  const meetStartHour = shP ? Number(shP) : 9;
+  const meetEndHour   = ehP ? Number(ehP) : 17;
+  const HOUR_LABELS = buildHourLabels(meetStartHour, meetEndHour);
+  const DAYS = adP ? decodeURIComponent(adP).split(",").filter(d => ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].includes(d)) : ["Mon","Tue","Wed","Thu","Fri"];
 
   useFocusEffect(
     useCallback(() => {

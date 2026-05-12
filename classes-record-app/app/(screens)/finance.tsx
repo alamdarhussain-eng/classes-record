@@ -30,38 +30,20 @@ const MONTH_NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct"
 
 type SemesterDef = { key: string; label: string; months: string[]; semPeriod: string };
 
-function buildSemesters(): SemesterDef[] {
-  const sems: SemesterDef[] = [];
-  for (const year of [2025, 2026, 2027]) {
-    sems.push({
-      key: `${year}-FALL`,
-      label: `Fall ${year}`,
-      months: [9, 10, 11, 12].map(m => `${year}-${String(m).padStart(2, "0")}`),
-      semPeriod: `${year}-FALL`,
-    });
-    sems.push({
-      key: `${year}-SPR`,
-      label: `Spring ${year}`,
-      months: [1, 2, 3, 4, 5, 6].map(m => `${year}-${String(m).padStart(2, "0")}`),
-      semPeriod: `${year}-SPR`,
-    });
-    sems.push({
-      key: `${year}-SUM`,
-      label: `Summer ${year}`,
-      months: [7, 8].map(m => `${year}-${String(m).padStart(2, "0")}`),
-      semPeriod: `${year}-SUM`,
-    });
+function buildAllMonths(): string[] {
+  const now = new Date();
+  const months: string[] = [];
+  for (let i = -2; i <= 9; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
+    months.push(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`);
   }
-  // Sort chronologically by first month
-  return sems.sort((a, b) => (a.months[0] < b.months[0] ? -1 : 1));
+  return months;
 }
-
-const SEMESTERS = buildSemesters();
+const ALL_MONTHS: string[] = buildAllMonths();
+const SEMESTERS: SemesterDef[] = [{ key: "ALL", label: "All Months", months: ALL_MONTHS, semPeriod: ALL_MONTHS[2] }];
 
 function findCurrentSemester(): SemesterDef {
-  const now = new Date();
-  const monthStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
-  return SEMESTERS.find(s => s.months.includes(monthStr)) ?? SEMESTERS[SEMESTERS.length - 2];
+  return SEMESTERS[0];
 }
 
 function monthLabel(period: string): string {

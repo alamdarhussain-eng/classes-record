@@ -245,7 +245,7 @@ async function handleApi(method, pathname, req, res) {
         const chars = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
         const password = Array.from({length:8}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
         await db.query(
-          "INSERT INTO public.faculty_accounts (schedule_id, faculty_name, username, password, email) VALUES ($1,$2,$3,$4,'') ON CONFLICT DO NOTHING",
+          "INSERT INTO public.faculty_accounts (schedule_id, faculty_name, username, password, email) SELECT $1,$2,$3,$4,'' WHERE NOT EXISTS (SELECT 1 FROM public.faculty_accounts WHERE schedule_id=$1 AND faculty_name=$2)",
           [parseInt(scheduleId), name, username, password]
         );
         created++;

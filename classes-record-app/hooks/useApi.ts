@@ -309,6 +309,131 @@ export async function fetchStudentAttendanceSummary(scheduleId: number, classNam
   } catch { return []; }
 }
 
+// ========== FINANCE API ==========
+
+export interface FinancePayment {
+  id?: number;
+  personType: string;
+  personName: string;
+  scheduleId?: number;
+  period: string;
+  amount: number;
+  status: string;
+  note?: string;
+}
+
+export interface SupportStaff {
+  id: number;
+  name: string;
+  role: string;
+  contact?: string;
+}
+
+export async function financeLogin(username: string, password: string, financePin: string) {
+  const res = await fetch(`${API_BASE}/finance/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password, financePin }),
+  });
+  return res.json();
+}
+
+export async function financeRegister(username: string, password: string, financePin: string) {
+  // Register just validates schedule credentials + pin, no separate account created
+  return financeLogin(username, password, financePin);
+}
+
+export async function setFinancePin(username: string, password: string, financePin: string) {
+  const res = await fetch(`${API_BASE}/finance/auth/set-pin`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password, financePin }),
+  });
+  return res.json();
+}
+
+export async function fetchFinanceSchedules() {
+  const res = await fetch(`${API_BASE}/finance/schedules`);
+  return res.json();
+}
+
+export async function fetchFinancePersons(scheduleId: number, personType: string) {
+  const res = await fetch(`${API_BASE}/finance/persons?scheduleId=${scheduleId}&personType=${encodeURIComponent(personType)}`);
+  return res.json();
+}
+
+export async function fetchFinancePayments(scheduleId: number, personType: string, period: string) {
+  const res = await fetch(`${API_BASE}/finance/payments?scheduleId=${scheduleId}&personType=${encodeURIComponent(personType)}&period=${encodeURIComponent(period)}`);
+  const data = await res.json();
+  return Array.isArray(data) ? data : [];
+}
+
+export async function saveFinancePaymentsBulk(payments: FinancePayment[]) {
+  const res = await fetch(`${API_BASE}/finance/payments`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ payments }),
+  });
+  return res.json();
+}
+
+export async function fetchFinanceSummary(scheduleId: number, period: string) {
+  const res = await fetch(`${API_BASE}/finance/summary?scheduleId=${scheduleId}&period=${encodeURIComponent(period)}`);
+  return res.json();
+}
+
+export async function fetchStudentFeeStatus(regNo: string) {
+  const res = await fetch(`${API_BASE}/finance/student-fee?regNo=${encodeURIComponent(regNo)}`);
+  return res.json();
+}
+
+export async function fetchFinanceRates(scheduleId: number, personType: string) {
+  const res = await fetch(`${API_BASE}/finance/rates?scheduleId=${scheduleId}&personType=${encodeURIComponent(personType)}`);
+  const data = await res.json();
+  return Array.isArray(data) ? data : [];
+}
+
+export async function saveFinanceRatesBulk(scheduleId: number, personType: string, rates: any[]) {
+  const res = await fetch(`${API_BASE}/finance/rates`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ scheduleId, personType, rates }),
+  });
+  return res.json();
+}
+
+export async function importRatesExcel(uri: string, name: string, mimeType: string, scheduleId: number, personType: string) {
+  const formData = await buildFormData(uri, name, mimeType);
+  const res = await fetch(`${API_BASE}/finance/rates/import?scheduleId=${scheduleId}&personType=${encodeURIComponent(personType)}`, { method: "POST", body: formData });
+  return res.json();
+}
+
+export async function fetchSupportStaff(scheduleId: number) {
+  const res = await fetch(`${API_BASE}/finance/staff?scheduleId=${scheduleId}`);
+  const data = await res.json();
+  return Array.isArray(data) ? data : [];
+}
+
+export async function addSupportStaff(scheduleId: number, name: string, role: string, contact: string) {
+  const res = await fetch(`${API_BASE}/finance/staff`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ scheduleId, name, role, contact }),
+  });
+  return res.json();
+}
+
+export async function deleteSupportStaff(id: number) {
+  const res = await fetch(`${API_BASE}/finance/staff/${id}`, { method: "DELETE" });
+  return res.json();
+}
+
+export async function importStaffExcel(uri: string, name: string, mimeType: string, scheduleId: number) {
+  const formData = await buildFormData(uri, name, mimeType);
+  const res = await fetch(`${API_BASE}/finance/staff/import?scheduleId=${scheduleId}`, { method: "POST", body: formData });
+  return res.json();
+}
+
 export async function importStudentsExcel(scheduleId: number, className: string, uri: string, name: string, mimeType: string) {
   const formData = await buildFormData(uri, name, mimeType);
   const res = await fetch(`${API_BASE}/import/students/xlsx?scheduleId=${scheduleId}&className=${encodeURIComponent(className)}`, { method: "POST", body: formData });

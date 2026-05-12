@@ -13,7 +13,7 @@ import * as ScreenOrientation from "expo-screen-orientation";
 import { useColors } from "@/hooks/useColors";
 import { useAuth } from "@/context/AuthContext";
 import {
-  fetchUserSchedules, createUserSchedule, deleteUserSchedule,
+  fetchUserSchedules, createUserSchedule, deleteUserSchedule, setFinancePin,
   toggleSchedulePublic, changePassword, recoverPasswordWithPin, UserSchedule,
 } from "@/hooks/useApi";
 
@@ -67,6 +67,12 @@ export default function MySchedulesScreen() {
   const [recoverLoading, setRecoverLoading] = useState(false);
 
   const [showCreate, setShowCreate] = useState(false);
+  const [showFinancePin, setShowFinancePin] = useState(false);
+  const [fpPass, setFpPass] = useState("");
+  const [fpPin, setFpPin] = useState("");
+  const [fpPin2, setFpPin2] = useState("");
+  const [fpLoading, setFpLoading] = useState(false);
+  const [fpMsg, setFpMsg] = useState("");
   const [newName, setNewName] = useState("");
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
@@ -310,11 +316,37 @@ export default function MySchedulesScreen() {
   });
 
   if (authLoading) {
-    return (
+    async function handleSetFinancePin() {
+    if (!fpPass.trim()) { setFpMsg("Enter your current password"); return; }
+    if (fpPin.length < 4) { setFpMsg("Finance PIN must be at least 4 characters"); return; }
+    if (fpPin !== fpPin2) { setFpMsg("PINs do not match"); return; }
+    setFpLoading(true); setFpMsg("");
+    const res = await setFinancePin(user!, fpPass.trim(), fpPin.trim());
+    setFpLoading(false);
+    if (res.success) {
+      setFpMsg("✓ Finance PIN set successfully!");
+      setFpPass(""); setFpPin(""); setFpPin2("");
+    } else { setFpMsg(res.message || "Failed to set PIN"); }
+  }
+
+  return (
       <View style={[s.container, { justifyContent: "center", alignItems: "center" }]}>
         <ActivityIndicator size="large" color={colors.primary} />
       </View>
     );
+  }
+
+  async function handleSetFinancePin() {
+    if (!fpPass.trim()) { setFpMsg("Enter your current password"); return; }
+    if (fpPin.length < 4) { setFpMsg("Finance PIN must be at least 4 characters"); return; }
+    if (fpPin !== fpPin2) { setFpMsg("PINs do not match"); return; }
+    setFpLoading(true); setFpMsg("");
+    const res = await setFinancePin(user!, fpPass.trim(), fpPin.trim());
+    setFpLoading(false);
+    if (res.success) {
+      setFpMsg("✓ Finance PIN set successfully!");
+      setFpPass(""); setFpPin(""); setFpPin2("");
+    } else { setFpMsg(res.message || "Failed to set PIN"); }
   }
 
   return (
@@ -413,6 +445,13 @@ export default function MySchedulesScreen() {
             >
               <Feather name="lock" size={13} color={colors.mutedForeground} />
               <Text style={s.logoutTxt}>Change Password</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[s.logoutBtn, { borderColor: "#00695C", marginRight: 8 }]}
+              onPress={() => { setFpPass(""); setFpPin(""); setFpPin2(""); setFpMsg(""); setShowFinancePin(true); }}
+            >
+              <Feather name="credit-card" size={13} color="#00695C" />
+              <Text style={[s.logoutTxt, { color: "#00695C" }]}>Finance PIN</Text>
             </TouchableOpacity>
             <TouchableOpacity style={s.logoutBtn} onPress={logout}>
               <Feather name="log-out" size={13} color={colors.mutedForeground} />
@@ -515,6 +554,38 @@ export default function MySchedulesScreen() {
         </Modal>
       )}
 
+      {/* Finance PIN Modal */}
+      <Modal visible={showFinancePin} transparent animationType="slide">
+        <View style={s.overlay}>
+          <View style={[s.sheet, { maxHeight: "80%" }]}>
+            <Text style={s.sheetTitle}>Set Finance PIN</Text>
+            <Text style={{ fontSize: 13, fontFamily: "Inter_400Regular", color: colors.mutedForeground, marginBottom: 16 }}>
+              Finance users log in with your password + this PIN. Keep it safe.
+            </Text>
+            <Text style={s.sheetLabel}>Current Password</Text>
+            <TextInput style={s.sheetInput} placeholder="Your current password" placeholderTextColor={colors.mutedForeground}
+              value={fpPass} onChangeText={setFpPass} secureTextEntry />
+            <Text style={s.sheetLabel}>New Finance PIN</Text>
+            <TextInput style={s.sheetInput} placeholder="Min 4 characters" placeholderTextColor={colors.mutedForeground}
+              value={fpPin} onChangeText={setFpPin} secureTextEntry />
+            <Text style={s.sheetLabel}>Confirm Finance PIN</Text>
+            <TextInput style={s.sheetInput} placeholder="Repeat PIN" placeholderTextColor={colors.mutedForeground}
+              value={fpPin2} onChangeText={setFpPin2} secureTextEntry />
+            {fpMsg ? (
+              <Text style={{ fontSize: 13, fontFamily: "Inter_400Regular",
+                color: fpMsg.startsWith("✓") ? "#2E7D32" : "#B71C1C",
+                marginBottom: 12, textAlign: "center" }}>{fpMsg}</Text>
+            ) : null}
+            <TouchableOpacity style={s.sheetBtn} onPress={handleSetFinancePin} disabled={fpLoading}>
+              {fpLoading ? <ActivityIndicator color="#fff" /> : <Text style={s.sheetBtnTxt}>Save Finance PIN</Text>}
+            </TouchableOpacity>
+            <TouchableOpacity style={s.sheetCancel} onPress={() => { setShowFinancePin(false); setFpPass(""); setFpPin(""); setFpPin2(""); setFpMsg(""); }}>
+              <Text style={s.sheetCancelTxt}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
       {/* Delete confirmation modal */}
       <Modal visible={!!deleteTarget} transparent animationType="fade">
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0,0,0,0.45)", padding: 32 }}>
@@ -608,7 +679,20 @@ export default function MySchedulesScreen() {
                 {[7,8,9,10,11,12,13,14,15,16,17,18,19,20].map(h => {
                   const lbl = h===12?"12 PM":h<12?`${h} AM`:`${h-12} PM`;
                   const on = startHour===h;
-                  return (
+                  async function handleSetFinancePin() {
+    if (!fpPass.trim()) { setFpMsg("Enter your current password"); return; }
+    if (fpPin.length < 4) { setFpMsg("Finance PIN must be at least 4 characters"); return; }
+    if (fpPin !== fpPin2) { setFpMsg("PINs do not match"); return; }
+    setFpLoading(true); setFpMsg("");
+    const res = await setFinancePin(user!, fpPass.trim(), fpPin.trim());
+    setFpLoading(false);
+    if (res.success) {
+      setFpMsg("✓ Finance PIN set successfully!");
+      setFpPass(""); setFpPin(""); setFpPin2("");
+    } else { setFpMsg(res.message || "Failed to set PIN"); }
+  }
+
+  return (
                     <TouchableOpacity key={h}
                       onPress={() => { setStartHour(h); if(endHour<=h) setEndHour(h+1); }}
                       style={{ paddingHorizontal:12, paddingVertical:7, borderRadius:8,
@@ -627,7 +711,20 @@ export default function MySchedulesScreen() {
                 {[8,9,10,11,12,13,14,15,16,17,18,19,20,21].filter(h=>h>startHour).map(h => {
                   const lbl = h===12?"12 PM":h<12?`${h} AM`:`${h-12} PM`;
                   const on = endHour===h;
-                  return (
+                  async function handleSetFinancePin() {
+    if (!fpPass.trim()) { setFpMsg("Enter your current password"); return; }
+    if (fpPin.length < 4) { setFpMsg("Finance PIN must be at least 4 characters"); return; }
+    if (fpPin !== fpPin2) { setFpMsg("PINs do not match"); return; }
+    setFpLoading(true); setFpMsg("");
+    const res = await setFinancePin(user!, fpPass.trim(), fpPin.trim());
+    setFpLoading(false);
+    if (res.success) {
+      setFpMsg("✓ Finance PIN set successfully!");
+      setFpPass(""); setFpPin(""); setFpPin2("");
+    } else { setFpMsg(res.message || "Failed to set PIN"); }
+  }
+
+  return (
                     <TouchableOpacity key={h}
                       onPress={() => setEndHour(h)}
                       style={{ paddingHorizontal:12, paddingVertical:7, borderRadius:8,
@@ -644,7 +741,20 @@ export default function MySchedulesScreen() {
             <View style={{ flexDirection:"row", flexWrap:"wrap", gap:8, marginBottom:20 }}>
               {["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map(d => {
                 const on = activeDays.includes(d);
-                return (
+                async function handleSetFinancePin() {
+    if (!fpPass.trim()) { setFpMsg("Enter your current password"); return; }
+    if (fpPin.length < 4) { setFpMsg("Finance PIN must be at least 4 characters"); return; }
+    if (fpPin !== fpPin2) { setFpMsg("PINs do not match"); return; }
+    setFpLoading(true); setFpMsg("");
+    const res = await setFinancePin(user!, fpPass.trim(), fpPin.trim());
+    setFpLoading(false);
+    if (res.success) {
+      setFpMsg("✓ Finance PIN set successfully!");
+      setFpPass(""); setFpPin(""); setFpPin2("");
+    } else { setFpMsg(res.message || "Failed to set PIN"); }
+  }
+
+  return (
                   <TouchableOpacity key={d}
                     onPress={() => setActiveDays(prev => on ? prev.filter(x=>x!==d) : [...prev, d])}
                     style={{ paddingHorizontal:14, paddingVertical:8, borderRadius:8,

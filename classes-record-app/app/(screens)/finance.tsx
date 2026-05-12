@@ -104,6 +104,7 @@ export default function FinanceScreen() {
   const [regMode, setRegMode] = useState(false);
   const [loginUser, setLoginUser] = useState("");
   const [loginPass, setLoginPass] = useState("");
+  const [loginPin, setLoginPin] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
   // ── Period state ───────────────────────────────────────────────────────
@@ -168,14 +169,14 @@ export default function FinanceScreen() {
   // ── Login ──────────────────────────────────────────────────────────────
   async function handleLogin() {
     if (!loginUser.trim() || !loginPass.trim()) { setErrorMsg("Enter username and password"); return; }
+    if (!loginPin.trim()) { setErrorMsg("Enter your Finance PIN"); return; }
     setLoginLoading(true);
-    const fn = regMode ? financeRegister : financeLogin;
-    const res = await fn(loginUser.trim(), loginPass.trim());
+    const res = await financeLogin(loginUser.trim(), loginPass.trim(), loginPin.trim());
     setLoginLoading(false);
     if (res.success && res.user) {
       await AsyncStorage.setItem(FINANCE_KEY, res.user);
       setFinUser(res.user);
-      setLoginUser(""); setLoginPass("");
+      setLoginUser(""); setLoginPass(""); setLoginPin("");
     } else {
       setErrorMsg(res.message ?? "Login failed");
     }
@@ -891,19 +892,18 @@ export default function FinanceScreen() {
         <ScrollView contentContainerStyle={{ paddingBottom: 30 }}>
           <View style={s.loginCard}>
             <Feather name="dollar-sign" size={32} color="#00695C" style={{ marginBottom: 10 }} />
-            <Text style={s.loginTitle}>{regMode ? "Create Finance Account" : "Finance Login"}</Text>
-            <Text style={s.loginSub}>Separate from the main app login. Finance staff only.</Text>
-            <TextInput style={s.input} placeholder="Username" placeholderTextColor={colors.mutedForeground} value={loginUser} onChangeText={setLoginUser} autoCapitalize="none" />
+            <Text style={s.loginTitle}>Finance Login</Text>
+            <Text style={s.loginSub}>Use your My Schedules username, password and Finance PIN.</Text>
+            <TextInput style={s.input} placeholder="Username (My Schedules)" placeholderTextColor={colors.mutedForeground} value={loginUser} onChangeText={setLoginUser} autoCapitalize="none" />
             <TextInput style={s.input} placeholder="Password" placeholderTextColor={colors.mutedForeground} value={loginPass} onChangeText={setLoginPass} secureTextEntry />
-            <TouchableOpacity style={s.loginBtn} onPress={handleLogin} disabled={loginLoading}>
-              {loginLoading ? <ActivityIndicator color="#fff" size="small" /> : <Text style={s.loginBtnTxt}>{regMode ? "Create Account" : "Sign In"}</Text>}
-            </TouchableOpacity>
-            <View style={s.switchRow}>
-              <Text style={s.switchTxt}>{regMode ? "Have an account?" : "No account?"}</Text>
-              <TouchableOpacity onPress={() => setRegMode(!regMode)}>
-                <Text style={s.switchLink}>{regMode ? " Sign In" : " Register"}</Text>
-              </TouchableOpacity>
+            <TextInput style={s.input} placeholder="Finance PIN (set in My Schedules)" placeholderTextColor={colors.mutedForeground} value={loginPin} onChangeText={setLoginPin} secureTextEntry keyboardType="default" />
+            <View style={{ backgroundColor: "#E8F5E9", borderRadius: 8, padding: 10, marginBottom: 12, flexDirection: "row", alignItems: "flex-start", gap: 8 }}>
+              <Feather name="info" size={14} color="#2E7D32" style={{ marginTop: 1 }} />
+              <Text style={{ fontSize: 12, fontFamily: "Inter_400Regular", color: "#2E7D32", flex: 1 }}>Finance PIN is set by the schedule owner in My Schedules → Settings → Finance PIN.</Text>
             </View>
+            <TouchableOpacity style={s.loginBtn} onPress={handleLogin} disabled={loginLoading}>
+              {loginLoading ? <ActivityIndicator color="#fff" size="small" /> : <Text style={s.loginBtnTxt}>Sign In to Finance</Text>}
+            </TouchableOpacity>
           </View>
 
           {/* Public student fee lookup */}

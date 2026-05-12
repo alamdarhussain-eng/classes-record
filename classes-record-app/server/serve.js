@@ -128,6 +128,35 @@ async function handleApi(method, pathname, req, res) {
 
   // ========== AUTH ROUTES ==========
 
+  // ========== FINANCE AUTH ROUTES ==========
+
+  // POST /api/finance/auth/set-pin  (My Schedule user sets their finance PIN)
+  if (method === "POST" && pathname === "/api/finance/auth/set-pin") {
+    const { username, password, financePin } = body;
+    if (!username || !password || !financePin) return json(res, 400, { success: false, message: "username, password and financePin required" });
+    if (financePin.length < 4) return json(res, 400, { success: false, message: "Finance PIN must be at least 4 characters" });
+    try {
+      const r = await db.query("SELECT * FROM public.users WHERE username=$1 AND password=$2", [username.trim(), password.trim()]);
+      if (!r.rows.length) return json(res, 200, { success: false, message: "Invalid username or password" });
+      await db.query("UPDATE public.users SET finance_pin=$1 WHERE username=$2", [financePin.trim(), username.trim()]);
+      return json(res, 200, { success: true, message: "Finance PIN set successfully" });
+    } catch(e) { return json(res, 500, { success: false, message: String(e) }); }
+  }
+
+  // POST /api/finance/auth/login  (Finance login: password + finance_pin)
+  if (method === "POST" && pathname === "/api/finance/auth/login") {
+    const { username, password, financePin } = body;
+    if (!username || !password || !financePin) return json(res, 400, { success: false, message: "username, password and Finance PIN required" });
+    try {
+      const r = await db.query("SELECT * FROM public.users WHERE username=$1 AND password=$2", [username.trim(), password.trim()]);
+      if (!r.rows.length) return json(res, 200, { success: false, message: "Invalid username or password" });
+      const user = r.rows[0];
+      if (!user.finance_pin || user.finance_pin.trim() === "") return json(res, 200, { success: false, message: "No Finance PIN set. Please set a Finance PIN from My Schedules → Settings first." });
+      if (user.finance_pin.trim() !== financePin.trim()) return json(res, 200, { success: false, message: "Incorrect Finance PIN" });
+      return json(res, 200, { success: true, user: username.trim(), message: "Finance login successful" });
+    } catch(e) { return json(res, 500, { success: false, message: String(e) }); }
+  }
+
   if (method === "POST" && pathname === "/api/auth/register") {
     await db.query("SELECT setval('public.users_id_seq', COALESCE((SELECT MAX(id) FROM public.users), 0) + 1, false)").catch(() => {});
     const { username, password, pin } = body;
@@ -901,6 +930,11 @@ async function fixSequences() {
     )`);
     console.log("\u2713 Attendance tables ensured");
   } catch(e) { console.log("Attendance table warning:", e.message); }
+
+  try {
+    await db.query("ALTER TABLE public.users ADD COLUMN IF NOT EXISTS finance_pin TEXT DEFAULT ''");
+    console.log("\u2713 finance_pin column ensured");
+  } catch(e) { console.log("finance_pin warning:", e.message); }
 
   try {
     await db.query("ALTER TABLE public.schedules ADD COLUMN IF NOT EXISTS start_hour INTEGER DEFAULT 9");

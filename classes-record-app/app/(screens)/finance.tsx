@@ -187,36 +187,37 @@ export default function FinanceScreen() {
     forPeriod: string,
   ) => {
     if (type === "staff") {
+      if (selectedScheduleId == null) return;
       const [staff, payments, rates] = await Promise.all([
-        fetchSupportStaff(),
-        fetchFinancePayments("staff", forPeriod),
-        fetchFinanceRates("staff", null),
+        fetchSupportStaff(selectedScheduleId),
+        fetchFinancePayments(selectedScheduleId, "staff", forPeriod),
+        fetchFinanceRates(selectedScheduleId, "staff"),
       ]);
       const payMap: Record<string, FinancePayment> = {};
       for (const p of payments) payMap[p.personId] = p;
       const rateMap: Record<string, string> = {};
-      for (const r of rates) rateMap[r.personId] = r.rate;
+      for (const r of rates) rateMap[r.personId] = String(r.amount);
       setter(staff.map(s => ({
-        personId: s.employeeId, personName: s.name,
-        amount: payMap[s.employeeId]?.amount ?? rateMap[s.employeeId] ?? "0",
-        paidAmount: payMap[s.employeeId]?.paidAmount ?? "0",
-        notes: payMap[s.employeeId]?.notes ?? "",
+        personId: String(s.id), personName: s.name,
+        amount: payMap[String(s.id)]?.amount ?? rateMap[String(s.id)] ?? "0",
+        paidAmount: payMap[String(s.id)]?.paidAmount ?? "0",
+        notes: payMap[String(s.id)]?.notes ?? "",
         dirty: false,
       })));
     } else if (selectedScheduleId != null) {
       const [persons, payments, rates] = await Promise.all([
         fetchFinancePersons(selectedScheduleId, type),
-        fetchFinancePayments(type, forPeriod, selectedScheduleId),
-        fetchFinanceRates(type, selectedScheduleId),
+        fetchFinancePayments(selectedScheduleId, type, forPeriod),
+        fetchFinanceRates(selectedScheduleId, type),
       ]);
       const payMap: Record<string, FinancePayment> = {};
       for (const p of payments) payMap[p.personId] = p;
       const rateMap: Record<string, string> = {};
-      for (const r of rates) rateMap[r.personId] = r.rate;
+      for (const r of rates) rateMap[r.personId] = String(r.amount);
       setter(persons.map(p => ({
         personId: p.personId, personName: p.personName,
-        amount: payMap[p.personId]?.amount ?? rateMap[p.personId] ?? "0",
-        paidAmount: payMap[p.personId]?.paidAmount ?? "0",
+        amount: String(payMap[p.personId]?.amount ?? rateMap[p.personId] ?? "0"),
+        paidAmount: String(payMap[p.personId]?.paidAmount ?? "0"),
         notes: payMap[p.personId]?.notes ?? "",
         dirty: false,
       })));
@@ -313,7 +314,7 @@ export default function FinanceScreen() {
         type === "staff"
           ? fetchSupportStaff().then(s => s.map(st => ({ personId: st.employeeId, personName: st.name })))
           : selectedScheduleId != null
-            ? fetchFinancePersons(type === "student" ? "students" : "faculty", selectedScheduleId)
+            ? fetchFinancePersons(selectedScheduleId ?? 0, type)
             : Promise.resolve([]),
       ]);
       const rateMap: Record<string, string> = {};

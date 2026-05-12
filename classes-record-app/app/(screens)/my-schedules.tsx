@@ -280,6 +280,7 @@ export default function MySchedulesScreen() {
     sheet: {
       backgroundColor: colors.card, borderTopLeftRadius: 20, borderTopRightRadius: 20,
       padding: 24, paddingBottom: insets.bottom + 24,
+      maxHeight: "90%",
     },
     sheetTitle: { fontSize: 17, fontFamily: "Inter_700Bold", color: colors.foreground, marginBottom: 16 },
     sheetInput: {
@@ -549,6 +550,7 @@ export default function MySchedulesScreen() {
       <Modal visible={showCreate} transparent animationType="slide">
         <View style={s.overlay}>
           <View style={s.sheet}>
+            <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
             <Text style={s.sheetTitle}>New Schedule</Text>
             <TextInput
               style={s.sheetInput}
@@ -615,11 +617,12 @@ export default function MySchedulesScreen() {
             </TouchableOpacity>
             <TouchableOpacity
               style={s.sheetCancel}
-              onPress={() => { setShowCreate(false); setNewName(""); setStartDate(new Date()); setEndDate(new Date()); }}
+              onPress={() => { setShowCreate(false); setNewName(""); setStartDate(new Date()); setEndDate(new Date()); setStartHour(9); setEndHour(17); setActiveDays(["Mon","Tue","Wed","Thu","Fri"]); }}
             >
               <Text style={s.sheetCancelTxt}>Cancel</Text>
             </TouchableOpacity>
 
+            </ScrollView>
             {pickerTarget === "start" && (
               <DateTimePicker
                 mode="date"

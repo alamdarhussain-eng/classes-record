@@ -204,6 +204,98 @@ async function handleApi(method, pathname, req, res) {
   }
 
   // POST /api/finance/persons - add new person WEF a month
+  // ========== FACULTY ACCESS ROUTES ==========
+
+  // GET /api/faculty-access
+  if (method === "GET" && pathname === "/api/faculty-access") {
+    const scheduleId = reqUrl.searchParams.get("scheduleId");
+    if (!scheduleId) return json(res, 200, []);
+    try {
+      const r = await db.query(
+        "SELECT id, schedule_id, faculty_name, username, password, email, created_at FROM public.faculty_accounts WHERE schedule_id=$1 ORDER BY faculty_name",
+        [parseInt(scheduleId)]
+      );
+      return json(res, 200, r.rows.map(a => ({
+        id: a.id, scheduleId: a.schedule_id, facultyName: a.faculty_name,
+        username: a.username, password: a.password, email: a.email||"",
+        createdAt: a.created_at
+      })));
+    } catch(e) { return json(res, 200, []); }
+  }
+
+  // POST /api/faculty-access/generate
+  if (method === "POST" && pathname === "/api/faculty-access/generate") {
+    const { scheduleId } = body;
+    if (!scheduleId) return json(res, 400, { error: "scheduleId required" });
+    try {
+      // Get all faculty from weekly_schedule
+      const faculty = await db.query(
+        "SELECT DISTINCT faculty FROM public.weekly_schedule WHERE schedule_id=$1 AND faculty != '_locations_' AND (type IS NULL OR type='') ORDER BY faculty",
+        [parseInt(scheduleId)]
+      );
+      let created = 0;
+      for (const f of faculty.rows.filter(r => r.faculty)) {
+        const name = f.faculty;
+        // Check if already exists
+        const existing = await db.query("SELECT id FROM public.faculty_accounts WHERE schedule_id=$1 AND faculty_name=$2", [parseInt(scheduleId), name]);
+        if (existing.rows.length > 0) continue;
+        // Generate username and password
+        const nameParts = name.toLowerCase().replace(/[^a-z0-9 ]/g, '').split(' ').filter(Boolean);
+        const username = (nameParts[nameParts.length-1] || 'faculty') + Math.floor(Math.random()*900+100);
+        const chars = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+        const password = Array.from({length:8}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
+        await db.query(
+          "INSERT INTO public.faculty_accounts (schedule_id, faculty_name, username, password, email) VALUES ($1,$2,$3,$4,'') ON CONFLICT DO NOTHING",
+          [parseInt(scheduleId), name, username, password]
+        );
+        created++;
+      }
+      return json(res, 200, { success: true, created });
+    } catch(e) { return json(res, 500, { error: String(e) }); }
+  }
+
+  // PATCH /api/faculty-access/:id
+  if (method === "PATCH" && pathname.match(/^\/api\/faculty-access\/\d+$/)) {
+    const id = parseInt(pathname.split("/").pop());
+    const { email, regenerate } = body;
+    try {
+      if (regenerate) {
+        const chars = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+        const password = Array.from({length:8}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
+        await db.query("UPDATE public.faculty_accounts SET password=$1 WHERE id=$2", [password, id]);
+      }
+      if (email !== undefined) {
+        await db.query("UPDATE public.faculty_accounts SET email=$1 WHERE id=$2", [email, id]);
+      }
+      return json(res, 200, { success: true });
+    } catch(e) { return json(res, 500, { error: String(e) }); }
+  }
+
+  // DELETE /api/faculty-access/:id
+  if (method === "DELETE" && pathname.match(/^\/api\/faculty-access\/\d+$/)) {
+    const id = parseInt(pathname.split("/").pop());
+    try {
+      await db.query("DELETE FROM public.faculty_accounts WHERE id=$1", [id]);
+      return json(res, 200, { success: true });
+    } catch(e) { return json(res, 500, { error: String(e) }); }
+  }
+
+  // GET /api/faculty-access/download
+  if (method === "GET" && pathname === "/api/faculty-access/download") {
+    const scheduleId = reqUrl.searchParams.get("scheduleId");
+    if (!scheduleId) return json(res, 400, { error: "scheduleId required" });
+    try {
+      const r = await db.query(
+        "SELECT faculty_name, username, password, email FROM public.faculty_accounts WHERE schedule_id=$1 ORDER BY faculty_name",
+        [parseInt(scheduleId)]
+      );
+      let csv = "Faculty Name,Username,Password,Email\n";
+      r.rows.forEach(a => { csv += `"${a.faculty_name}","${a.username}","${a.password}","${a.email||""}"\n`; });
+      res.writeHead(200, { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": "attachment; filename=faculty-credentials.csv", "Access-Control-Allow-Origin": "*" });
+      res.end(csv); return;
+    } catch(e) { return json(res, 500, { error: String(e) }); }
+  }
+
   if (method === "POST" && pathname === "/api/finance/persons") {
     const { scheduleId, personType, name, email, activeFrom } = body;
     if (!scheduleId || !personType || !name) return json(res, 400, { error: "required" });

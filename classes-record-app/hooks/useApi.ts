@@ -455,6 +455,48 @@ export async function importStaffExcel(uri: string, name: string, mimeType: stri
   return res.json();
 }
 
+// ========== FACULTY ACCOUNTS ==========
+export interface FacultyAccount {
+  id: number;
+  scheduleId: number;
+  facultyName: string;
+  username: string;
+  password: string;
+  email: string;
+  createdAt: string;
+}
+
+export async function fetchFacultyAccounts(scheduleId: number): Promise<FacultyAccount[]> {
+  try {
+    const res = await fetch(`${API_BASE}/faculty-access?scheduleId=${scheduleId}`);
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch { return []; }
+}
+
+export async function generateFacultyAccounts(scheduleId: number) {
+  const res = await fetch(`${API_BASE}/faculty-access/generate`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ scheduleId }),
+  });
+  return res.json();
+}
+
+export async function updateFacultyAccount(id: number, data: { email?: string; regenerate?: boolean }) {
+  const res = await fetch(`${API_BASE}/faculty-access/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  return res.json();
+}
+
+export async function deleteFacultyAccount(id: number) {
+  const res = await fetch(`${API_BASE}/faculty-access/${id}`, { method: "DELETE" });
+  return res.json();
+}
+
 export async function importStudentsExcel(scheduleId: number, className: string, uri: string, name: string, mimeType: string) {
   const formData = await buildFormData(uri, name, mimeType);
   const res = await fetch(`${API_BASE}/import/students/xlsx?scheduleId=${scheduleId}&className=${encodeURIComponent(className)}`, { method: "POST", body: formData });

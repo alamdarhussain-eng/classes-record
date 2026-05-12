@@ -143,15 +143,15 @@ async function handleApi(method, pathname, req, res) {
     } catch(e) { return json(res, 500, { success: false, message: String(e) }); }
   }
 
-  // POST /api/finance/auth/login  (Finance login: password + finance_pin)
+  // POST /api/finance/auth/login  (Finance login: username + finance_pin only)
   if (method === "POST" && pathname === "/api/finance/auth/login") {
-    const { username, password, financePin } = body;
-    if (!username || !password || !financePin) return json(res, 400, { success: false, message: "username, password and Finance PIN required" });
+    const { username, financePin } = body;
+    if (!username || !financePin) return json(res, 400, { success: false, message: "Username and Finance PIN required" });
     try {
-      const r = await db.query("SELECT * FROM public.users WHERE username=$1 AND password=$2", [username.trim(), password.trim()]);
-      if (!r.rows.length) return json(res, 200, { success: false, message: "Invalid username or password" });
+      const r = await db.query("SELECT * FROM public.users WHERE username=$1", [username.trim()]);
+      if (!r.rows.length) return json(res, 200, { success: false, message: "Username not found" });
       const user = r.rows[0];
-      if (!user.finance_pin || user.finance_pin.trim() === "") return json(res, 200, { success: false, message: "No Finance PIN set. Please set a Finance PIN from My Schedules → Settings first." });
+      if (!user.finance_pin || user.finance_pin.trim() === "") return json(res, 200, { success: false, message: "No Finance PIN set. Ask the schedule owner to set a Finance PIN from My Schedules → Finance PIN." });
       if (user.finance_pin.trim() !== financePin.trim()) return json(res, 200, { success: false, message: "Incorrect Finance PIN" });
       return json(res, 200, { success: true, user: username.trim(), message: "Finance login successful" });
     } catch(e) { return json(res, 500, { success: false, message: String(e) }); }

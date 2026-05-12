@@ -83,9 +83,8 @@ export default function FinanceScreen() {
   // ── Auth state ─────────────────────────────────────────────────────────
   const [finUser, setFinUser] = useState<string | null>(null);
   const [loginLoading, setLoginLoading] = useState(false);
-  const [regMode, setRegMode] = useState(false);
+
   const [loginUser, setLoginUser] = useState("");
-  const [loginPass, setLoginPass] = useState("");
   const [loginPin, setLoginPin] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -142,15 +141,15 @@ export default function FinanceScreen() {
 
   // ── Login ──────────────────────────────────────────────────────────────
   async function handleLogin() {
-    if (!loginUser.trim() || !loginPass.trim()) { setErrorMsg("Enter username and password"); return; }
+    if (!loginUser.trim()) { setErrorMsg("Enter your username"); return; }
     if (!loginPin.trim()) { setErrorMsg("Enter your Finance PIN"); return; }
     setLoginLoading(true);
-    const res = await financeLogin(loginUser.trim(), loginPass.trim(), loginPin.trim());
+    const res = await financeLogin(loginUser.trim(), loginPin.trim());
     setLoginLoading(false);
     if (res.success && res.user) {
       await AsyncStorage.setItem(FINANCE_KEY, res.user);
       setFinUser(res.user);
-      setLoginUser(""); setLoginPass(""); setLoginPin("");
+      setLoginUser(""); setLoginPin("");
     } else {
       setErrorMsg(res.message ?? "Login failed");
     }
@@ -868,13 +867,12 @@ export default function FinanceScreen() {
           <View style={s.loginCard}>
             <Feather name="dollar-sign" size={32} color="#00695C" style={{ marginBottom: 10 }} />
             <Text style={s.loginTitle}>Finance Login</Text>
-            <Text style={s.loginSub}>Use your My Schedules username, password and Finance PIN.</Text>
+            <Text style={s.loginSub}>Enter your username and Finance PIN to access finance records.</Text>
             <TextInput style={s.input} placeholder="Username (My Schedules)" placeholderTextColor={colors.mutedForeground} value={loginUser} onChangeText={setLoginUser} autoCapitalize="none" />
-            <TextInput style={s.input} placeholder="Password" placeholderTextColor={colors.mutedForeground} value={loginPass} onChangeText={setLoginPass} secureTextEntry />
-            <TextInput style={s.input} placeholder="Finance PIN (set in My Schedules)" placeholderTextColor={colors.mutedForeground} value={loginPin} onChangeText={setLoginPin} secureTextEntry keyboardType="default" />
+            <TextInput style={s.input} placeholder="Finance PIN" placeholderTextColor={colors.mutedForeground} value={loginPin} onChangeText={setLoginPin} secureTextEntry />
             <View style={{ backgroundColor: "#E8F5E9", borderRadius: 8, padding: 10, marginBottom: 12, flexDirection: "row", alignItems: "flex-start", gap: 8 }}>
               <Feather name="info" size={14} color="#2E7D32" style={{ marginTop: 1 }} />
-              <Text style={{ fontSize: 12, fontFamily: "Inter_400Regular", color: "#2E7D32", flex: 1 }}>Finance PIN is set by the schedule owner in My Schedules → Settings → Finance PIN.</Text>
+              <Text style={{ fontSize: 12, fontFamily: "Inter_400Regular", color: "#2E7D32", flex: 1 }}>Finance PIN is set by the schedule owner in My Schedules → Finance PIN button.</Text>
             </View>
             <TouchableOpacity style={s.loginBtn} onPress={handleLogin} disabled={loginLoading}>
               {loginLoading ? <ActivityIndicator color="#fff" size="small" /> : <Text style={s.loginBtnTxt}>Sign In to Finance</Text>}

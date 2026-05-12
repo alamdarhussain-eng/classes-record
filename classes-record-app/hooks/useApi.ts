@@ -329,18 +329,13 @@ export interface SupportStaff {
   contact?: string;
 }
 
-export async function financeLogin(username: string, password: string, financePin: string) {
+export async function financeLogin(username: string, financePin: string) {
   const res = await fetch(`${API_BASE}/finance/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password, financePin }),
+    body: JSON.stringify({ username, financePin }),
   });
   return res.json();
-}
-
-export async function financeRegister(username: string, password: string, financePin: string) {
-  // Register just validates schedule credentials + pin, no separate account created
-  return financeLogin(username, password, financePin);
 }
 
 export async function setFinancePin(username: string, password: string, financePin: string) {

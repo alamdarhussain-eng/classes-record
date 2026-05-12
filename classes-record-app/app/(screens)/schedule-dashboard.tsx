@@ -86,19 +86,10 @@ export default function ScheduleDashboardScreen() {
       publicAllowed: true,
     },
     {
-      route: `/(screens)/students?${q}`,
-      icon: "users" as const,
-      title: "Students",
-      subtitle: "Enroll · Attendance · Roster",
-      color: "#1565C0",
-      bg: "#E3F2FD",
-      publicAllowed: false,
-    },
-    {
       route: `/(screens)/personnel?${q}`,
       icon: "briefcase" as const,
       title: "HR · Personnel",
-      subtitle: "Join · Leave · Staff Management",
+      subtitle: "Students · Faculty · Staff · Join · Leave",
       color: "#4A148C",
       bg: "#F3E5F5",
       publicAllowed: false,
@@ -112,15 +103,7 @@ export default function ScheduleDashboardScreen() {
       bg: "#F3E5F5",
       publicAllowed: true,
     },
-    {
-      route: `/(screens)/faculty-credentials?scheduleId=${scheduleId}&scheduleTitle=${encodeURIComponent(scheduleTitle ?? "")}`,
-      icon: "user-check" as const,
-      title: "Faculty Access",
-      subtitle: "Credentials · Share · Download",
-      color: "#00695C",
-      bg: "#E0F2F1",
-      publicAllowed: false,
-    },
+
   ];
 
   const TILES = publicMode ? ALL_TILES.filter((t) => t.publicAllowed) : ALL_TILES;

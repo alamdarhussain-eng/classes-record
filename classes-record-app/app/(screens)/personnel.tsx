@@ -8,7 +8,7 @@ import { useColors } from "@/hooks/useColors";
 import { fetchSchedule, addFinancePerson, deactivateFinancePerson } from "@/hooks/useApi";
 import { PickerModal } from "@/components/PickerModal";
 
-type PersonType = "student" | "faculty" | "staff";
+type PersonType = "student" | "faculty" | "staff" | "roster" | "access";
 type ActionType = "join" | "leave";
 
 export default function PersonnelScreen() {
@@ -147,7 +147,7 @@ export default function PersonnelScreen() {
     personRow: { flexDirection: "row", alignItems: "center", paddingHorizontal: 14, paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: colors.border },
   });
 
-  const tabLabels: Record<PersonType, string> = { faculty: "Faculty", student: "Student", staff: "Staff" };
+  const tabLabels: Record<PersonType, string> = { faculty: "Faculty", student: "Student", staff: "Staff", roster: "Students", access: "Faculty Access" };
 
   return (
     <View style={s.container}>
@@ -160,7 +160,7 @@ export default function PersonnelScreen() {
         <Text style={s.headerSub}>{scheduleTitle ? decodeURIComponent(scheduleTitle) : ""}</Text>
       </View>
 
-      {/* Type Tabs */}
+      {/* Type Tabs - Row 1: HR actions */}
       <View style={s.tabRow}>
         {(["faculty","student","staff"] as PersonType[]).map(t => (
           <TouchableOpacity key={t} style={[s.tab, activeTab===t && s.tabActive]} onPress={() => { setActiveTab(t); setMsg(""); setSelectedPersonId(""); setSelectedPersonName(""); }}>
@@ -168,11 +168,21 @@ export default function PersonnelScreen() {
           </TouchableOpacity>
         ))}
       </View>
+      {/* Row 2: Management screens */}
+      <View style={[s.tabRow, { borderTopWidth: 0 }]}>
+        <TouchableOpacity style={[s.tab, activeTab==="roster" && { borderColor:"#1565C0", backgroundColor:"#1565C0" }]}
+          onPress={() => { setActiveTab("roster"); setMsg(""); }}>
+          <Text style={[s.tabTxt, activeTab==="roster" && s.tabTxtActive]}>📋 Students Roster</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[s.tab, activeTab==="access" && { borderColor:"#00695C", backgroundColor:"#00695C" }]}
+          onPress={() => { setActiveTab("access"); setMsg(""); }}>
+          <Text style={[s.tabTxt, activeTab==="access" && s.tabTxtActive]}>🔑 Faculty Access</Text>
+        </TouchableOpacity>
+      </View>
 
       <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
 
-        {/* JOIN Card */}
-        <View style={s.card}>
+        {(activeTab === "faculty" || activeTab === "student" || activeTab === "staff") && <View style={s.card}>
           <View style={[s.cardHeader, { backgroundColor: "#E8F5E9" }]}>
             <Feather name="user-plus" size={18} color="#2E7D32" />
             <Text style={[s.cardTitle, { color: "#2E7D32" }]}>New {tabLabels[activeTab]} — Join</Text>
@@ -210,8 +220,8 @@ export default function PersonnelScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* LEAVE Card */}
-        <View style={s.card}>
+        </View>}
+        {(activeTab === "faculty" || activeTab === "student" || activeTab === "staff") && <View style={s.card}>
           <View style={[s.cardHeader, { backgroundColor: "#FFEBEE" }]}>
             <Feather name="user-minus" size={18} color="#B71C1C" />
             <Text style={[s.cardTitle, { color: "#B71C1C" }]}>{tabLabels[activeTab]} — Leave / Resign</Text>
@@ -239,8 +249,8 @@ export default function PersonnelScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* Active Persons List */}
-        <View style={s.card}>
+        </View>}
+        {(activeTab === "faculty" || activeTab === "student" || activeTab === "staff") && <View style={s.card}>
           <View style={[s.cardHeader, { backgroundColor: "#EDE7F6" }]}>
             <Feather name="users" size={18} color="#4A148C" />
             <Text style={[s.cardTitle, { color: "#4A148C" }]}>Currently Active {tabLabels[activeTab]}s ({activePersons.length})</Text>
@@ -257,6 +267,41 @@ export default function PersonnelScreen() {
             </View>
           ))}
         </View>
+
+        </View>}
+        {activeTab === "roster" && (
+          <View style={s.card}>
+            <View style={[s.cardHeader, { backgroundColor: "#E3F2FD" }]}>
+              <Feather name="users" size={18} color="#1565C0" />
+              <Text style={[s.cardTitle, { color: "#1565C0" }]}>Students Enrollment & Roster</Text>
+            </View>
+            <TouchableOpacity
+              style={[s.btn, { backgroundColor: "#1565C0", margin: 14 }]}
+              onPress={() => router.push(`/(screens)/students?scheduleId=${scheduleId}&scheduleTitle=${encodeURIComponent(decodeURIComponent(scheduleTitle ?? ""))}` as never)}>
+              <Text style={{ color: "#fff", fontFamily: "Inter_700Bold", fontSize: 15 }}>Open Students Screen →</Text>
+            </TouchableOpacity>
+            <Text style={{ paddingHorizontal:14, paddingBottom:14, fontSize:13, fontFamily:"Inter_400Regular", color:colors.mutedForeground }}>
+              Enroll students, view class-wise roster, bulk upload, download reports.
+            </Text>
+          </View>
+        )}
+
+        {activeTab === "access" && (
+          <View style={s.card}>
+            <View style={[s.cardHeader, { backgroundColor: "#E0F2F1" }]}>
+              <Feather name="user-check" size={18} color="#00695C" />
+              <Text style={[s.cardTitle, { color: "#00695C" }]}>Faculty Access & Credentials</Text>
+            </View>
+            <TouchableOpacity
+              style={[s.btn, { backgroundColor: "#00695C", margin: 14 }]}
+              onPress={() => router.push(`/(screens)/faculty-credentials?scheduleId=${scheduleId}&scheduleTitle=${encodeURIComponent(decodeURIComponent(scheduleTitle ?? ""))}` as never)}>
+              <Text style={{ color: "#fff", fontFamily: "Inter_700Bold", fontSize: 15 }}>Open Faculty Access →</Text>
+            </TouchableOpacity>
+            <Text style={{ paddingHorizontal:14, paddingBottom:14, fontSize:13, fontFamily:"Inter_400Regular", color:colors.mutedForeground }}>
+              Manage faculty login credentials, share schedule access, download faculty reports.
+            </Text>
+          </View>
+        )}
 
         {msg ? (
           <Text style={[s.msgTxt, { color: msg.startsWith("✓") ? "#2E7D32" : "#B71C1C" }]}>{msg}</Text>

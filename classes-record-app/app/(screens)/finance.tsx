@@ -527,11 +527,9 @@ export default function FinanceScreen() {
         <TouchableOpacity
           style={[s.ratesBarBtn, { backgroundColor: "#1565C0", borderColor: "#1565C0" }]}
           onPress={() => {
-            if (type !== "staff") {
-              setPersonMgmtType(type as "student"|"faculty"|"staff");
-              setPersonMgmtMsg(""); setNewPersonName(""); setNewPersonEmail("");
-              setShowPersonMgmt(true);
-            }
+            setPersonMgmtType(type as "student"|"faculty"|"staff");
+            setPersonMgmtMsg(""); setNewPersonName(""); setNewPersonEmail("");
+            setShowPersonMgmt(true);
           }}
         >
           <Feather name="users" size={13} color="#fff" />

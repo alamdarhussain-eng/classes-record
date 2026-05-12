@@ -93,10 +93,7 @@ export default function FinanceScreen() {
   const [activeTab, setActiveTab] = useState<Tab>("summary");
   const [selectedSem, setSelectedSem] = useState<SemesterDef>(findCurrentSemester);
   const [studentPeriodMode, setStudentPeriodMode] = useState<PeriodMode>("month");
-  const [selectedMonth, setSelectedMonth] = useState<string>(() => {
-    const d = new Date();
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
-  });
+  const [selectedMonth, setSelectedMonth] = useState<string>(ALL_MONTHS[2]);
   const [showSemPicker, setShowSemPicker] = useState(false);
   const [selectedScheduleId, setSelectedScheduleId] = useState<number | null>(null);
   const [showSchedPicker, setShowSchedPicker] = useState(false);
@@ -140,9 +137,7 @@ export default function FinanceScreen() {
 
   // When semester changes, auto-select its first month for month-mode
   useEffect(() => {
-    const now = new Date();
-    const curMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
-    setSelectedMonth(ALL_MONTHS.includes(curMonth) ? curMonth : ALL_MONTHS[2]);
+    // month stays as selected, no reset needed
   }, [selectedSem]);
 
   // ── Login ──────────────────────────────────────────────────────────────

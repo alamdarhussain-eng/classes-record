@@ -18,13 +18,7 @@ import {
 import { PickerModal } from "@/components/PickerModal";
 import { ExcelImportButton, ImportPanel } from "@/components/ExcelImportButton";
 
-const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri"];
-const DAY_FULL: Record<string, string> = {
-  Mon: "Monday", Tue: "Tuesday", Wed: "Wednesday", Thu: "Thursday", Fri: "Friday",
-};
-const HOURS = Array.from({ length: 9 }, (_, i) => i + 9);
-const TIME_SLOTS = HOURS.map((h) => {
-});
+const ALL_DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 
 function normalizeDay(d: string): string {
   const l = d?.toLowerCase() ?? "";

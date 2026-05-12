@@ -14,7 +14,6 @@ import { useColors } from "@/hooks/useColors";
 import {
   financeLogin,
   fetchSupportStaff, addSupportStaff, deleteSupportStaff, importStaffExcel,
-  addFinancePerson, deactivateFinancePerson,
   fetchFinancePersons, fetchFinancePayments, saveFinancePaymentsBulk,
   fetchFinanceSummary, fetchStudentFeeStatus,
   fetchFinanceSchedules,
@@ -88,12 +87,6 @@ export default function FinanceScreen() {
   const [loginUser, setLoginUser] = useState("");
   const [loginPin, setLoginPin] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const [showPersonMgmt, setShowPersonMgmt] = useState(false);
-  const [personMgmtType, setPersonMgmtType] = useState<"student"|"faculty"|"staff">("student");
-  const [newPersonName, setNewPersonName] = useState("");
-  const [newPersonEmail, setNewPersonEmail] = useState("");
-  const [personMgmtLoading, setPersonMgmtLoading] = useState(false);
-  const [personMgmtMsg, setPersonMgmtMsg] = useState("");
 
   // ── Period state ───────────────────────────────────────────────────────
   const [activeTab, setActiveTab] = useState<Tab>("summary");
@@ -147,33 +140,6 @@ export default function FinanceScreen() {
   }, [selectedSem]);
 
   // ── Login ──────────────────────────────────────────────────────────────
-  async function handleAddPerson() {
-    if (!newPersonName.trim() || !selectedScheduleId) return;
-    setPersonMgmtLoading(true); setPersonMgmtMsg("");
-    const res = await addFinancePerson(selectedScheduleId, personMgmtType, newPersonName.trim(), newPersonEmail.trim(), period);
-    setPersonMgmtLoading(false);
-    if (res.success) {
-      setPersonMgmtMsg(`✓ Added from ${period}`);
-      setNewPersonName(""); setNewPersonEmail("");
-      if (personMgmtType === "student") loadPayRows("student", setStudentRows, period);
-      else if (personMgmtType === "faculty") loadPayRows("faculty", setFacultyRows, period);
-      else loadPayRows("staff", setStaffPayRows, period);
-    } else { setPersonMgmtMsg(res.error || "Failed to add"); }
-  }
-
-  async function handleRemovePerson(personId: string, personName: string) {
-    if (!selectedScheduleId) return;
-    setPersonMgmtLoading(true); setPersonMgmtMsg("");
-    const res = await deactivateFinancePerson(personId, personMgmtType, selectedScheduleId, period);
-    setPersonMgmtLoading(false);
-    if (res.success) {
-      setPersonMgmtMsg(`✓ ${personName} removed WEF ${period}`);
-      if (personMgmtType === "student") loadPayRows("student", setStudentRows, period);
-      else if (personMgmtType === "faculty") loadPayRows("faculty", setFacultyRows, period);
-      else loadPayRows("staff", setStaffPayRows, period);
-    } else { setPersonMgmtMsg(res.error || "Failed"); }
-  }
-
   async function handleLogin() {
     if (!loginUser.trim()) { setErrorMsg("Enter your username"); return; }
     if (!loginPin.trim()) { setErrorMsg("Enter your Finance PIN"); return; }
@@ -524,17 +490,7 @@ export default function FinanceScreen() {
     const rateLabel = type === "student" ? "Fee" : "Pay";
     return (
       <View style={s.ratesBar}>
-        <TouchableOpacity
-          style={[s.ratesBarBtn, { backgroundColor: "#1565C0", borderColor: "#1565C0" }]}
-          onPress={() => {
-            setPersonMgmtType(type as "student"|"faculty"|"staff");
-            setPersonMgmtMsg(""); setNewPersonName(""); setNewPersonEmail("");
-            setShowPersonMgmt(true);
-          }}
-        >
-          <Feather name="users" size={13} color="#fff" />
-          <Text style={[s.ratesBarBtnTxt, { color: "#fff" }]}>Manage</Text>
-        </TouchableOpacity>
+
         <TouchableOpacity
           style={[s.ratesBarBtn, { backgroundColor: "#E0F2F1", borderColor: "#00695C" }]}
           onPress={() => openRatesModal(type)}

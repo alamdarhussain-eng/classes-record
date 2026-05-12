@@ -95,6 +95,15 @@ export default function ScheduleDashboardScreen() {
       publicAllowed: false,
     },
     {
+      route: `/(screens)/personnel?${q}`,
+      icon: "briefcase" as const,
+      title: "HR · Personnel",
+      subtitle: "Join · Leave · Staff Management",
+      color: "#4A148C",
+      bg: "#F3E5F5",
+      publicAllowed: false,
+    },
+    {
       route: `/(screens)/exam?${q}`,
       icon: "award" as const,
       title: "Exam Marks",

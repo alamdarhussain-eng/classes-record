@@ -20,6 +20,17 @@ import { ExcelImportButton, ImportPanel } from "@/components/ExcelImportButton";
 
 const ALL_DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 
+function TIME_SLOTS_FOR(startH: number, endH: number) {
+  const hours = Array.from({ length: Math.max(1, endH - startH) }, (_, i) => i + startH);
+  return hours.map((h) => {
+    const fmt = (n: number) =>
+      n < 12 ? `${n.toString().padStart(2,"0")}:00 AM`
+      : n === 12 ? "12:00 PM"
+      : `${(n-12).toString().padStart(2,"0")}:00 PM`;
+    return { label: `${fmt(h)}–${fmt(h+1)}`, shortLabel: fmt(h), hour: h };
+  });
+}
+
 function normalizeDay(d: string): string {
   const l = d?.toLowerCase() ?? "";
   if (l.startsWith("mon")) return "Mon";

@@ -6,7 +6,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import * as DocumentPicker from "expo-document-picker";
 import { useColors } from "@/hooks/useColors";
-import { fetchAllStudents, fetchStudents, addStudent, deleteStudent, importStudentsExcel, Student } from "@/hooks/useApi";
+import { fetchAllStudents, fetchStudents, fetchSchedule, addStudent, deleteStudent, importStudentsExcel, Student } from "@/hooks/useApi";
 import { PickerModal } from "@/components/PickerModal";
 
 export default function StudentsScreen() {
@@ -65,7 +65,7 @@ export default function StudentsScreen() {
 
   const { data: scheduleRows = [] } = useQuery({
     queryKey: ["schedule", scheduleId],
-    queryFn: () => (scheduleId ? require("@/hooks/useApi").fetchSchedule(scheduleId) : Promise.resolve([])),
+    queryFn: () => fetchSchedule(scheduleId),
     enabled: !!scheduleId,
   });
 

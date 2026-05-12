@@ -586,6 +586,122 @@ async function handleApi(method, pathname, req, res) {
     return;
   }
 
+  // ========== STUDENTS & ATTENDANCE ROUTES ==========
+
+  // GET /api/attendance/students
+  if (method === "GET" && pathname === "/api/attendance/students") {
+    const scheduleId = reqUrl.searchParams.get("scheduleId");
+    const className = reqUrl.searchParams.get("className");
+    if (!scheduleId || !className) return json(res, 400, { error: "scheduleId and className required" });
+    try {
+      const r = await db.query(
+        "SELECT id, schedule_id, class_name, roll_no, student_name, email, enrolled_at FROM public.students WHERE schedule_id=$1 AND class_name=$2 ORDER BY roll_no",
+        [parseInt(scheduleId), className]
+      );
+      return json(res, 200, r.rows.map(s => ({
+        id: s.id, scheduleId: s.schedule_id, className: s.class_name,
+        rollNo: s.roll_no, name: s.student_name, email: s.email || "",
+        enrolledAt: s.enrolled_at ? s.enrolled_at.toISOString().split("T")[0] : ""
+      })));
+    } catch(e) { return json(res, 500, { error: String(e) }); }
+  }
+
+  // POST /api/attendance/students
+  if (method === "POST" && pathname === "/api/attendance/students") {
+    const { scheduleId, className, rollNo, name, email } = body;
+    if (!scheduleId || !className || !rollNo || !name) return json(res, 400, { error: "scheduleId, className, rollNo, name required" });
+    try {
+      const r = await db.query(
+        "INSERT INTO public.students (schedule_id, class_name, roll_no, student_name, email, enrolled_at) VALUES ($1,$2,$3,$4,$5,NOW()) RETURNING id, schedule_id, class_name, roll_no, student_name, email, enrolled_at",
+        [scheduleId, className, rollNo.toUpperCase(), name, email || ""]
+      );
+      const s = r.rows[0];
+      return json(res, 200, { success: true, student: {
+        id: s.id, scheduleId: s.schedule_id, className: s.class_name,
+        rollNo: s.roll_no, name: s.student_name, email: s.email || "",
+        enrolledAt: s.enrolled_at ? s.enrolled_at.toISOString().split("T")[0] : ""
+      }});
+    } catch(e) {
+      if (String(e).includes("unique") || String(e).includes("duplicate")) return json(res, 409, { error: "Student already enrolled" });
+      return json(res, 500, { error: String(e) });
+    }
+  }
+
+  // DELETE /api/attendance/students/:id
+  if (method === "DELETE" && pathname.match(/^\/api\/attendance\/students\/\d+$/)) {
+    const id = parseInt(pathname.split("/").pop());
+    try {
+      await db.query("DELETE FROM public.students WHERE id=$1", [id]);
+      return json(res, 200, { success: true });
+    } catch(e) { return json(res, 500, { error: String(e) }); }
+  }
+
+  // POST /api/attendance/mark
+  if (method === "POST" && pathname === "/api/attendance/mark") {
+    const { scheduleId, className, date, sessionTime, records } = body;
+    if (!scheduleId || !className || !date || !records) return json(res, 400, { error: "Missing required fields" });
+    try {
+      for (const rec of records) {
+        await db.query(
+          `INSERT INTO public.attendance (schedule_id, class_name, student_id, date, session_time, status)
+           VALUES ($1,$2,$3,$4,$5,$6)
+           ON CONFLICT (schedule_id, class_name, student_id, date, session_time)
+           DO UPDATE SET status=$6`,
+          [scheduleId, className, rec.studentId, date, sessionTime || "", rec.status]
+        );
+      }
+      return json(res, 200, { success: true });
+    } catch(e) { return json(res, 500, { error: String(e) }); }
+  }
+
+  // GET /api/attendance/roster
+  if (method === "GET" && pathname === "/api/attendance/roster") {
+    const scheduleId = reqUrl.searchParams.get("scheduleId");
+    const className = reqUrl.searchParams.get("className");
+    if (!scheduleId || !className) return json(res, 400, { error: "scheduleId and className required" });
+    try {
+      const r = await db.query(
+        `SELECT a.student_id, a.date, a.session_time, a.status, s.roll_no, s.student_name
+         FROM public.attendance a
+         JOIN public.students s ON s.id = a.student_id
+         WHERE a.schedule_id=$1 AND a.class_name=$2
+         ORDER BY a.date, a.session_time, s.roll_no`,
+        [parseInt(scheduleId), className]
+      );
+      return json(res, 200, r.rows.map(row => ({
+        studentId: row.student_id, date: row.date, sessionTime: row.session_time,
+        status: row.status, rollNo: row.roll_no, name: row.student_name
+      })));
+    } catch(e) { return json(res, 500, { error: String(e) }); }
+  }
+
+  // GET /api/attendance/summary
+  if (method === "GET" && pathname === "/api/attendance/summary") {
+    const scheduleId = reqUrl.searchParams.get("scheduleId");
+    const className = reqUrl.searchParams.get("className");
+    if (!scheduleId || !className) return json(res, 400, { error: "scheduleId and className required" });
+    try {
+      const r = await db.query(
+        `SELECT s.roll_no, s.student_name as name, s.email,
+                COUNT(a.id) as total,
+                SUM(CASE WHEN a.status='P' THEN 1 ELSE 0 END) as present,
+                SUM(CASE WHEN a.status='A' THEN 1 ELSE 0 END) as absent,
+                SUM(CASE WHEN a.status='L' THEN 1 ELSE 0 END) as late
+         FROM public.students s
+         LEFT JOIN public.attendance a ON a.student_id=s.id AND a.schedule_id=$1 AND a.class_name=$2
+         WHERE s.schedule_id=$1 AND s.class_name=$2
+         GROUP BY s.id, s.roll_no, s.student_name, s.email
+         ORDER BY s.roll_no`,
+        [parseInt(scheduleId), className]
+      );
+      return json(res, 200, r.rows.map(row => ({
+        rollNo: row.roll_no, name: row.name, email: row.email || "",
+        total: parseInt(row.total)||0, present: parseInt(row.present)||0,
+        absent: parseInt(row.absent)||0, late: parseInt(row.late)||0
+      })));
+    } catch(e) { return json(res, 500, { error: String(e) }); }
+  }
+
   if (method === "GET" && pathname === "/api/import/sample/students") {
     const csv = "Class,Roll No,Name,Email\n2K25-BSCS-15A,001,Ahmed Ali,ahmed@example.com\n";
     res.writeHead(200, { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": "attachment; filename=SampleStudents.csv", "Access-Control-Allow-Origin": "*", "Cache-Control": "no-cache" });
@@ -737,6 +853,30 @@ const port = parseInt(process.env.PORT || "3000", 10);
 
 async function fixSequences() {
   // Add new columns if they don't exist
+  try {
+    await db.query(`CREATE TABLE IF NOT EXISTS public.students (
+      id SERIAL PRIMARY KEY,
+      schedule_id INTEGER REFERENCES public.schedules(id) ON DELETE CASCADE,
+      class_name TEXT NOT NULL,
+      roll_no TEXT NOT NULL,
+      student_name TEXT NOT NULL,
+      email TEXT DEFAULT '',
+      enrolled_at TIMESTAMPTZ DEFAULT NOW(),
+      UNIQUE(schedule_id, class_name, roll_no)
+    )`);
+    await db.query(`CREATE TABLE IF NOT EXISTS public.attendance (
+      id SERIAL PRIMARY KEY,
+      schedule_id INTEGER REFERENCES public.schedules(id) ON DELETE CASCADE,
+      class_name TEXT NOT NULL,
+      student_id INTEGER REFERENCES public.students(id) ON DELETE CASCADE,
+      date DATE NOT NULL,
+      session_time TEXT DEFAULT '',
+      status TEXT NOT NULL DEFAULT 'P',
+      UNIQUE(schedule_id, class_name, student_id, date, session_time)
+    )`);
+    console.log("\u2713 Attendance tables ensured");
+  } catch(e) { console.log("Attendance table warning:", e.message); }
+
   try {
     await db.query("ALTER TABLE public.schedules ADD COLUMN IF NOT EXISTS start_hour INTEGER DEFAULT 9");
     await db.query("ALTER TABLE public.schedules ADD COLUMN IF NOT EXISTS end_hour INTEGER DEFAULT 17");

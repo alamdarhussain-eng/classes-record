@@ -234,6 +234,64 @@ export async function importEntriesExcel(uri: string, name: string, mimeType: st
   return res.json();
 }
 
+export interface Student {
+  id: number;
+  scheduleId: number;
+  className: string;
+  rollNo: string;
+  name: string;
+  email: string;
+  enrolledAt: string;
+}
+
+export interface StudentAttendanceSummary {
+  rollNo: string;
+  name: string;
+  email: string;
+  total: number;
+  present: number;
+  absent: number;
+  late: number;
+}
+
+export async function fetchStudents(scheduleId: number, className: string): Promise<Student[]> {
+  const res = await fetch(`${API_BASE}/attendance/students?scheduleId=${scheduleId}&className=${encodeURIComponent(className)}`);
+  return res.json();
+}
+
+export async function addStudent(scheduleId: number, className: string, rollNo: string, name: string, email: string) {
+  const res = await fetch(`${API_BASE}/attendance/students`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ scheduleId, className, rollNo, name, email }),
+  });
+  return res.json();
+}
+
+export async function deleteStudent(id: number) {
+  const res = await fetch(`${API_BASE}/attendance/students/${id}`, { method: "DELETE" });
+  return res.json();
+}
+
+export async function markAttendance(scheduleId: number, className: string, date: string, sessionTime: string, records: { studentId: number; status: string }[]) {
+  const res = await fetch(`${API_BASE}/attendance/mark`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ scheduleId, className, date, sessionTime, records }),
+  });
+  return res.json();
+}
+
+export async function fetchRoster(scheduleId: number, className: string) {
+  const res = await fetch(`${API_BASE}/attendance/roster?scheduleId=${scheduleId}&className=${encodeURIComponent(className)}`);
+  return res.json();
+}
+
+export async function fetchStudentAttendanceSummary(scheduleId: number, className: string): Promise<StudentAttendanceSummary[]> {
+  const res = await fetch(`${API_BASE}/attendance/summary?scheduleId=${scheduleId}&className=${encodeURIComponent(className)}`);
+  return res.json();
+}
+
 export async function importStudentsExcel(scheduleId: number, className: string, uri: string, name: string, mimeType: string) {
   const formData = await buildFormData(uri, name, mimeType);
   const res = await fetch(`${API_BASE}/import/students/xlsx?scheduleId=${scheduleId}&className=${encodeURIComponent(className)}`, { method: "POST", body: formData });

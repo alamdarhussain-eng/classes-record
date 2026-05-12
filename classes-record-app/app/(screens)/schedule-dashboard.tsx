@@ -86,6 +86,15 @@ export default function ScheduleDashboardScreen() {
       publicAllowed: true,
     },
     {
+      route: `/(screens)/students?${q}`,
+      icon: "users" as const,
+      title: "Students",
+      subtitle: "Enroll · Attendance · Roster",
+      color: "#1565C0",
+      bg: "#E3F2FD",
+      publicAllowed: false,
+    },
+    {
       route: `/(screens)/exam?${q}`,
       icon: "award" as const,
       title: "Exam Marks",

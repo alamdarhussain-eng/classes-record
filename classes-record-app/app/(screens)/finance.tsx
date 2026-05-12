@@ -1161,73 +1161,7 @@ export default function FinanceScreen() {
 
       {renderErrorModal()}
 
-      {/* ── Manage Persons Modal (Add/Remove WEF) ── */}
-      <Modal visible={showPersonMgmt} transparent animationType="slide">
-        <View style={{ flex:1, justifyContent:"flex-end", backgroundColor:"rgba(0,0,0,0.45)" }}>
-          <View style={{ backgroundColor:colors.card, borderTopLeftRadius:20, borderTopRightRadius:20, padding:24, maxHeight:"85%" }}>
-            <Text style={{ fontSize:18, fontFamily:"Inter_700Bold", color:"#1565C0", marginBottom:4 }}>
-              Manage {personMgmtType === "student" ? "Students" : personMgmtType === "faculty" ? "Faculty" : "Staff"}
-            </Text>
-            <Text style={{ fontSize:13, fontFamily:"Inter_400Regular", color:colors.mutedForeground, marginBottom:16 }}>
-              Add or remove persons WEF: <Text style={{ fontFamily:"Inter_600SemiBold", color:"#1565C0" }}>{period}</Text>
-            </Text>
 
-            {/* Add new person */}
-            <Text style={{ fontSize:12, fontFamily:"Inter_600SemiBold", color:colors.foreground, marginBottom:8, textTransform:"uppercase" }}>
-              ➕ Add New {personMgmtType === "student" ? "Student" : personMgmtType === "faculty" ? "Faculty Member" : "Staff Member"}
-            </Text>
-            <TextInput
-              style={{ borderWidth:1, borderColor:colors.border, borderRadius:8, paddingHorizontal:12, paddingVertical:10, fontSize:14, fontFamily:"Inter_400Regular", color:colors.foreground, backgroundColor:colors.background, marginBottom:8 }}
-              placeholder={personMgmtType === "student" ? "Roll No (e.g. 2K24-BEE-001)" : "Full Name"}
-              placeholderTextColor={colors.mutedForeground}
-              value={newPersonName} onChangeText={setNewPersonName}
-            />
-            <TextInput
-              style={{ borderWidth:1, borderColor:colors.border, borderRadius:8, paddingHorizontal:12, paddingVertical:10, fontSize:14, fontFamily:"Inter_400Regular", color:colors.foreground, backgroundColor:colors.background, marginBottom:12 }}
-              placeholder="Email (optional)"
-              placeholderTextColor={colors.mutedForeground}
-              value={newPersonEmail} onChangeText={setNewPersonEmail}
-              autoCapitalize="none" keyboardType="email-address"
-            />
-            <TouchableOpacity
-              style={{ backgroundColor:"#2E7D32", borderRadius:10, paddingVertical:11, alignItems:"center", marginBottom:16 }}
-              onPress={handleAddPerson} disabled={personMgmtLoading || !newPersonName.trim()}>
-              <Text style={{ color:"#fff", fontFamily:"Inter_700Bold", fontSize:14 }}>Add WEF {period}</Text>
-            </TouchableOpacity>
-
-            {/* Remove existing persons */}
-            <Text style={{ fontSize:12, fontFamily:"Inter_600SemiBold", color:colors.foreground, marginBottom:8, textTransform:"uppercase" }}>
-              🗑 Remove Person (WEF {period})
-            </Text>
-            <ScrollView style={{ maxHeight:180, marginBottom:12 }}>
-              {(personMgmtType === "student" ? studentRows : personMgmtType === "faculty" ? facultyRows : staffPayRows).map(row => (
-                <View key={row.personId} style={{ flexDirection:"row", alignItems:"center", paddingVertical:8, borderBottomWidth:1, borderBottomColor:colors.border }}>
-                  <Text style={{ flex:1, fontSize:13, fontFamily:"Inter_500Medium", color:colors.foreground }}>{row.personName}</Text>
-                  <TouchableOpacity
-                    onPress={() => handleRemovePerson(row.personId, row.personName)}
-                    style={{ backgroundColor:"#B71C1C", borderRadius:6, paddingHorizontal:10, paddingVertical:5 }}
-                    disabled={personMgmtLoading}>
-                    <Text style={{ color:"#fff", fontSize:12, fontFamily:"Inter_600SemiBold" }}>Remove</Text>
-                  </TouchableOpacity>
-                </View>
-              ))}
-              {(personMgmtType === "student" ? studentRows : personMgmtType === "faculty" ? facultyRows : staffPayRows).length === 0 && (
-                <Text style={{ color:colors.mutedForeground, fontFamily:"Inter_400Regular", fontSize:13, textAlign:"center", paddingVertical:16 }}>No active persons for {period}</Text>
-              )}
-            </ScrollView>
-
-            {personMgmtMsg ? (
-              <Text style={{ fontSize:13, fontFamily:"Inter_600SemiBold", color: personMgmtMsg.startsWith("✓") ? "#2E7D32" : "#B71C1C", textAlign:"center", marginBottom:8 }}>{personMgmtMsg}</Text>
-            ) : null}
-
-            <TouchableOpacity
-              style={{ backgroundColor:colors.muted, borderRadius:10, paddingVertical:12, alignItems:"center" }}
-              onPress={() => { setShowPersonMgmt(false); setPersonMgmtMsg(""); }}>
-              <Text style={{ fontFamily:"Inter_600SemiBold", color:colors.foreground }}>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
 
     </View>
   );

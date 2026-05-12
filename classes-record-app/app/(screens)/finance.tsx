@@ -189,8 +189,8 @@ export default function FinanceScreen() {
 
   // ── Data queries ───────────────────────────────────────────────────────
   const { data: schedules = [] } = useQuery({
-    queryKey: ["financeSchedules"],
-    queryFn: fetchFinanceSchedules,
+    queryKey: ["financeSchedules", finUser],
+    queryFn: () => fetchFinanceSchedules(finUser ?? undefined),
     enabled: !!finUser,
   });
 

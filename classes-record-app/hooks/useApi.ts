@@ -352,9 +352,12 @@ export async function setFinancePin(username: string, password: string, financeP
   return res.json();
 }
 
-export async function fetchFinanceSchedules() {
+export async function fetchFinanceSchedules(username?: string) {
   try {
-    const res = await fetch(`${API_BASE}/finance/schedules`);
+    const url = username
+      ? `${API_BASE}/finance/schedules?username=${encodeURIComponent(username)}`
+      : `${API_BASE}/finance/schedules`;
+    const res = await fetch(url);
     const data = await res.json();
     return Array.isArray(data) ? data : [];
   } catch { return []; }

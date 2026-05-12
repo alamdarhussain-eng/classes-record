@@ -606,8 +606,8 @@ async function handleApi(method, pathname, req, res) {
         [parseInt(scheduleId)]
       );
       return json(res, 200, r.rows.map(s => ({
-        id: s.id, className: s.class_name, rollNo: s.roll_no, name: s.student_name,
-        email: s.email || "", enrolledAt: s.enrolled_at ? s.enrolled_at.toISOString().split("T")[0] : "",
+        id: s.id, className: s.class_name, rollNo: s.roll_no, name: s.name,
+        email: s.email || "", enrolledAt: s.created_at ? s.created_at.toISOString().split("T")[0] : "",
         subject: s.subject || "", faculty: s.faculty || ""
       })));
     } catch(e) { return json(res, 500, { error: String(e) }); }
@@ -620,13 +620,13 @@ async function handleApi(method, pathname, req, res) {
     if (!scheduleId || !className) return json(res, 400, { error: "scheduleId and className required" });
     try {
       const r = await db.query(
-        "SELECT id, schedule_id, class_name, roll_no, student_name, email, enrolled_at FROM public.students WHERE schedule_id=$1 AND class_name=$2 ORDER BY roll_no",
+        "SELECT id, schedule_id, class_name, roll_no, name, email, created_at FROM public.students WHERE schedule_id=$1 AND class_name=$2 ORDER BY roll_no",
         [parseInt(scheduleId), className]
       );
       return json(res, 200, r.rows.map(s => ({
         id: s.id, scheduleId: s.schedule_id, className: s.class_name,
-        rollNo: s.roll_no, name: s.student_name, email: s.email || "",
-        enrolledAt: s.enrolled_at ? s.enrolled_at.toISOString().split("T")[0] : ""
+        rollNo: s.roll_no, name: s.name, email: s.email || "",
+        enrolledAt: s.created_at ? s.created_at.toISOString().split("T")[0] : ""
       })));
     } catch(e) { return json(res, 500, { error: String(e) }); }
   }
@@ -637,14 +637,14 @@ async function handleApi(method, pathname, req, res) {
     if (!scheduleId || !className || !rollNo || !name) return json(res, 400, { error: "scheduleId, className, rollNo, name required" });
     try {
       const r = await db.query(
-        "INSERT INTO public.students (schedule_id, class_name, roll_no, student_name, email, enrolled_at) VALUES ($1,$2,$3,$4,$5,NOW()) RETURNING id, schedule_id, class_name, roll_no, student_name, email, enrolled_at",
+        "INSERT INTO public.students (schedule_id, class_name, roll_no, name, email, created_at) VALUES ($1,$2,$3,$4,$5,NOW()) RETURNING id, schedule_id, class_name, roll_no, name, email, created_at",
         [scheduleId, className, rollNo.toUpperCase(), name, email || ""]
       );
       const s = r.rows[0];
       return json(res, 200, { success: true, student: {
         id: s.id, scheduleId: s.schedule_id, className: s.class_name,
-        rollNo: s.roll_no, name: s.student_name, email: s.email || "",
-        enrolledAt: s.enrolled_at ? s.enrolled_at.toISOString().split("T")[0] : ""
+        rollNo: s.roll_no, name: s.name, email: s.email || "",
+        enrolledAt: s.created_at ? s.created_at.toISOString().split("T")[0] : ""
       }});
     } catch(e) {
       if (String(e).includes("unique") || String(e).includes("duplicate")) return json(res, 409, { error: "Student already enrolled" });
@@ -707,7 +707,7 @@ async function handleApi(method, pathname, req, res) {
     if (!scheduleId || !className) return json(res, 400, { error: "scheduleId and className required" });
     try {
       const r = await db.query(
-        `SELECT s.roll_no, s.student_name as name, s.email,
+        `SELECT s.roll_no, s.name, s.email,
                 COUNT(a.id) as total,
                 SUM(CASE WHEN a.status='P' THEN 1 ELSE 0 END) as present,
                 SUM(CASE WHEN a.status='A' THEN 1 ELSE 0 END) as absent,

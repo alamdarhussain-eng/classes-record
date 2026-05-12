@@ -33,7 +33,7 @@ export default function StudentsScreen() {
 
   const classSubjectMap = useMemo(() => {
     const map: Record<string, string> = {};
-    scheduleRows.filter((r: any) => !r.Type && r.Class && r.Subject).forEach((r: any) => {
+    scheduleRows.filter((r: any) => !r.Type && r.Class && r.Subject && r.Class !== "_ref_" && r.Faculty !== "_locations_").forEach((r: any) => {
       const key = `${r.Class}|||${r.Subject}`;
       map[key] = `${r.Class} · ${r.Subject}`;
     });

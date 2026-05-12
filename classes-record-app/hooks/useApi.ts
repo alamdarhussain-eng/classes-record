@@ -255,8 +255,11 @@ export interface StudentAttendanceSummary {
 }
 
 export async function fetchStudents(scheduleId: number, className: string): Promise<Student[]> {
-  const res = await fetch(`${API_BASE}/attendance/students?scheduleId=${scheduleId}&className=${encodeURIComponent(className)}`);
-  return res.json();
+  try {
+    const res = await fetch(`${API_BASE}/attendance/students?scheduleId=${scheduleId}&className=${encodeURIComponent(className)}`);
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch { return []; }
 }
 
 export async function addStudent(scheduleId: number, className: string, rollNo: string, name: string, email: string) {
@@ -283,13 +286,19 @@ export async function markAttendance(scheduleId: number, className: string, date
 }
 
 export async function fetchRoster(scheduleId: number, className: string) {
-  const res = await fetch(`${API_BASE}/attendance/roster?scheduleId=${scheduleId}&className=${encodeURIComponent(className)}`);
-  return res.json();
+  try {
+    const res = await fetch(`${API_BASE}/attendance/roster?scheduleId=${scheduleId}&className=${encodeURIComponent(className)}`);
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch { return []; }
 }
 
 export async function fetchStudentAttendanceSummary(scheduleId: number, className: string): Promise<StudentAttendanceSummary[]> {
-  const res = await fetch(`${API_BASE}/attendance/summary?scheduleId=${scheduleId}&className=${encodeURIComponent(className)}`);
-  return res.json();
+  try {
+    const res = await fetch(`${API_BASE}/attendance/summary?scheduleId=${scheduleId}&className=${encodeURIComponent(className)}`);
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch { return []; }
 }
 
 export async function importStudentsExcel(scheduleId: number, className: string, uri: string, name: string, mimeType: string) {

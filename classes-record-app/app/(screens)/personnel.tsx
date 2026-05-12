@@ -65,6 +65,7 @@ export default function PersonnelScreen() {
   const classSubjectList = Object.keys(classSubjectMap);
 
   // Get active persons for leave action (from finance_faculty/students/staff)
+  const isHRTab = activeTab === "faculty" || activeTab === "student" || activeTab === "staff";
   const { data: activePersons = [] } = useQuery({
     queryKey: ["finance-persons", scheduleId, activeTab],
     queryFn: async () => {
@@ -73,7 +74,7 @@ export default function PersonnelScreen() {
       const data = await res.json();
       return Array.isArray(data) ? data : [];
     },
-    enabled: !!scheduleId,
+    enabled: !!scheduleId && isHRTab,
   });
 
   async function handleJoin() {

@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, ActivityIndicator, Modal, Linking } from "react-native";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, ActivityIndicator, Modal, Linking, Platform } from "react-native";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Feather } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -36,6 +36,12 @@ export default function StudentsScreen() {
     enabled: !!scheduleId,
   });
 
+  const { data: scheduleRows = [] } = useQuery({
+    queryKey: ["schedule", scheduleId],
+    queryFn: () => fetchSchedule(scheduleId),
+    enabled: !!scheduleId,
+  });
+
   // Group by class then subject — use scheduleRows as base so all classes show even with 0 students
   const grouped = useMemo(() => {
     const map: Record<string, Record<string, typeof allStudents>> = {};
@@ -63,11 +69,7 @@ export default function StudentsScreen() {
   // For enroll view
   const [selectedClass, selectedSubject] = selectedKey ? selectedKey.split("|||") : ["", ""];
 
-  const { data: scheduleRows = [] } = useQuery({
-    queryKey: ["schedule", scheduleId],
-    queryFn: () => fetchSchedule(scheduleId),
-    enabled: !!scheduleId,
-  });
+
 
   const classSubjectMap = useMemo(() => {
     const map: Record<string, string> = {};
@@ -148,7 +150,7 @@ export default function StudentsScreen() {
 
   const s = StyleSheet.create({
     container: { flex: 1, backgroundColor: colors.background },
-    header: { backgroundColor: "#1565C0", paddingTop: insets.top + (require("react-native").Platform.OS === "web" ? 67 : 0), paddingBottom: 16, paddingHorizontal: 16 },
+    header: { backgroundColor: "#1565C0", paddingTop: insets.top + (Platform.OS === "web" ? 67 : 0), paddingBottom: 16, paddingHorizontal: 16 },
     backBtn: { flexDirection: "row", alignItems: "center", gap: 6, marginBottom: 10 },
     backTxt: { color: "#fff", fontSize: 13, fontFamily: "Inter_500Medium" },
     headerTitle: { color: "#fff", fontSize: 22, fontFamily: "Inter_700Bold" },

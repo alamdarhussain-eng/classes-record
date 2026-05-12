@@ -29,6 +29,9 @@ export default function PersonnelScreen() {
     return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
   });
   const [reason, setReason] = useState("");
+  const [studentClass, setStudentClass] = useState("");
+  const [studentSubject, setStudentSubject] = useState("");
+  const [showClassPicker, setShowClassPicker] = useState(false);
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
   const [showPersonPicker, setShowPersonPicker] = useState(false);
@@ -49,6 +52,18 @@ export default function PersonnelScreen() {
     return [...set].sort();
   }, [scheduleRows]);
 
+  // Class+Subject map for student enrollment
+  const classSubjectMap = useMemo(() => {
+    const map: Record<string, string> = {};
+    (scheduleRows as any[]).filter((r: any) => !r.Type && r.Class && r.Subject && r.Class !== "_ref_" && r.Faculty !== "_locations_")
+      .forEach((r: any) => {
+        const key = `${r.Class}|||${r.Subject}`;
+        map[key] = `${r.Class} · ${r.Subject}`;
+      });
+    return map;
+  }, [scheduleRows]);
+  const classSubjectList = Object.keys(classSubjectMap);
+
   // Get active persons for leave action (from finance_faculty/students/staff)
   const { data: activePersons = [] } = useQuery({
     queryKey: ["finance-persons", scheduleId, activeTab],
@@ -63,13 +78,31 @@ export default function PersonnelScreen() {
 
   async function handleJoin() {
     if (!personName.trim() || !effectiveDate) { setMsg("Enter name and effective date"); return; }
+    if (activeTab === "student" && !studentClass) { setMsg("Select class and subject for student"); return; }
     setLoading(true); setMsg("");
-    const period = effectiveDate.slice(0, 7); // YYYY-MM
-    const res = await addFinancePerson(scheduleId, activeTab, personName.trim(), personEmail.trim(), period);
+    const period = effectiveDate.slice(0, 7);
+    let res: any;
+    if (activeTab === "student") {
+      // Add student to students table with class
+      const [cls, subj] = studentClass.split("|||");
+      res = await fetch(`https://${process.env.EXPO_PUBLIC_DOMAIN}/api/attendance/students`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ scheduleId, className: cls, rollNo: personName.trim(), name: personName.trim(), email: personEmail.trim(), activeFrom: period }),
+      }).then(r => r.json());
+      // Also set active_from
+      await fetch(`https://${process.env.EXPO_PUBLIC_DOMAIN}/api/finance/persons`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ scheduleId, personType: "student", name: personName.trim(), email: personEmail.trim(), activeFrom: period }),
+      });
+    } else {
+      res = await addFinancePerson(scheduleId, activeTab, personName.trim(), personEmail.trim(), period);
+    }
     setLoading(false);
-    if (res.success) {
-      setMsg(`✓ ${personName} joined as ${activeTab} WEF ${effectiveDate}`);
-      setPersonName(""); setPersonEmail(""); setReason("");
+    if (res.success || res.student) {
+      setMsg(`✓ ${personName} joined as ${activeTab}${activeTab==="student" ? ` in ${classSubjectMap[studentClass]||studentClass}` : ""} WEF ${effectiveDate}`);
+      setPersonName(""); setPersonEmail(""); setReason(""); setStudentClass(""); setStudentSubject("");
       qc.invalidateQueries({ queryKey: ["finance-persons", scheduleId, activeTab] });
       qc.invalidateQueries({ queryKey: ["students-all", scheduleId] });
     } else { setMsg(res.error || "Failed to add"); }
@@ -145,7 +178,19 @@ export default function PersonnelScreen() {
             <Text style={[s.cardTitle, { color: "#2E7D32" }]}>New {tabLabels[activeTab]} — Join</Text>
           </View>
           <View style={{ height: 14 }} />
-          <Text style={s.label}>{activeTab === "student" ? "Roll No / Name" : "Full Name"}</Text>
+          {activeTab === "student" && (
+            <>
+              <Text style={s.label}>Class & Subject</Text>
+              <TouchableOpacity style={s.personPicker} onPress={() => setShowClassPicker(true)}>
+                <Feather name="book" size={15} color={colors.mutedForeground} />
+                <Text style={{ flex:1, fontSize:14, fontFamily:"Inter_400Regular", color: studentClass ? colors.foreground : colors.mutedForeground }}>
+                  {studentClass ? classSubjectMap[studentClass] : "Select Class & Subject..."}
+                </Text>
+                <Feather name="chevron-down" size={15} color={colors.mutedForeground} />
+              </TouchableOpacity>
+            </>
+          )}
+          <Text style={s.label}>{activeTab === "student" ? "Roll No" : "Full Name"}</Text>
           <TextInput style={s.input} placeholder={activeTab === "student" ? "e.g. 2K24-BEE-001" : `e.g. Dr. Ahmad Shah`}
             placeholderTextColor={colors.mutedForeground} value={personName} onChangeText={setPersonName} />
           <Text style={s.label}>Email (optional)</Text>
@@ -219,6 +264,15 @@ export default function PersonnelScreen() {
 
       </ScrollView>
 
+      <PickerModal
+        visible={showClassPicker}
+        title="Select Class & Subject"
+        items={classSubjectList.map(k => classSubjectMap[k])}
+        selected={studentClass ? classSubjectMap[studentClass] : ""}
+        onSelect={(val) => { const k = classSubjectList.find(k => classSubjectMap[k] === val); if (k) setStudentClass(k); setShowClassPicker(false); }}
+        onClose={() => setShowClassPicker(false)}
+        placeholder="Search class or subject..."
+      />
       <PickerModal
         visible={showPersonPicker}
         title={`Select ${tabLabels[activeTab]}`}

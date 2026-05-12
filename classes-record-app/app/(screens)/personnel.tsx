@@ -182,93 +182,6 @@ export default function PersonnelScreen() {
 
       <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
 
-        {(activeTab === "faculty" || activeTab === "student" || activeTab === "staff") && <View style={s.card}>
-          <View style={[s.cardHeader, { backgroundColor: "#E8F5E9" }]}>
-            <Feather name="user-plus" size={18} color="#2E7D32" />
-            <Text style={[s.cardTitle, { color: "#2E7D32" }]}>New {tabLabels[activeTab]} — Join</Text>
-          </View>
-          <View style={{ height: 14 }} />
-          {activeTab === "student" && (
-            <>
-              <Text style={s.label}>Class & Subject</Text>
-              <TouchableOpacity style={s.personPicker} onPress={() => setShowClassPicker(true)}>
-                <Feather name="book" size={15} color={colors.mutedForeground} />
-                <Text style={{ flex:1, fontSize:14, fontFamily:"Inter_400Regular", color: studentClass ? colors.foreground : colors.mutedForeground }}>
-                  {studentClass ? classSubjectMap[studentClass] : "Select Class & Subject..."}
-                </Text>
-                <Feather name="chevron-down" size={15} color={colors.mutedForeground} />
-              </TouchableOpacity>
-            </>
-          )}
-          <Text style={s.label}>{activeTab === "student" ? "Roll No" : "Full Name"}</Text>
-          <TextInput style={s.input} placeholder={activeTab === "student" ? "e.g. 2K24-BEE-001" : `e.g. Dr. Ahmad Shah`}
-            placeholderTextColor={colors.mutedForeground} value={personName} onChangeText={setPersonName} />
-          <Text style={s.label}>Email (optional)</Text>
-          <TextInput style={s.input} placeholder="email@example.com" placeholderTextColor={colors.mutedForeground}
-            value={personEmail} onChangeText={setPersonEmail} autoCapitalize="none" keyboardType="email-address" />
-          <Text style={s.label}>Joining Date (exact)</Text>
-          <TextInput style={s.input} placeholder="YYYY-MM-DD" placeholderTextColor={colors.mutedForeground}
-            value={effectiveDate} onChangeText={setEffectiveDate} />
-          <Text style={{ fontSize: 11, fontFamily: "Inter_400Regular", color: colors.mutedForeground, marginHorizontal: 14, marginBottom: 10 }}>
-            💡 Person will appear in Finance from the month of joining date
-          </Text>
-          <Text style={s.label}>Reason / Note (optional)</Text>
-          <TextInput style={s.input} placeholder="e.g. New hire, Transfer in..." placeholderTextColor={colors.mutedForeground}
-            value={reason} onChangeText={setReason} />
-          <TouchableOpacity style={[s.btn, { backgroundColor: "#2E7D32" }]} onPress={handleJoin} disabled={loading}>
-            {loading ? <ActivityIndicator color="#fff" /> : <Text style={{ color: "#fff", fontFamily: "Inter_700Bold", fontSize: 15 }}>✓ Confirm Join WEF {effectiveDate}</Text>}
-          </TouchableOpacity>
-        </View>
-
-        </View>}
-        {(activeTab === "faculty" || activeTab === "student" || activeTab === "staff") && <View style={s.card}>
-          <View style={[s.cardHeader, { backgroundColor: "#FFEBEE" }]}>
-            <Feather name="user-minus" size={18} color="#B71C1C" />
-            <Text style={[s.cardTitle, { color: "#B71C1C" }]}>{tabLabels[activeTab]} — Leave / Resign</Text>
-          </View>
-          <View style={{ height: 14 }} />
-          <Text style={s.label}>Select {tabLabels[activeTab]}</Text>
-          <TouchableOpacity style={s.personPicker} onPress={() => setShowPersonPicker(true)}>
-            <Feather name="user" size={15} color={colors.mutedForeground} />
-            <Text style={{ flex:1, fontSize:14, fontFamily:"Inter_400Regular", color: selectedPersonName ? colors.foreground : colors.mutedForeground }}>
-              {selectedPersonName || `Select active ${tabLabels[activeTab]}...`}
-            </Text>
-            <Feather name="chevron-down" size={15} color={colors.mutedForeground} />
-          </TouchableOpacity>
-          <Text style={s.label}>Last Working Date (exact)</Text>
-          <TextInput style={s.input} placeholder="YYYY-MM-DD" placeholderTextColor={colors.mutedForeground}
-            value={effectiveDate} onChangeText={setEffectiveDate} />
-          <Text style={{ fontSize: 11, fontFamily: "Inter_400Regular", color: colors.mutedForeground, marginHorizontal: 14, marginBottom: 10 }}>
-            💡 Person will be removed from Finance from next month onwards
-          </Text>
-          <Text style={s.label}>Reason for Leaving</Text>
-          <TextInput style={s.input} placeholder="e.g. Resigned, Contract ended, Transfer out..."
-            placeholderTextColor={colors.mutedForeground} value={reason} onChangeText={setReason} />
-          <TouchableOpacity style={[s.btn, { backgroundColor: "#B71C1C" }]} onPress={handleLeave} disabled={loading || !selectedPersonId}>
-            {loading ? <ActivityIndicator color="#fff" /> : <Text style={{ color: "#fff", fontFamily: "Inter_700Bold", fontSize: 15 }}>✗ Confirm Leave WEF {effectiveDate}</Text>}
-          </TouchableOpacity>
-        </View>
-
-        </View>}
-        {(activeTab === "faculty" || activeTab === "student" || activeTab === "staff") && <View style={s.card}>
-          <View style={[s.cardHeader, { backgroundColor: "#EDE7F6" }]}>
-            <Feather name="users" size={18} color="#4A148C" />
-            <Text style={[s.cardTitle, { color: "#4A148C" }]}>Currently Active {tabLabels[activeTab]}s ({activePersons.length})</Text>
-          </View>
-          {activePersons.length === 0 ? (
-            <Text style={{ padding: 20, textAlign: "center", color: colors.mutedForeground, fontFamily: "Inter_400Regular" }}>No active {tabLabels[activeTab]}s found</Text>
-          ) : activePersons.map((p: any) => (
-            <View key={p.personId} style={s.personRow}>
-              <Feather name="user" size={14} color={colors.mutedForeground} style={{ marginRight: 10 }} />
-              <View style={{ flex: 1 }}>
-                <Text style={{ fontSize: 14, fontFamily: "Inter_600SemiBold", color: colors.foreground }}>{p.personName}</Text>
-                {p.activeFrom && <Text style={{ fontSize: 11, fontFamily: "Inter_400Regular", color: colors.mutedForeground }}>From: {p.activeFrom}</Text>}
-              </View>
-            </View>
-          ))}
-        </View>
-
-        </View>}
         {activeTab === "roster" && (
           <View style={s.card}>
             <View style={[s.cardHeader, { backgroundColor: "#E3F2FD" }]}>
@@ -303,11 +216,102 @@ export default function PersonnelScreen() {
           </View>
         )}
 
+        {(activeTab === "faculty" || activeTab === "student" || activeTab === "staff") && (
+          <>
+            {/* JOIN Card */}
+            <View style={s.card}>
+              <View style={[s.cardHeader, { backgroundColor: "#E8F5E9" }]}>
+                <Feather name="user-plus" size={18} color="#2E7D32" />
+                <Text style={[s.cardTitle, { color: "#2E7D32" }]}>New {tabLabels[activeTab]} — Join</Text>
+              </View>
+              <View style={{ height: 14 }} />
+              {activeTab === "student" && (
+                <>
+                  <Text style={s.label}>Class & Subject</Text>
+                  <TouchableOpacity style={s.personPicker} onPress={() => setShowClassPicker(true)}>
+                    <Feather name="book" size={15} color={colors.mutedForeground} />
+                    <Text style={{ flex:1, fontSize:14, fontFamily:"Inter_400Regular", color: studentClass ? colors.foreground : colors.mutedForeground }}>
+                      {studentClass ? classSubjectMap[studentClass] : "Select Class & Subject..."}
+                    </Text>
+                    <Feather name="chevron-down" size={15} color={colors.mutedForeground} />
+                  </TouchableOpacity>
+                </>
+              )}
+              <Text style={s.label}>{activeTab === "student" ? "Roll No" : "Full Name"}</Text>
+              <TextInput style={s.input} placeholder={activeTab === "student" ? "e.g. 2K24-BEE-001" : "e.g. Dr. Ahmad Shah"}
+                placeholderTextColor={colors.mutedForeground} value={personName} onChangeText={setPersonName} />
+              <Text style={s.label}>Email (optional)</Text>
+              <TextInput style={s.input} placeholder="email@example.com" placeholderTextColor={colors.mutedForeground}
+                value={personEmail} onChangeText={setPersonEmail} autoCapitalize="none" keyboardType="email-address" />
+              <Text style={s.label}>Joining Date (exact)</Text>
+              <TextInput style={s.input} placeholder="YYYY-MM-DD" placeholderTextColor={colors.mutedForeground}
+                value={effectiveDate} onChangeText={setEffectiveDate} />
+              <Text style={{ fontSize: 11, fontFamily: "Inter_400Regular", color: colors.mutedForeground, marginHorizontal: 14, marginBottom: 10 }}>
+                💡 Person will appear in Finance from the month of joining date
+              </Text>
+              <Text style={s.label}>Reason / Note (optional)</Text>
+              <TextInput style={s.input} placeholder="e.g. New hire, Transfer in..."
+                placeholderTextColor={colors.mutedForeground} value={reason} onChangeText={setReason} />
+              <TouchableOpacity style={[s.btn, { backgroundColor: "#2E7D32" }]} onPress={handleJoin} disabled={loading}>
+                {loading ? <ActivityIndicator color="#fff" /> : <Text style={{ color: "#fff", fontFamily: "Inter_700Bold", fontSize: 15 }}>✓ Confirm Join WEF {effectiveDate}</Text>}
+              </TouchableOpacity>
+            </View>
+
+            {/* LEAVE Card */}
+            <View style={s.card}>
+              <View style={[s.cardHeader, { backgroundColor: "#FFEBEE" }]}>
+                <Feather name="user-minus" size={18} color="#B71C1C" />
+                <Text style={[s.cardTitle, { color: "#B71C1C" }]}>{tabLabels[activeTab]} — Leave / Resign</Text>
+              </View>
+              <View style={{ height: 14 }} />
+              <Text style={s.label}>Select {tabLabels[activeTab]}</Text>
+              <TouchableOpacity style={s.personPicker} onPress={() => setShowPersonPicker(true)}>
+                <Feather name="user" size={15} color={colors.mutedForeground} />
+                <Text style={{ flex:1, fontSize:14, fontFamily:"Inter_400Regular", color: selectedPersonName ? colors.foreground : colors.mutedForeground }}>
+                  {selectedPersonName || `Select active ${tabLabels[activeTab]}...`}
+                </Text>
+                <Feather name="chevron-down" size={15} color={colors.mutedForeground} />
+              </TouchableOpacity>
+              <Text style={s.label}>Last Working Date (exact)</Text>
+              <TextInput style={s.input} placeholder="YYYY-MM-DD" placeholderTextColor={colors.mutedForeground}
+                value={effectiveDate} onChangeText={setEffectiveDate} />
+              <Text style={{ fontSize: 11, fontFamily: "Inter_400Regular", color: colors.mutedForeground, marginHorizontal: 14, marginBottom: 10 }}>
+                💡 Person will be removed from Finance from next month onwards
+              </Text>
+              <Text style={s.label}>Reason for Leaving</Text>
+              <TextInput style={s.input} placeholder="e.g. Resigned, Contract ended, Transfer out..."
+                placeholderTextColor={colors.mutedForeground} value={reason} onChangeText={setReason} />
+              <TouchableOpacity style={[s.btn, { backgroundColor: "#B71C1C" }]} onPress={handleLeave} disabled={loading || !selectedPersonId}>
+                {loading ? <ActivityIndicator color="#fff" /> : <Text style={{ color: "#fff", fontFamily: "Inter_700Bold", fontSize: 15 }}>✗ Confirm Leave WEF {effectiveDate}</Text>}
+              </TouchableOpacity>
+            </View>
+
+            {/* Active Persons List */}
+            <View style={s.card}>
+              <View style={[s.cardHeader, { backgroundColor: "#EDE7F6" }]}>
+                <Feather name="users" size={18} color="#4A148C" />
+                <Text style={[s.cardTitle, { color: "#4A148C" }]}>Currently Active {tabLabels[activeTab]}s ({activePersons.length})</Text>
+              </View>
+              {activePersons.length === 0 ? (
+                <Text style={{ padding: 20, textAlign: "center", color: colors.mutedForeground, fontFamily: "Inter_400Regular" }}>No active {tabLabels[activeTab]}s found</Text>
+              ) : activePersons.map((p: any) => (
+                <View key={p.personId} style={s.personRow}>
+                  <Feather name="user" size={14} color={colors.mutedForeground} style={{ marginRight: 10 }} />
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ fontSize: 14, fontFamily: "Inter_600SemiBold", color: colors.foreground }}>{p.personName}</Text>
+                    {p.activeFrom && <Text style={{ fontSize: 11, fontFamily: "Inter_400Regular", color: colors.mutedForeground }}>From: {p.activeFrom}</Text>}
+                  </View>
+                </View>
+              ))}
+            </View>
+          </>
+        )}
+
         {msg ? (
           <Text style={[s.msgTxt, { color: msg.startsWith("✓") ? "#2E7D32" : "#B71C1C" }]}>{msg}</Text>
         ) : null}
 
-      </ScrollView>
+  </ScrollView>
 
       <PickerModal
         visible={showClassPicker}

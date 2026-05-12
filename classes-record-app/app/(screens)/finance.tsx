@@ -158,12 +158,9 @@ export default function FinanceScreen() {
 
   // When semester changes, auto-select its first month for month-mode
   useEffect(() => {
-    if (selectedSem.months.length > 0) {
-      const now = new Date();
-      const curMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
-      const inSem = selectedSem.months.includes(curMonth) ? curMonth : selectedSem.months[0];
-      setSelectedMonth(inSem);
-    }
+    const now = new Date();
+    const curMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+    setSelectedMonth(ALL_MONTHS.includes(curMonth) ? curMonth : ALL_MONTHS[2]);
   }, [selectedSem]);
 
   // ── Login ──────────────────────────────────────────────────────────────
@@ -231,7 +228,7 @@ export default function FinanceScreen() {
       })));
     } else if (selectedScheduleId != null) {
       const [persons, payments, rates] = await Promise.all([
-        fetchFinancePersons(type === "student" ? "students" : "faculty", selectedScheduleId),
+        fetchFinancePersons(selectedScheduleId, type),
         fetchFinancePayments(type, forPeriod, selectedScheduleId),
         fetchFinanceRates(type, selectedScheduleId),
       ]);
@@ -552,7 +549,7 @@ export default function FinanceScreen() {
     const showMonthChips = !showModeToggle || studentPeriodMode === "month";
     const displayPeriod = showModeToggle && studentPeriodMode === "semester"
       ? selectedSem.label
-      : `${selectedMonth.split("-")[0]} · ${monthLabel(selectedMonth)}`;
+      : `${monthLabel(selectedMonth)} ${selectedMonth.split("-")[0]}`;
 
     return (
       <View style={s.periodBox}>
@@ -1001,23 +998,25 @@ export default function FinanceScreen() {
           <View style={{ backgroundColor: colors.card, borderTopLeftRadius: 20, borderTopRightRadius: 20, padding: 20, maxHeight: "70%" }}>
             <Text style={{ fontSize: 16, fontFamily: "Inter_700Bold", color: colors.foreground, marginBottom: 14 }}>Select Semester</Text>
             <ScrollView>
-              {SEMESTERS.map(sem => (
+              {ALL_MONTHS.map(m => (
                 <TouchableOpacity
-                  key={sem.key}
+                  key={m}
                   style={{
                     padding: 14, borderBottomWidth: 1, borderBottomColor: colors.border,
                     flexDirection: "row", alignItems: "center",
-                    backgroundColor: selectedSem.key === sem.key ? "#E0F2F1" : colors.card,
+                    backgroundColor: selectedMonth === m ? "#E0F2F1" : colors.card,
                   }}
-                  onPress={() => { setSelectedSem(sem); setShowSemPicker(false); }}
+                  onPress={() => { setSelectedMonth(m); setShowSemPicker(false); }}
                 >
                   <View style={{ flex: 1 }}>
-                    <Text style={{ fontSize: 15, fontFamily: "Inter_600SemiBold", color: selectedSem.key === sem.key ? "#00695C" : colors.foreground }}>{sem.label}</Text>
+                    <Text style={{ fontSize: 15, fontFamily: "Inter_600SemiBold", color: selectedMonth === m ? "#00695C" : colors.foreground }}>
+                      {MONTH_NAMES[parseInt(m.split("-")[1])-1]} {m.split("-")[0]}
+                    </Text>
                     <Text style={{ fontSize: 11, fontFamily: "Inter_400Regular", color: colors.mutedForeground, marginTop: 2 }}>
-                      {sem.months.map(m => monthLabel(m)).join(" · ")} {sem.months[0].split("-")[0]}
+                      {m}
                     </Text>
                   </View>
-                  {selectedSem.key === sem.key && <Feather name="check" size={18} color="#00695C" />}
+                  {selectedMonth === m && <Feather name="check" size={18} color="#00695C" />}
                 </TouchableOpacity>
               ))}
             </ScrollView>

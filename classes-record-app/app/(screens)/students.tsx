@@ -36,17 +36,26 @@ export default function StudentsScreen() {
     enabled: !!scheduleId,
   });
 
-  // Group by class then subject
+  // Group by class then subject — use scheduleRows as base so all classes show even with 0 students
   const grouped = useMemo(() => {
     const map: Record<string, Record<string, typeof allStudents>> = {};
+    // First seed all classes/subjects from schedule
+    (scheduleRows as any[]).filter((r: any) => !r.Type && r.Class && r.Subject && r.Class !== "_ref_" && r.Faculty !== "_locations_").forEach((r: any) => {
+      if (!map[r.Class]) map[r.Class] = {};
+      if (!map[r.Class][r.Subject]) map[r.Class][r.Subject] = [];
+    });
+    // Then fill with actual students
     allStudents.forEach(s => {
       if (!map[s.className]) map[s.className] = {};
       const subj = s.subject || "Unassigned";
       if (!map[s.className][subj]) map[s.className][subj] = [];
-      map[s.className][subj].push(s);
+      // Avoid duplicates
+      if (!map[s.className][subj].find((x: any) => x.id === s.id)) {
+        map[s.className][subj].push(s);
+      }
     });
     return map;
-  }, [allStudents]);
+  }, [allStudents, scheduleRows]);
 
   const classes = Object.keys(grouped).sort();
   const totalStudents = new Set(allStudents.map(s => s.id)).size;

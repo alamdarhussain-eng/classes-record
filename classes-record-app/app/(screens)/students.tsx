@@ -1,11 +1,12 @@
 import React, { useState, useMemo } from "react";
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, ActivityIndicator, Modal } from "react-native";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, ActivityIndicator, Modal, Linking } from "react-native";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Feather } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRouter, useLocalSearchParams } from "expo-router";
+import * as DocumentPicker from "expo-document-picker";
 import { useColors } from "@/hooks/useColors";
-import { fetchSchedule, fetchStudents, addStudent, deleteStudent, Student } from "@/hooks/useApi";
+import { fetchSchedule, fetchStudents, addStudent, deleteStudent, importStudentsExcel, Student } from "@/hooks/useApi";
 import { PickerModal } from "@/components/PickerModal";
 
 export default function StudentsScreen() {
@@ -22,6 +23,7 @@ export default function StudentsScreen() {
   const [newName, setNewName] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [addLoading, setAddLoading] = useState(false);
+  const [bulkLoading, setBulkLoading] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<Student | null>(null);
   const [error, setError] = useState("");
 
@@ -63,6 +65,20 @@ export default function StudentsScreen() {
       qc.invalidateQueries({ queryKey: ["students", scheduleId, selectedClass] });
       setNewRoll(""); setNewName(""); setNewEmail("");
     } else { setError(res.error || "Failed to add student"); }
+  }
+
+  async function handleBulkUpload() {
+    if (!selectedClass) { setError("Select a class first"); return; }
+    try {
+      const result = await DocumentPicker.getDocumentAsync({ type: ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","text/csv"], copyToCacheDirectory: true });
+      if (result.canceled || !result.assets?.length) return;
+      const asset = result.assets[0];
+      setBulkLoading(true); setError("");
+      const res = await importStudentsExcel(scheduleId, selectedClass, asset.uri, asset.name, asset.mimeType ?? "application/octet-stream");
+      setBulkLoading(false);
+      if (res.inserted >= 0) { qc.invalidateQueries({ queryKey: ["students", scheduleId, selectedClass] }); }
+      else { setError(res.error || "Upload failed"); }
+    } catch { setBulkLoading(false); setError("Upload error"); }
   }
 
   const s = StyleSheet.create({
@@ -113,6 +129,17 @@ export default function StudentsScreen() {
               value={newEmail} onChangeText={setNewEmail} autoCapitalize="none" keyboardType="email-address" />
             <TouchableOpacity style={s.addBtn} onPress={handleAdd} disabled={addLoading}>
               {addLoading ? <ActivityIndicator color="#fff" size="small" /> : <Feather name="user-plus" size={18} color="#fff" />}
+            </TouchableOpacity>
+          </View>
+          <View style={{ flexDirection:"row", gap:8, paddingHorizontal:16, paddingTop:10 }}>
+            <TouchableOpacity style={{ flex:1, flexDirection:"row", alignItems:"center", justifyContent:"center", gap:6, borderWidth:1, borderColor:colors.primary, borderRadius:8, paddingVertical:9, backgroundColor:colors.background }}
+              onPress={handleBulkUpload} disabled={bulkLoading}>
+              {bulkLoading ? <ActivityIndicator color={colors.primary} size="small" /> : <><Feather name="upload" size={14} color={colors.primary} /><Text style={{ fontSize:13, fontFamily:"Inter_600SemiBold", color:colors.primary }}>{"  Bulk Upload (Excel)"}</Text></>}
+            </TouchableOpacity>
+            <TouchableOpacity style={{ flexDirection:"row", alignItems:"center", justifyContent:"center", gap:6, borderWidth:1, borderColor:"#2E7D32", borderRadius:8, paddingVertical:9, paddingHorizontal:14, backgroundColor:colors.background }}
+              onPress={() => Linking.openURL(`https://${process.env.EXPO_PUBLIC_DOMAIN}/api/attendance/students/sample`)}>
+              <Feather name="download" size={14} color="#2E7D32" />
+              <Text style={{ fontSize:13, fontFamily:"Inter_600SemiBold", color:"#2E7D32" }}>Sample</Text>
             </TouchableOpacity>
           </View>
           {error ? <Text style={s.errorTxt}>{error}</Text> : null}

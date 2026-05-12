@@ -54,15 +54,20 @@ export default function StudentsScreen() {
   // For enroll view
   const [selectedClass, selectedSubject] = selectedKey ? selectedKey.split("|||") : ["", ""];
 
+  const { data: scheduleRows = [] } = useQuery({
+    queryKey: ["schedule", scheduleId],
+    queryFn: () => (scheduleId ? require("@/hooks/useApi").fetchSchedule(scheduleId) : Promise.resolve([])),
+    enabled: !!scheduleId,
+  });
+
   const classSubjectMap = useMemo(() => {
     const map: Record<string, string> = {};
-    Object.entries(grouped).forEach(([cls, subjects]) => {
-      Object.keys(subjects).forEach(subj => {
-        if (cls !== "_ref_") map[`${cls}|||${subj}`] = `${cls} · ${subj}`;
-      });
+    (scheduleRows as any[]).filter((r: any) => !r.Type && r.Class && r.Subject && r.Class !== "_ref_" && r.Faculty !== "_locations_").forEach((r: any) => {
+      const key = `${r.Class}|||${r.Subject}`;
+      map[key] = `${r.Class} · ${r.Subject}`;
     });
     return map;
-  }, [grouped]);
+  }, [scheduleRows]);
   const classSubjectList = Object.keys(classSubjectMap);
 
   const { data: enrollStudents = [] } = useQuery({

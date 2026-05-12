@@ -926,7 +926,7 @@ async function handleApi(method, pathname, req, res) {
   }
 
   if (method === "GET" && pathname === "/api/finance/staff/sample") {
-    const csv = "Name,Role,Contact,Email,WhatsApp\nJohn Security,Security Guard,0300-1234567,john@example.com,03001234567\nMike Peon,Office Peon,0301-2345678,mike@example.com,03012345678\n";
+    const csv = "Name,Role,Pay (Rs),Contact,Email,WhatsApp\nJohn Security,Security Guard,25000,0300-1234567,john@example.com,03001234567\nMike Peon,Office Peon,22000,0301-2345678,mike@example.com,03012345678\n";
     res.writeHead(200, { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": "attachment; filename=staff-template.csv", "Access-Control-Allow-Origin": "*" });
     res.end(csv); return;
   }

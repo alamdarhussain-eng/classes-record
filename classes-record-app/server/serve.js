@@ -176,8 +176,8 @@ async function handleApi(method, pathname, req, res) {
     try {
       let rows = [];
       if (personType === "student") {
-        const r = await db.query("SELECT DISTINCT roll_no FROM public.students WHERE schedule_id=$1 ORDER BY roll_no", [parseInt(scheduleId)]);
-        rows = r.rows.map((x) => ({ personId: x.roll_no, personName: x.roll_no }));
+        const r = await db.query("SELECT roll_no, name FROM public.students WHERE schedule_id=$1 ORDER BY roll_no", [parseInt(scheduleId)]);
+        rows = r.rows.map((x) => ({ personId: x.roll_no, personName: `${x.name} (${x.roll_no})` }));
       } else if (personType === "faculty") {
         const r = await db.query("SELECT DISTINCT faculty FROM public.weekly_schedule WHERE schedule_id=$1 AND faculty != '_locations_' AND (type IS NULL OR type='') ORDER BY faculty", [parseInt(scheduleId)]);
         rows = r.rows.filter(x => x.faculty).map((x) => ({ personId: x.faculty, personName: x.faculty }));

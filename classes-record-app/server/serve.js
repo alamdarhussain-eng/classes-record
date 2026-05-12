@@ -588,6 +588,31 @@ async function handleApi(method, pathname, req, res) {
 
   // ========== STUDENTS & ATTENDANCE ROUTES ==========
 
+  // GET /api/attendance/students/all - summary grouped by class
+  if (method === "GET" && pathname === "/api/attendance/students/all") {
+    const scheduleId = reqUrl.searchParams.get("scheduleId");
+    if (!scheduleId) return json(res, 400, { error: "scheduleId required" });
+    try {
+      const r = await db.query(
+        `SELECT s.id, s.class_name, s.roll_no, s.student_name, s.email, s.enrolled_at,
+                w.subject, w.faculty
+         FROM public.students s
+         LEFT JOIN (
+           SELECT DISTINCT class_name, subject, faculty FROM public.weekly_schedule
+           WHERE schedule_id = $1 AND (type IS NULL OR type = '') AND class_name != '_ref_'
+         ) w ON w.class_name = s.class_name
+         WHERE s.schedule_id = $1
+         ORDER BY s.class_name, w.subject, s.roll_no`,
+        [parseInt(scheduleId)]
+      );
+      return json(res, 200, r.rows.map(s => ({
+        id: s.id, className: s.class_name, rollNo: s.roll_no, name: s.student_name,
+        email: s.email || "", enrolledAt: s.enrolled_at ? s.enrolled_at.toISOString().split("T")[0] : "",
+        subject: s.subject || "", faculty: s.faculty || ""
+      })));
+    } catch(e) { return json(res, 500, { error: String(e) }); }
+  }
+
   // GET /api/attendance/students
   if (method === "GET" && pathname === "/api/attendance/students") {
     const scheduleId = reqUrl.searchParams.get("scheduleId");

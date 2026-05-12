@@ -254,6 +254,14 @@ export interface StudentAttendanceSummary {
   late: number;
 }
 
+export async function fetchAllStudents(scheduleId: number): Promise<{id:number;className:string;rollNo:string;name:string;email:string;enrolledAt:string;subject:string;faculty:string}[]> {
+  try {
+    const res = await fetch(`${API_BASE}/attendance/students/all?scheduleId=${scheduleId}`);
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch { return []; }
+}
+
 export async function fetchStudents(scheduleId: number, className: string): Promise<Student[]> {
   try {
     const res = await fetch(`${API_BASE}/attendance/students?scheduleId=${scheduleId}&className=${encodeURIComponent(className)}`);

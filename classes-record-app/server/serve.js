@@ -908,21 +908,31 @@ async function handleApi(method, pathname, req, res) {
   if (method === "GET" && pathname === "/api/finance/rates/sample") {
     const personType = reqUrl.searchParams.get("personType") || "student";
     let csv = "";
-    if (personType === "student") csv = "Name / ID,Fee (Rs)\nAli Khan (2K24-001),15000\nSara Ahmed (2K24-002),15000\n";
-    else if (personType === "faculty") csv = "Name / ID,Fee (Rs)\nDr. Ahmad Shah,80000\nProf. Sara Malik,70000\n";
-    else csv = "Name / ID,Fee (Rs)\nJohn Support,25000\nMike Staff,22000\n";
+    if (personType === "student") {
+      csv = "Name / ID,Fee (Rs),Email,WhatsApp\n";
+      csv += "Ali Khan (2K24-001),15000,ali.khan@example.com,03001234567\n";
+      csv += "Sara Ahmed (2K24-002),15000,sara.ahmed@example.com,03012345678\n";
+    } else if (personType === "faculty") {
+      csv = "Name / ID,Pay (Rs),Email,WhatsApp\n";
+      csv += "Dr. Ahmad Shah,80000,ahmad.shah@university.edu,03001234567\n";
+      csv += "Prof. Sara Malik,70000,sara.malik@university.edu,03012345678\n";
+    } else {
+      csv = "Name / ID,Pay (Rs),Email,WhatsApp\n";
+      csv += "John Security,25000,john@example.com,03001234567\n";
+      csv += "Mike Peon,22000,mike@example.com,03012345678\n";
+    }
     res.writeHead(200, { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": `attachment; filename=${personType}-rates-template.csv`, "Access-Control-Allow-Origin": "*" });
     res.end(csv); return;
   }
 
   if (method === "GET" && pathname === "/api/finance/staff/sample") {
-    const csv = "Name,Role,Contact\nJohn Security,Security Guard,0300-1234567\nMike Peon,Office Peon,0301-2345678\n";
+    const csv = "Name,Role,Contact,Email,WhatsApp\nJohn Security,Security Guard,0300-1234567,john@example.com,03001234567\nMike Peon,Office Peon,0301-2345678,mike@example.com,03012345678\n";
     res.writeHead(200, { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": "attachment; filename=staff-template.csv", "Access-Control-Allow-Origin": "*" });
     res.end(csv); return;
   }
 
   if (method === "GET" && pathname === "/api/attendance/students/sample") {
-    const csv = "Reg No,Student Name,Email\n2K24-BEE-001,Ali Hassan,ali@example.com\n2K24-BEE-002,Sara Ahmed,sara@example.com\n";
+    const csv = "Reg No,Student Name,Email,WhatsApp\n2K24-BEE-001,Ali Hassan,ali@example.com,03001234567\n2K24-BEE-002,Sara Ahmed,sara@example.com,03012345678\n";
     res.writeHead(200, { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": "attachment; filename=SampleStudents.csv", "Access-Control-Allow-Origin": "*" });
     res.end(csv); return;
   }

@@ -932,6 +932,35 @@ async function fixSequences() {
   } catch(e) { console.log("Attendance table warning:", e.message); }
 
   try {
+    await db.query(`CREATE TABLE IF NOT EXISTS public.finance_payments (
+      id SERIAL PRIMARY KEY,
+      person_type TEXT NOT NULL,
+      person_name TEXT NOT NULL,
+      schedule_id INTEGER REFERENCES public.schedules(id) ON DELETE CASCADE,
+      period TEXT NOT NULL,
+      amount NUMERIC(12,2) DEFAULT 0,
+      status TEXT DEFAULT 'Unpaid',
+      note TEXT DEFAULT '',
+      UNIQUE(person_type, person_name, schedule_id, period)
+    )`);
+    await db.query(`CREATE TABLE IF NOT EXISTS public.finance_rates (
+      id SERIAL PRIMARY KEY,
+      schedule_id INTEGER REFERENCES public.schedules(id) ON DELETE CASCADE,
+      person_type TEXT NOT NULL,
+      label TEXT NOT NULL,
+      amount NUMERIC(12,2) DEFAULT 0
+    )`);
+    await db.query(`CREATE TABLE IF NOT EXISTS public.support_staff (
+      id SERIAL PRIMARY KEY,
+      schedule_id INTEGER REFERENCES public.schedules(id) ON DELETE CASCADE,
+      name TEXT NOT NULL,
+      role TEXT DEFAULT '',
+      contact TEXT DEFAULT ''
+    )`);
+    console.log("\u2713 Finance tables ensured");
+  } catch(e) { console.log("Finance table warning:", e.message); }
+
+  try {
     await db.query("ALTER TABLE public.users ADD COLUMN IF NOT EXISTS finance_pin TEXT DEFAULT ''");
     console.log("\u2713 finance_pin column ensured");
   } catch(e) { console.log("finance_pin warning:", e.message); }

@@ -353,8 +353,11 @@ export async function setFinancePin(username: string, password: string, financeP
 }
 
 export async function fetchFinanceSchedules() {
-  const res = await fetch(`${API_BASE}/finance/schedules`);
-  return res.json();
+  try {
+    const res = await fetch(`${API_BASE}/finance/schedules`);
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch { return []; }
 }
 
 export async function fetchFinancePersons(scheduleId: number, personType: string) {

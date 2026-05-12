@@ -601,6 +601,60 @@ export default function MySchedulesScreen() {
               </TouchableOpacity>
             )}
 
+            {/* ── Start Hour ── */}
+            <Text style={s.sheetLabel}>Start Hour</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 14 }}>
+              <View style={{ flexDirection: "row", gap: 6 }}>
+                {[7,8,9,10,11,12,13,14,15,16,17,18,19,20].map(h => {
+                  const lbl = h===12?"12 PM":h<12?`${h} AM`:`${h-12} PM`;
+                  const on = startHour===h;
+                  return (
+                    <TouchableOpacity key={h}
+                      onPress={() => { setStartHour(h); if(endHour<=h) setEndHour(h+1); }}
+                      style={{ paddingHorizontal:12, paddingVertical:7, borderRadius:8,
+                        backgroundColor:on?"#1565C0":"#F0F4F8", borderWidth:1, borderColor:on?"#1565C0":"#DDD" }}>
+                      <Text style={{ fontSize:13, color:on?"#fff":"#333", fontFamily:"Inter_500Medium" }}>{lbl}</Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            </ScrollView>
+
+            {/* ── End Hour ── */}
+            <Text style={s.sheetLabel}>End Hour</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 14 }}>
+              <View style={{ flexDirection: "row", gap: 6 }}>
+                {[8,9,10,11,12,13,14,15,16,17,18,19,20,21].filter(h=>h>startHour).map(h => {
+                  const lbl = h===12?"12 PM":h<12?`${h} AM`:`${h-12} PM`;
+                  const on = endHour===h;
+                  return (
+                    <TouchableOpacity key={h}
+                      onPress={() => setEndHour(h)}
+                      style={{ paddingHorizontal:12, paddingVertical:7, borderRadius:8,
+                        backgroundColor:on?"#1565C0":"#F0F4F8", borderWidth:1, borderColor:on?"#1565C0":"#DDD" }}>
+                      <Text style={{ fontSize:13, color:on?"#fff":"#333", fontFamily:"Inter_500Medium" }}>{lbl}</Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            </ScrollView>
+
+            {/* ── Active Days ── */}
+            <Text style={s.sheetLabel}>Active Days</Text>
+            <View style={{ flexDirection:"row", flexWrap:"wrap", gap:8, marginBottom:20 }}>
+              {["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map(d => {
+                const on = activeDays.includes(d);
+                return (
+                  <TouchableOpacity key={d}
+                    onPress={() => setActiveDays(prev => on ? prev.filter(x=>x!==d) : [...prev, d])}
+                    style={{ paddingHorizontal:14, paddingVertical:8, borderRadius:8,
+                      backgroundColor:on?"#1565C0":"#F0F4F8", borderWidth:1, borderColor:on?"#1565C0":"#DDD" }}>
+                    <Text style={{ fontSize:14, color:on?"#fff":"#333", fontFamily:"Inter_600SemiBold" }}>{d}</Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+
             <TouchableOpacity
               style={s.sheetBtn}
               onPress={() => {

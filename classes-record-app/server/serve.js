@@ -904,6 +904,29 @@ async function handleApi(method, pathname, req, res) {
     return;
   }
 
+  // Finance sample CSV downloads
+  if (method === "GET" && pathname === "/api/finance/rates/sample") {
+    const personType = reqUrl.searchParams.get("personType") || "student";
+    let csv = "";
+    if (personType === "student") csv = "Name / ID,Fee (Rs)\nAli Khan (2K24-001),15000\nSara Ahmed (2K24-002),15000\n";
+    else if (personType === "faculty") csv = "Name / ID,Fee (Rs)\nDr. Ahmad Shah,80000\nProf. Sara Malik,70000\n";
+    else csv = "Name / ID,Fee (Rs)\nJohn Support,25000\nMike Staff,22000\n";
+    res.writeHead(200, { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": `attachment; filename=${personType}-rates-template.csv`, "Access-Control-Allow-Origin": "*" });
+    res.end(csv); return;
+  }
+
+  if (method === "GET" && pathname === "/api/finance/staff/sample") {
+    const csv = "Name,Role,Contact\nJohn Security,Security Guard,0300-1234567\nMike Peon,Office Peon,0301-2345678\n";
+    res.writeHead(200, { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": "attachment; filename=staff-template.csv", "Access-Control-Allow-Origin": "*" });
+    res.end(csv); return;
+  }
+
+  if (method === "GET" && pathname === "/api/attendance/students/sample") {
+    const csv = "Reg No,Student Name,Email\n2K24-BEE-001,Ali Hassan,ali@example.com\n2K24-BEE-002,Sara Ahmed,sara@example.com\n";
+    res.writeHead(200, { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": "attachment; filename=SampleStudents.csv", "Access-Control-Allow-Origin": "*" });
+    res.end(csv); return;
+  }
+
   // Generic sample endpoints (MUST be after specific ones)
   if (pathname.includes("/sample")) return json(res, 200, []);
 

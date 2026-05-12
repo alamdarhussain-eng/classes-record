@@ -203,6 +203,39 @@ async function handleApi(method, pathname, req, res) {
     } catch(e) { return json(res, 200, []); }
   }
 
+  // POST /api/finance/persons - add new person WEF a month
+  if (method === "POST" && pathname === "/api/finance/persons") {
+    const { scheduleId, personType, name, email, activeFrom } = body;
+    if (!scheduleId || !personType || !name) return json(res, 400, { error: "required" });
+    try {
+      if (personType === "faculty") {
+        await db.query("INSERT INTO public.finance_faculty (schedule_id, name, email, active_from) VALUES ($1,$2,$3,$4) ON CONFLICT (schedule_id, name) DO UPDATE SET active_from=$4, active_to=NULL, email=$3", [scheduleId, name, email||"", activeFrom||null]);
+      } else if (personType === "staff") {
+        await db.query("INSERT INTO public.support_staff (schedule_id, name, role, email, active_from) VALUES ($1,$2,'Staff',$3,$4)", [scheduleId, name, email||"", activeFrom||null]);
+      } else if (personType === "student") {
+        await db.query("UPDATE public.students SET active_from=$1, active_to=NULL WHERE schedule_id=$2 AND roll_no=$3", [activeFrom||null, scheduleId, name]);
+      }
+      return json(res, 200, { success: true });
+    } catch(e) { return json(res, 500, { error: String(e) }); }
+  }
+
+  // PATCH /api/finance/persons/:id/deactivate - remove WEF a month
+  if (method === "PATCH" && pathname.match(/^\/api\/finance\/persons\/[^/]+\/deactivate$/)) {
+    const parts = pathname.split("/");
+    const personId = parts[4];
+    const { personType, scheduleId, activeTo } = body;
+    try {
+      if (personType === "faculty") {
+        await db.query("UPDATE public.finance_faculty SET active_to=$1 WHERE id=$2", [activeTo, parseInt(personId)]);
+      } else if (personType === "staff") {
+        await db.query("UPDATE public.support_staff SET active_to=$1 WHERE id=$2", [activeTo, parseInt(personId)]);
+      } else if (personType === "student") {
+        await db.query("UPDATE public.students SET active_to=$1 WHERE schedule_id=$2 AND roll_no=$3", [activeTo, parseInt(scheduleId), personId]);
+      }
+      return json(res, 200, { success: true });
+    } catch(e) { return json(res, 500, { error: String(e) }); }
+  }
+
   if (method === "POST" && pathname === "/api/finance/payments") {
     const { payments } = body;
     if (!Array.isArray(payments)) return json(res, 400, { error: "payments array required" });

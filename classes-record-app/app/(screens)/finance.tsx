@@ -525,6 +525,19 @@ export default function FinanceScreen() {
     return (
       <View style={s.ratesBar}>
         <TouchableOpacity
+          style={[s.ratesBarBtn, { backgroundColor: "#1565C0", borderColor: "#1565C0" }]}
+          onPress={() => {
+            if (type !== "staff") {
+              setPersonMgmtType(type as "student"|"faculty"|"staff");
+              setPersonMgmtMsg(""); setNewPersonName(""); setNewPersonEmail("");
+              setShowPersonMgmt(true);
+            }
+          }}
+        >
+          <Feather name="users" size={13} color="#fff" />
+          <Text style={[s.ratesBarBtnTxt, { color: "#fff" }]}>Manage</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           style={[s.ratesBarBtn, { backgroundColor: "#E0F2F1", borderColor: "#00695C" }]}
           onPress={() => openRatesModal(type)}
         >

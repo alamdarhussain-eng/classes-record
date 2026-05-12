@@ -511,7 +511,7 @@ export default function FinanceScreen() {
           style={[s.ratesBarBtn, { borderColor: "#00695C" }]}
           onPress={() => {
             const typeParam = type === "student" ? "student" : type === "faculty" ? "faculty" : "staff";
-            Linking.openURL(`https://${process.env.EXPO_PUBLIC_DOMAIN}/api/finance/rates/sample?personType=${typeParam}`);
+            Linking.openURL(`https://${process.env.EXPO_PUBLIC_DOMAIN}/api/finance/rates/sample?personType=${typeParam}&scheduleId=${selectedScheduleId ?? ""}`);
           }}
         >
           <Feather name="download" size={13} color="#00695C" />
@@ -772,7 +772,7 @@ export default function FinanceScreen() {
           <TouchableOpacity style={s.bulkBtn} onPress={handleBulkStaff} disabled={bulkLoading}>
             {bulkLoading ? <ActivityIndicator color="#00695C" size="small" /> : <><Feather name="upload" size={15} color="#00695C" /><Text style={s.bulkBtnTxt}>  Bulk Upload Staff (Excel)</Text></>}
           </TouchableOpacity>
-          <TouchableOpacity style={s.sampleBtn} onPress={() => Linking.openURL(`https://${process.env.EXPO_PUBLIC_DOMAIN}/api/finance/staff/sample`)}>
+          <TouchableOpacity style={s.sampleBtn} onPress={() => Linking.openURL(`https://${process.env.EXPO_PUBLIC_DOMAIN}/api/finance/staff/sample?scheduleId=${selectedScheduleId ?? ""}`)}>
             <Feather name="download" size={13} color="#00695C" />
             <Text style={s.sampleBtnTxt}>Template</Text>
           </TouchableOpacity>
@@ -1093,7 +1093,7 @@ export default function FinanceScreen() {
                 style={s.sampleBtn}
                 onPress={() => {
                   if (!showRatesModal) return;
-                  Linking.openURL(`https://${process.env.EXPO_PUBLIC_DOMAIN}/api/finance/rates/sample?personType=${showRatesModal}`);
+                  Linking.openURL(`https://${process.env.EXPO_PUBLIC_DOMAIN}/api/finance/rates/sample?personType=${showRatesModal}&scheduleId=${selectedScheduleId ?? ""}`);
                 }}
               >
                 <Feather name="download" size={13} color="#00695C" />

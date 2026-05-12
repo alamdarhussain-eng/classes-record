@@ -904,29 +904,60 @@ async function handleApi(method, pathname, req, res) {
     return;
   }
 
-  // Finance sample CSV downloads
+  // Finance sample CSV downloads - dynamic with actual data
   if (method === "GET" && pathname === "/api/finance/rates/sample") {
     const personType = reqUrl.searchParams.get("personType") || "student";
+    const scheduleId = reqUrl.searchParams.get("scheduleId");
     let csv = "";
-    if (personType === "student") {
-      csv = "Name / ID,Fee (Rs),Email,WhatsApp\n";
-      csv += "Ali Khan (2K24-001),15000,ali.khan@example.com,03001234567\n";
-      csv += "Sara Ahmed (2K24-002),15000,sara.ahmed@example.com,03012345678\n";
-    } else if (personType === "faculty") {
-      csv = "Name / ID,Pay (Rs),Email,WhatsApp\n";
-      csv += "Dr. Ahmad Shah,80000,ahmad.shah@university.edu,03001234567\n";
-      csv += "Prof. Sara Malik,70000,sara.malik@university.edu,03012345678\n";
-    } else {
-      csv = "Name / ID,Pay (Rs),Email,WhatsApp\n";
-      csv += "John Security,25000,john@example.com,03001234567\n";
-      csv += "Mike Peon,22000,mike@example.com,03012345678\n";
-    }
+    try {
+      if (personType === "student" && scheduleId) {
+        const r = await db.query("SELECT roll_no, name, email FROM public.students WHERE schedule_id=$1 ORDER BY roll_no", [parseInt(scheduleId)]);
+        csv = "Name / ID,Fee (Rs),Email,WhatsApp\n";
+        if (r.rows.length > 0) {
+          r.rows.forEach(s => { csv += `"${s.name} (${s.roll_no})",0,"${s.email||""}",""\n`; });
+        } else {
+          csv += "Ali Khan (2K24-001),15000,ali.khan@example.com,03001234567\n";
+        }
+      } else if (personType === "faculty" && scheduleId) {
+        const r = await db.query("SELECT DISTINCT faculty FROM public.weekly_schedule WHERE schedule_id=$1 AND faculty != '_locations_' AND (type IS NULL OR type='') ORDER BY faculty", [parseInt(scheduleId)]);
+        csv = "Name / ID,Pay (Rs),Email,WhatsApp\n";
+        if (r.rows.length > 0) {
+          r.rows.filter(f => f.faculty).forEach(f => { csv += `"${f.faculty}",0,"",""\n`; });
+        } else {
+          csv += "Dr. Ahmad Shah,80000,ahmad.shah@university.edu,03001234567\n";
+        }
+      } else if (personType === "staff" && scheduleId) {
+        const r = await db.query("SELECT name, role, contact FROM public.support_staff WHERE schedule_id=$1 ORDER BY name", [parseInt(scheduleId)]);
+        csv = "Name / ID,Pay (Rs),Email,WhatsApp\n";
+        if (r.rows.length > 0) {
+          r.rows.forEach(s => { csv += `"${s.name}",0,"","${s.contact||""}"\n`; });
+        } else {
+          csv += "John Security,25000,john@example.com,03001234567\n";
+        }
+      } else {
+        if (personType === "student") csv = "Name / ID,Fee (Rs),Email,WhatsApp\nAli Khan (2K24-001),15000,ali.khan@example.com,03001234567\n";
+        else csv = "Name / ID,Pay (Rs),Email,WhatsApp\nDr. Ahmad Shah,80000,ahmad.shah@university.edu,03001234567\n";
+      }
+    } catch(e) { csv = "Name / ID,Fee (Rs),Email,WhatsApp\n"; }
     res.writeHead(200, { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": `attachment; filename=${personType}-rates-template.csv`, "Access-Control-Allow-Origin": "*" });
     res.end(csv); return;
   }
 
   if (method === "GET" && pathname === "/api/finance/staff/sample") {
-    const csv = "Name,Role,Pay (Rs),Contact,Email,WhatsApp\nJohn Security,Security Guard,25000,0300-1234567,john@example.com,03001234567\nMike Peon,Office Peon,22000,0301-2345678,mike@example.com,03012345678\n";
+    const scheduleId = reqUrl.searchParams.get("scheduleId");
+    let csv = "Name,Role,Pay (Rs),Contact,Email,WhatsApp\n";
+    try {
+      if (scheduleId) {
+        const r = await db.query("SELECT name, role, contact FROM public.support_staff WHERE schedule_id=$1 ORDER BY name", [parseInt(scheduleId)]);
+        if (r.rows.length > 0) {
+          r.rows.forEach(s => { csv += `"${s.name}","${s.role||""}",0,"${s.contact||""}","",""\n`; });
+        } else {
+          csv += "John Security,Security Guard,25000,0300-1234567,john@example.com,03001234567\n";
+        }
+      } else {
+        csv += "John Security,Security Guard,25000,0300-1234567,john@example.com,03001234567\n";
+      }
+    } catch(e) {}
     res.writeHead(200, { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": "attachment; filename=staff-template.csv", "Access-Control-Allow-Origin": "*" });
     res.end(csv); return;
   }

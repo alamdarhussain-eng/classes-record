@@ -358,8 +358,28 @@ export async function fetchFinanceSchedules(username?: string) {
   } catch { return []; }
 }
 
-export async function fetchFinancePersons(scheduleId: number, personType: string) {
-  const res = await fetch(`${API_BASE}/finance/persons?scheduleId=${scheduleId}&personType=${encodeURIComponent(personType)}`);
+export async function fetchFinancePersons(scheduleId: number, personType: string, period?: string) {
+  const p = period ? `&period=${encodeURIComponent(period)}` : "";
+  const res = await fetch(`${API_BASE}/finance/persons?scheduleId=${scheduleId}&personType=${encodeURIComponent(personType)}${p}`);
+  const data = await res.json();
+  return Array.isArray(data) ? data : [];
+}
+
+export async function addFinancePerson(scheduleId: number, personType: string, name: string, email: string, activeFrom: string) {
+  const res = await fetch(`${API_BASE}/finance/persons`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ scheduleId, personType, name, email, activeFrom }),
+  });
+  return res.json();
+}
+
+export async function deactivateFinancePerson(personId: string, personType: string, scheduleId: number, activeTo: string) {
+  const res = await fetch(`${API_BASE}/finance/persons/${personId}/deactivate`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ personType, scheduleId, activeTo }),
+  });
   return res.json();
 }
 

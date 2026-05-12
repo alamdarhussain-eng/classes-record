@@ -12,8 +12,9 @@ import * as DocumentPicker from "expo-document-picker";
 
 import { useColors } from "@/hooks/useColors";
 import {
-  financeLogin, financeRegister,
+  financeLogin,
   fetchSupportStaff, addSupportStaff, deleteSupportStaff, importStaffExcel,
+  addFinancePerson, deactivateFinancePerson,
   fetchFinancePersons, fetchFinancePayments, saveFinancePaymentsBulk,
   fetchFinanceSummary, fetchStudentFeeStatus,
   fetchFinanceSchedules,
@@ -87,6 +88,12 @@ export default function FinanceScreen() {
   const [loginUser, setLoginUser] = useState("");
   const [loginPin, setLoginPin] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [showPersonMgmt, setShowPersonMgmt] = useState(false);
+  const [personMgmtType, setPersonMgmtType] = useState<"student"|"faculty"|"staff">("student");
+  const [newPersonName, setNewPersonName] = useState("");
+  const [newPersonEmail, setNewPersonEmail] = useState("");
+  const [personMgmtLoading, setPersonMgmtLoading] = useState(false);
+  const [personMgmtMsg, setPersonMgmtMsg] = useState("");
 
   // ── Period state ───────────────────────────────────────────────────────
   const [activeTab, setActiveTab] = useState<Tab>("summary");
@@ -140,6 +147,33 @@ export default function FinanceScreen() {
   }, [selectedSem]);
 
   // ── Login ──────────────────────────────────────────────────────────────
+  async function handleAddPerson() {
+    if (!newPersonName.trim() || !selectedScheduleId) return;
+    setPersonMgmtLoading(true); setPersonMgmtMsg("");
+    const res = await addFinancePerson(selectedScheduleId, personMgmtType, newPersonName.trim(), newPersonEmail.trim(), period);
+    setPersonMgmtLoading(false);
+    if (res.success) {
+      setPersonMgmtMsg(`✓ Added from ${period}`);
+      setNewPersonName(""); setNewPersonEmail("");
+      if (personMgmtType === "student") loadPayRows("student", setStudentRows, period);
+      else if (personMgmtType === "faculty") loadPayRows("faculty", setFacultyRows, period);
+      else loadPayRows("staff", setStaffPayRows, period);
+    } else { setPersonMgmtMsg(res.error || "Failed to add"); }
+  }
+
+  async function handleRemovePerson(personId: string, personName: string) {
+    if (!selectedScheduleId) return;
+    setPersonMgmtLoading(true); setPersonMgmtMsg("");
+    const res = await deactivateFinancePerson(personId, personMgmtType, selectedScheduleId, period);
+    setPersonMgmtLoading(false);
+    if (res.success) {
+      setPersonMgmtMsg(`✓ ${personName} removed WEF ${period}`);
+      if (personMgmtType === "student") loadPayRows("student", setStudentRows, period);
+      else if (personMgmtType === "faculty") loadPayRows("faculty", setFacultyRows, period);
+      else loadPayRows("staff", setStaffPayRows, period);
+    } else { setPersonMgmtMsg(res.error || "Failed"); }
+  }
+
   async function handleLogin() {
     if (!loginUser.trim()) { setErrorMsg("Enter your username"); return; }
     if (!loginPin.trim()) { setErrorMsg("Enter your Finance PIN"); return; }
@@ -205,7 +239,7 @@ export default function FinanceScreen() {
       })));
     } else if (selectedScheduleId != null) {
       const [persons, payments, rates] = await Promise.all([
-        fetchFinancePersons(selectedScheduleId, type),
+        fetchFinancePersons(selectedScheduleId, type, forPeriod),
         fetchFinancePayments(selectedScheduleId, type, forPeriod),
         fetchFinanceRates(selectedScheduleId, type),
       ]);
@@ -313,7 +347,7 @@ export default function FinanceScreen() {
         type === "staff"
           ? fetchSupportStaff().then(s => s.map(st => ({ personId: st.employeeId, personName: st.name })))
           : selectedScheduleId != null
-            ? fetchFinancePersons(selectedScheduleId ?? 0, type)
+            ? fetchFinancePersons(selectedScheduleId ?? 0, type, period)
             : Promise.resolve([]),
       ]);
       const rateMap: Record<string, string> = {};
@@ -937,7 +971,7 @@ export default function FinanceScreen() {
           <TouchableOpacity style={s.scheduleBtn} onPress={() => setShowSchedPicker(true)}>
             <Feather name="briefcase" size={13} color="#00695C" />
             <Text style={s.scheduleBtnTxt} numberOfLines={1}>
-              {selectedSched ? selectedSched.name : "Select Schedule"}
+              {selectedSched ? selectedSched.name : "Select Schedule ▾"}
             </Text>
             <Feather name="chevron-down" size={13} color={colors.mutedForeground} />
           </TouchableOpacity>
@@ -1159,6 +1193,75 @@ export default function FinanceScreen() {
       </Modal>
 
       {renderErrorModal()}
+
+      {/* ── Manage Persons Modal (Add/Remove WEF) ── */}
+      <Modal visible={showPersonMgmt} transparent animationType="slide">
+        <View style={{ flex:1, justifyContent:"flex-end", backgroundColor:"rgba(0,0,0,0.45)" }}>
+          <View style={{ backgroundColor:colors.card, borderTopLeftRadius:20, borderTopRightRadius:20, padding:24, maxHeight:"85%" }}>
+            <Text style={{ fontSize:18, fontFamily:"Inter_700Bold", color:"#1565C0", marginBottom:4 }}>
+              Manage {personMgmtType === "student" ? "Students" : personMgmtType === "faculty" ? "Faculty" : "Staff"}
+            </Text>
+            <Text style={{ fontSize:13, fontFamily:"Inter_400Regular", color:colors.mutedForeground, marginBottom:16 }}>
+              Add or remove persons WEF: <Text style={{ fontFamily:"Inter_600SemiBold", color:"#1565C0" }}>{period}</Text>
+            </Text>
+
+            {/* Add new person */}
+            <Text style={{ fontSize:12, fontFamily:"Inter_600SemiBold", color:colors.foreground, marginBottom:8, textTransform:"uppercase" }}>
+              ➕ Add New {personMgmtType === "student" ? "Student" : personMgmtType === "faculty" ? "Faculty Member" : "Staff Member"}
+            </Text>
+            <TextInput
+              style={{ borderWidth:1, borderColor:colors.border, borderRadius:8, paddingHorizontal:12, paddingVertical:10, fontSize:14, fontFamily:"Inter_400Regular", color:colors.foreground, backgroundColor:colors.background, marginBottom:8 }}
+              placeholder={personMgmtType === "student" ? "Roll No (e.g. 2K24-BEE-001)" : "Full Name"}
+              placeholderTextColor={colors.mutedForeground}
+              value={newPersonName} onChangeText={setNewPersonName}
+            />
+            <TextInput
+              style={{ borderWidth:1, borderColor:colors.border, borderRadius:8, paddingHorizontal:12, paddingVertical:10, fontSize:14, fontFamily:"Inter_400Regular", color:colors.foreground, backgroundColor:colors.background, marginBottom:12 }}
+              placeholder="Email (optional)"
+              placeholderTextColor={colors.mutedForeground}
+              value={newPersonEmail} onChangeText={setNewPersonEmail}
+              autoCapitalize="none" keyboardType="email-address"
+            />
+            <TouchableOpacity
+              style={{ backgroundColor:"#2E7D32", borderRadius:10, paddingVertical:11, alignItems:"center", marginBottom:16 }}
+              onPress={handleAddPerson} disabled={personMgmtLoading || !newPersonName.trim()}>
+              <Text style={{ color:"#fff", fontFamily:"Inter_700Bold", fontSize:14 }}>Add WEF {period}</Text>
+            </TouchableOpacity>
+
+            {/* Remove existing persons */}
+            <Text style={{ fontSize:12, fontFamily:"Inter_600SemiBold", color:colors.foreground, marginBottom:8, textTransform:"uppercase" }}>
+              🗑 Remove Person (WEF {period})
+            </Text>
+            <ScrollView style={{ maxHeight:180, marginBottom:12 }}>
+              {(personMgmtType === "student" ? studentRows : personMgmtType === "faculty" ? facultyRows : staffPayRows).map(row => (
+                <View key={row.personId} style={{ flexDirection:"row", alignItems:"center", paddingVertical:8, borderBottomWidth:1, borderBottomColor:colors.border }}>
+                  <Text style={{ flex:1, fontSize:13, fontFamily:"Inter_500Medium", color:colors.foreground }}>{row.personName}</Text>
+                  <TouchableOpacity
+                    onPress={() => handleRemovePerson(row.personId, row.personName)}
+                    style={{ backgroundColor:"#B71C1C", borderRadius:6, paddingHorizontal:10, paddingVertical:5 }}
+                    disabled={personMgmtLoading}>
+                    <Text style={{ color:"#fff", fontSize:12, fontFamily:"Inter_600SemiBold" }}>Remove</Text>
+                  </TouchableOpacity>
+                </View>
+              ))}
+              {(personMgmtType === "student" ? studentRows : personMgmtType === "faculty" ? facultyRows : staffPayRows).length === 0 && (
+                <Text style={{ color:colors.mutedForeground, fontFamily:"Inter_400Regular", fontSize:13, textAlign:"center", paddingVertical:16 }}>No active persons for {period}</Text>
+              )}
+            </ScrollView>
+
+            {personMgmtMsg ? (
+              <Text style={{ fontSize:13, fontFamily:"Inter_600SemiBold", color: personMgmtMsg.startsWith("✓") ? "#2E7D32" : "#B71C1C", textAlign:"center", marginBottom:8 }}>{personMgmtMsg}</Text>
+            ) : null}
+
+            <TouchableOpacity
+              style={{ backgroundColor:colors.muted, borderRadius:10, paddingVertical:12, alignItems:"center" }}
+              onPress={() => { setShowPersonMgmt(false); setPersonMgmtMsg(""); }}>
+              <Text style={{ fontFamily:"Inter_600SemiBold", color:colors.foreground }}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
     </View>
   );
 }

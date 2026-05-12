@@ -1166,6 +1166,28 @@ async function fixSequences() {
   } catch(e) { console.log("Finance table warning:", e.message); }
 
   try {
+    // Add active_from/active_to to students
+    await db.query("ALTER TABLE public.students ADD COLUMN IF NOT EXISTS active_from TEXT DEFAULT NULL");
+    await db.query("ALTER TABLE public.students ADD COLUMN IF NOT EXISTS active_to TEXT DEFAULT NULL");
+    // Create finance_faculty table for tracking faculty with effective dates
+    await db.query(`CREATE TABLE IF NOT EXISTS public.finance_faculty (
+      id SERIAL PRIMARY KEY,
+      schedule_id INTEGER REFERENCES public.schedules(id) ON DELETE CASCADE,
+      name TEXT NOT NULL,
+      email TEXT DEFAULT '',
+      active_from TEXT DEFAULT NULL,
+      active_to TEXT DEFAULT NULL,
+      UNIQUE(schedule_id, name)
+    )`);
+    // Add active_from/active_to to support_staff
+    await db.query("ALTER TABLE public.support_staff ADD COLUMN IF NOT EXISTS active_from TEXT DEFAULT NULL");
+    await db.query("ALTER TABLE public.support_staff ADD COLUMN IF NOT EXISTS active_to TEXT DEFAULT NULL");
+    await db.query("ALTER TABLE public.support_staff ADD COLUMN IF NOT EXISTS schedule_id INTEGER DEFAULT NULL");
+    await db.query("ALTER TABLE public.support_staff ADD COLUMN IF NOT EXISTS email TEXT DEFAULT ''");
+    console.log("\u2713 Finance effective date columns ensured");
+  } catch(e) { console.log("Finance date columns warning:", e.message); }
+
+  try {
     await db.query("ALTER TABLE public.users ADD COLUMN IF NOT EXISTS finance_pin TEXT DEFAULT ''");
     console.log("\u2713 finance_pin column ensured");
   } catch(e) { console.log("finance_pin warning:", e.message); }

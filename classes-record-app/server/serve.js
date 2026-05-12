@@ -157,6 +157,147 @@ async function handleApi(method, pathname, req, res) {
     } catch(e) { return json(res, 500, { success: false, message: String(e) }); }
   }
 
+  // ========== FINANCE DATA ROUTES ==========
+
+  if (method === "GET" && pathname === "/api/finance/schedules") {
+    const username = reqUrl.searchParams.get("username");
+    try {
+      const r = username
+        ? await db.query("SELECT id, name, start_date, end_date FROM public.schedules WHERE user_id=$1 ORDER BY id DESC", [username])
+        : await db.query("SELECT id, name, start_date, end_date FROM public.schedules ORDER BY id DESC");
+      return json(res, 200, r.rows.map(s => ({ id: s.id, name: s.name, startDate: s.start_date, endDate: s.end_date })));
+    } catch(e) { return json(res, 200, []); }
+  }
+
+  if (method === "GET" && pathname === "/api/finance/persons") {
+    const scheduleId = reqUrl.searchParams.get("scheduleId");
+    const personType = reqUrl.searchParams.get("personType");
+    if (!scheduleId || !personType) return json(res, 200, []);
+    try {
+      let rows = [];
+      if (personType === "student") {
+        const r = await db.query("SELECT DISTINCT roll_no as name FROM public.students WHERE schedule_id=$1 ORDER BY roll_no", [parseInt(scheduleId)]);
+        rows = r.rows.map((x) => x.name);
+      } else if (personType === "faculty") {
+        const r = await db.query("SELECT DISTINCT faculty as name FROM public.weekly_schedule WHERE schedule_id=$1 AND faculty != '_locations_' AND (type IS NULL OR type='') ORDER BY faculty", [parseInt(scheduleId)]);
+        rows = r.rows.map((x) => x.name).filter(Boolean);
+      } else if (personType === "staff") {
+        const r = await db.query("SELECT DISTINCT name FROM public.support_staff WHERE schedule_id=$1 ORDER BY name", [parseInt(scheduleId)]);
+        rows = r.rows.map((x) => x.name);
+      }
+      return json(res, 200, rows);
+    } catch(e) { return json(res, 200, []); }
+  }
+
+  if (method === "GET" && pathname === "/api/finance/payments") {
+    const scheduleId = reqUrl.searchParams.get("scheduleId");
+    const personType = reqUrl.searchParams.get("personType");
+    const period = reqUrl.searchParams.get("period");
+    if (!scheduleId || !personType || !period) return json(res, 200, []);
+    try {
+      const r = await db.query(
+        "SELECT id, person_type, person_name, schedule_id, period, amount, status, note FROM public.finance_payments WHERE schedule_id=$1 AND person_type=$2 AND period=$3 ORDER BY person_name",
+        [parseInt(scheduleId), personType, period]
+      );
+      return json(res, 200, r.rows.map(p => ({ id: p.id, personType: p.person_type, personName: p.person_name, scheduleId: p.schedule_id, period: p.period, amount: parseFloat(p.amount)||0, status: p.status, note: p.note||"" })));
+    } catch(e) { return json(res, 200, []); }
+  }
+
+  if (method === "POST" && pathname === "/api/finance/payments") {
+    const { payments } = body;
+    if (!Array.isArray(payments)) return json(res, 400, { error: "payments array required" });
+    try {
+      for (const p of payments) {
+        await db.query(
+          `INSERT INTO public.finance_payments (person_type, person_name, schedule_id, period, amount, status, note)
+           VALUES ($1,$2,$3,$4,$5,$6,$7)
+           ON CONFLICT (person_type, person_name, schedule_id, period)
+           DO UPDATE SET amount=$5, status=$6, note=$7`,
+          [p.personType, p.personName, p.scheduleId, p.period, p.amount||0, p.status||"Unpaid", p.note||""]
+        );
+      }
+      return json(res, 200, { success: true });
+    } catch(e) { return json(res, 500, { error: String(e) }); }
+  }
+
+  if (method === "GET" && pathname === "/api/finance/summary") {
+    const scheduleId = reqUrl.searchParams.get("scheduleId");
+    const period = reqUrl.searchParams.get("period");
+    if (!scheduleId || !period) return json(res, 200, { student: {}, faculty: {}, staff: {} });
+    try {
+      const r = await db.query(
+        "SELECT person_type, status, COUNT(*) as cnt, SUM(amount) as total FROM public.finance_payments WHERE schedule_id=$1 AND period=$2 GROUP BY person_type, status",
+        [parseInt(scheduleId), period]
+      );
+      const summary = { student: {}, faculty: {}, staff: {} };
+      r.rows.forEach((row) => {
+        if (!summary[row.person_type]) summary[row.person_type] = {};
+        summary[row.person_type][row.status] = { count: parseInt(row.cnt), total: parseFloat(row.total)||0 };
+      });
+      return json(res, 200, summary);
+    } catch(e) { return json(res, 200, { student: {}, faculty: {}, staff: {} }); }
+  }
+
+  if (method === "GET" && pathname === "/api/finance/rates") {
+    const scheduleId = reqUrl.searchParams.get("scheduleId");
+    const personType = reqUrl.searchParams.get("personType");
+    if (!scheduleId || !personType) return json(res, 200, []);
+    try {
+      const r = await db.query("SELECT id, schedule_id, person_type, label, amount FROM public.finance_rates WHERE schedule_id=$1 AND person_type=$2 ORDER BY label", [parseInt(scheduleId), personType]);
+      return json(res, 200, r.rows.map(r => ({ id: r.id, scheduleId: r.schedule_id, personType: r.person_type, label: r.label, amount: parseFloat(r.amount)||0 })));
+    } catch(e) { return json(res, 200, []); }
+  }
+
+  if (method === "POST" && pathname === "/api/finance/rates") {
+    const { scheduleId, personType, rates } = body;
+    if (!scheduleId || !personType || !Array.isArray(rates)) return json(res, 400, { error: "required fields missing" });
+    try {
+      await db.query("DELETE FROM public.finance_rates WHERE schedule_id=$1 AND person_type=$2", [scheduleId, personType]);
+      for (const rate of rates) {
+        await db.query("INSERT INTO public.finance_rates (schedule_id, person_type, label, amount) VALUES ($1,$2,$3,$4)", [scheduleId, personType, rate.label, rate.amount||0]);
+      }
+      return json(res, 200, { success: true });
+    } catch(e) { return json(res, 500, { error: String(e) }); }
+  }
+
+  if (method === "GET" && pathname === "/api/finance/staff") {
+    const scheduleId = reqUrl.searchParams.get("scheduleId");
+    if (!scheduleId || scheduleId === "undefined" || scheduleId === "[object Object]") return json(res, 200, []);
+    try {
+      const r = await db.query("SELECT id, schedule_id, name, role, contact FROM public.support_staff WHERE schedule_id=$1 ORDER BY name", [parseInt(scheduleId)]);
+      return json(res, 200, r.rows.map(s => ({ id: s.id, scheduleId: s.schedule_id, name: s.name, role: s.role, contact: s.contact||"" })));
+    } catch(e) { return json(res, 200, []); }
+  }
+
+  if (method === "POST" && pathname === "/api/finance/staff") {
+    const { scheduleId, name, role, contact } = body;
+    if (!scheduleId || !name) return json(res, 400, { error: "scheduleId and name required" });
+    try {
+      const r = await db.query("INSERT INTO public.support_staff (schedule_id, name, role, contact) VALUES ($1,$2,$3,$4) RETURNING id", [scheduleId, name, role||"", contact||""]);
+      return json(res, 200, { success: true, id: r.rows[0].id });
+    } catch(e) { return json(res, 500, { error: String(e) }); }
+  }
+
+  if (method === "DELETE" && pathname.match(/^\/api\/finance\/staff\/\d+$/)) {
+    const id = parseInt(pathname.split("/").pop());
+    try {
+      await db.query("DELETE FROM public.support_staff WHERE id=$1", [id]);
+      return json(res, 200, { success: true });
+    } catch(e) { return json(res, 500, { error: String(e) }); }
+  }
+
+  if (method === "GET" && pathname === "/api/finance/student-fee") {
+    const regNo = reqUrl.searchParams.get("regNo");
+    if (!regNo) return json(res, 200, null);
+    try {
+      const r = await db.query(
+        "SELECT fp.*, s.name as student_name FROM public.finance_payments fp LEFT JOIN public.students s ON s.roll_no=fp.person_name WHERE fp.person_type='student' AND fp.person_name=$1 ORDER BY fp.period DESC LIMIT 12",
+        [regNo]
+      );
+      return json(res, 200, r.rows.length ? { regNo, name: r.rows[0].student_name||regNo, payments: r.rows } : null);
+    } catch(e) { return json(res, 200, null); }
+  }
+
   if (method === "POST" && pathname === "/api/auth/register") {
     await db.query("SELECT setval('public.users_id_seq', COALESCE((SELECT MAX(id) FROM public.users), 0) + 1, false)").catch(() => {});
     const { username, password, pin } = body;

@@ -594,7 +594,7 @@ async function handleApi(method, pathname, req, res) {
     if (!scheduleId) return json(res, 400, { error: "scheduleId required" });
     try {
       const r = await db.query(
-        `SELECT s.id, s.class_name, s.roll_no, s.student_name, s.email, s.enrolled_at,
+        `SELECT s.id, s.class_name, s.roll_no, s.name, s.email, s.created_at,
                 w.subject, w.faculty
          FROM public.students s
          LEFT JOIN (
@@ -686,7 +686,7 @@ async function handleApi(method, pathname, req, res) {
     if (!scheduleId || !className) return json(res, 400, { error: "scheduleId and className required" });
     try {
       const r = await db.query(
-        `SELECT a.student_id, a.date, a.session_time, a.status, s.roll_no, s.student_name
+        `SELECT a.student_id, a.date, a.session_time, a.status, s.roll_no, s.name
          FROM public.attendance a
          JOIN public.students s ON s.id = a.student_id
          WHERE a.schedule_id=$1 AND a.class_name=$2
@@ -695,7 +695,7 @@ async function handleApi(method, pathname, req, res) {
       );
       return json(res, 200, r.rows.map(row => ({
         studentId: row.student_id, date: row.date, sessionTime: row.session_time,
-        status: row.status, rollNo: row.roll_no, name: row.student_name
+        status: row.status, rollNo: row.roll_no, name: row.name
       })));
     } catch(e) { return json(res, 500, { error: String(e) }); }
   }
@@ -715,7 +715,7 @@ async function handleApi(method, pathname, req, res) {
          FROM public.students s
          LEFT JOIN public.attendance a ON a.student_id=s.id AND a.schedule_id=$1 AND a.class_name=$2
          WHERE s.schedule_id=$1 AND s.class_name=$2
-         GROUP BY s.id, s.roll_no, s.student_name, s.email
+         GROUP BY s.id, s.roll_no, s.name, s.email
          ORDER BY s.roll_no`,
         [parseInt(scheduleId), className]
       );
@@ -884,11 +884,11 @@ async function fixSequences() {
       schedule_id INTEGER REFERENCES public.schedules(id) ON DELETE CASCADE,
       class_name TEXT NOT NULL,
       roll_no TEXT NOT NULL,
-      student_name TEXT NOT NULL,
+      name TEXT NOT NULL,
       email TEXT DEFAULT '',
-      enrolled_at TIMESTAMPTZ DEFAULT NOW(),
+      created_at TIMESTAMPTZ DEFAULT NOW(),
       UNIQUE(schedule_id, class_name, roll_no)
-    )`);
+    ) ON CONFLICT DO NOTHING`);
     await db.query(`CREATE TABLE IF NOT EXISTS public.attendance (
       id SERIAL PRIMARY KEY,
       schedule_id INTEGER REFERENCES public.schedules(id) ON DELETE CASCADE,

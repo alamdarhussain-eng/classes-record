@@ -204,6 +204,41 @@ async function handleApi(method, pathname, req, res) {
   }
 
   // POST /api/finance/persons - add new person WEF a month
+  // ========== FACULTY PORTAL ROUTES ==========
+
+  if (method === "POST" && pathname === "/api/faculty-portal/login") {
+    const { username, password } = body;
+    if (!username || !password) return json(res, 400, { success: false, message: "Username and password required" });
+    try {
+      const r = await db.query(
+        `SELECT fa.id, fa.schedule_id, fa.faculty_name, fa.username, fa.password, s.name as schedule_name
+         FROM public.faculty_accounts fa
+         JOIN public.schedules s ON s.id = fa.schedule_id
+         WHERE fa.username=$1`,
+        [username.trim()]
+      );
+      if (!r.rows.length) return json(res, 200, { success: false, message: "Username not found" });
+      const account = r.rows[0];
+      if (account.password !== password.trim()) return json(res, 200, { success: false, message: "Incorrect password" });
+      const sessions = r.rows.map(a => ({
+        id: a.id, scheduleId: a.schedule_id, scheduleName: a.schedule_name,
+        facultyName: a.faculty_name, username: a.username
+      }));
+      return json(res, 200, { success: true, sessions });
+    } catch(e) { return json(res, 500, { success: false, message: String(e) }); }
+  }
+
+  if (method === "POST" && pathname === "/api/faculty-portal/change-password") {
+    const { username, currentPassword, newPassword } = body;
+    try {
+      const r = await db.query("SELECT id, password FROM public.faculty_accounts WHERE username=$1 LIMIT 1", [username]);
+      if (!r.rows.length) return json(res, 200, { success: false, message: "Account not found" });
+      if (r.rows[0].password !== currentPassword) return json(res, 200, { success: false, message: "Current password incorrect" });
+      await db.query("UPDATE public.faculty_accounts SET password=$1 WHERE username=$2", [newPassword, username]);
+      return json(res, 200, { success: true });
+    } catch(e) { return json(res, 500, { success: false, message: String(e) }); }
+  }
+
   // ========== FACULTY ACCESS ROUTES ==========
 
   // GET /api/faculty-access

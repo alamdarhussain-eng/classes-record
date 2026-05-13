@@ -309,6 +309,37 @@ export async function fetchStudentAttendanceSummary(scheduleId: number, classNam
   } catch { return []; }
 }
 
+// ========== FACULTY PORTAL ==========
+export interface FacultySession {
+  id: number;
+  scheduleId: number;
+  scheduleName: string;
+  facultyName: string;
+  username: string;
+}
+
+export async function facultyLogin(username: string, password: string): Promise<{ success: boolean; sessions?: FacultySession[]; message?: string }> {
+  try {
+    const res = await fetch(`${API_BASE}/faculty-portal/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+    });
+    return res.json();
+  } catch { return { success: false, message: "Network error" }; }
+}
+
+export async function changeFacultyPassword(username: string, currentPassword: string, newPassword: string) {
+  try {
+    const res = await fetch(`${API_BASE}/faculty-portal/change-password`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, currentPassword, newPassword }),
+    });
+    return res.json();
+  } catch { return { success: false, message: "Network error" }; }
+}
+
 export async function fetchPublicSchedules() {
   try {
     const res = await fetch(`${API_BASE}/schedules/public`);

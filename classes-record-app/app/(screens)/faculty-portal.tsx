@@ -62,7 +62,12 @@ export default function FacultyPortalScreen() {
     setLoginLoading(true);
     setLoginError("");
     try {
-      const results = await facultyLogin(username.trim().toLowerCase(), password.trim());
+      const res = await facultyLogin(username.trim().toLowerCase(), password.trim());
+      if (!res.success) {
+        setLoginError(res.message ?? "Login failed");
+        return;
+      }
+      const results = res.sessions ?? [];
       if (results.length === 1) {
         await saveSession(results[0]);
       } else {

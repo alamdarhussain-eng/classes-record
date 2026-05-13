@@ -309,6 +309,14 @@ export async function fetchStudentAttendanceSummary(scheduleId: number, classNam
   } catch { return []; }
 }
 
+export async function fetchPublicSchedules() {
+  try {
+    const res = await fetch(`${API_BASE}/schedules/public`);
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch { return []; }
+}
+
 // ========== FINANCE API ==========
 
 export interface FinancePayment {

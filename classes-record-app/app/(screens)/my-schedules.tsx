@@ -101,9 +101,19 @@ export default function MySchedulesScreen() {
       qc.invalidateQueries({ queryKey: ["publicSchedules"] });
       setShowCreate(false); setCsvUploaded(false); setUploadedFileName('');
       setNewName("");
-      setStartDate(null);
-      setEndDate(null);
-    },
+      setStartDate(new Date());
+      setEndDate(new Date());
+        // Navigate to AI Generator immediately after schedule created
+        const newId = data?.id ?? data?.schedule?.id ?? data?.scheduleId;
+        if (newId) {
+          router.push(
+            `/(screens)/schedule-generator?scheduleId=${newId}` +
+            `&scheduleTitle=${encodeURIComponent(newName)}` +
+            `&activeDays=${encodeURIComponent(activeDays.join(','))}` +
+            `&startHour=${startHour}&endHour=${endHour}`
+          );
+        }
+},
     onError: () => setErrorMsg("Could not create schedule"),
   });
 

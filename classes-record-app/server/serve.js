@@ -1221,7 +1221,44 @@ async function handleApi(method, pathname, req, res) {
   }
 
 
-  // POST /api/import/schedule/xlsx
+  
+  // POST /api/import/schedule — JSON bulk import from AI schedule generator
+  if (method === "POST" && pathname === "/api/import/schedule") {
+    try {
+      const chunks = [];
+      for await (const chunk of req) chunks.push(chunk);
+      const body = JSON.parse(Buffer.concat(chunks).toString());
+      const { scheduleId, rows } = body;
+      if (!scheduleId || !Array.isArray(rows) || rows.length === 0)
+        return json(res, 400, { error: "scheduleId and rows[] required" });
+      const sidInt = parseInt(scheduleId);
+      if (isNaN(sidInt)) return json(res, 400, { error: "Invalid scheduleId" });
+      let inserted = 0;
+      for (const r of rows) {
+        const faculty   = r.faculty   || r.Faculty   || "";
+        const subject   = r.subject   || r.Subject   || "";
+        const className = r.className || r.Class     || r.class_name || "";
+        const dept      = r.dept      || r.Deptt     || "";
+        const day       = r.day       || r.Day       || "";
+        const location  = r.location  || r.Location  || "";
+        const timeStart = r.timeStart || r.Time      || r.time_start || "";
+        const timeEnd   = r.timeEnd   || r.EndTime   || r.time_end   || "";
+        const lecLab    = r.lecLab    || r.LecLab    || r.lec_lab    || "Lec";
+        const elective  = r.elective  || r.Elective  || "";
+        const userEmail = r.userEmail || r.UserEmail || r.user_email || "";
+        const sortKey   = r.sortKey   || r.SortKey   || r.sort_key   || 0;
+        await db.query(
+          `INSERT INTO public.weekly_schedule (faculty, subject, class_name, dept, day, location, time_start, time_end, lec_lab, elective, user_email, sort_key, schedule_id)
+           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`,
+          [faculty, subject, className, dept, day, location, timeStart, timeEnd, lecLab, elective, userEmail, sortKey, sidInt]
+        );
+        inserted++;
+      }
+      return json(res, 200, { success: true, inserted });
+    } catch(e) { return json(res, 500, { error: e.message }); }
+  }
+
+// POST /api/import/schedule/xlsx
   if (method === "POST" && pathname === "/api/import/schedule/xlsx") {
     const scheduleId = reqUrl.searchParams.get("scheduleId");
     const sidInt = scheduleId && !isNaN(parseInt(scheduleId)) ? parseInt(scheduleId) : null;

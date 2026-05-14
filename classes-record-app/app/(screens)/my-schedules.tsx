@@ -652,7 +652,7 @@ export default function MySchedulesScreen() {
               autoFocus
             />
 
-            <View style={{opacity:csvUploaded?1:0.4,pointerEvents:csvUploaded?"auto":"none"}}>
+            <View style={{opacity:csvUploaded?1:0.5}}>
             <Text style={s.sheetLabel}>Start Date</Text>
             {Platform.OS === "web" ? (
               <View style={[s.datePill, { marginBottom: 16 }]}>

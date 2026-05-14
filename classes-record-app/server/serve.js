@@ -482,7 +482,10 @@ async function handleApi(method, pathname, req, res) {
     try {
       const r = await db.query("SELECT * FROM public.users WHERE username = $1 AND password = $2", [username, password]);
       if (!r.rows.length) return json(res, 200, { success: false, message: "Invalid username or password" });
-      return json(res, 200, { success: true, user: r.rows[0].username });
+      const u = r.rows[0];
+      if (u.is_locked) return json(res, 200, { success: false, message: "Account is locked. Contact admin." });
+      if (u.expiry_date && new Date(u.expiry_date) < new Date()) return json(res, 200, { success: false, message: "Account has expired. Contact admin." });
+      return json(res, 200, { success: true, user: u.username });
     } catch (e) { return json(res, 500, { success: false, message: e.message }); }
   }
 
@@ -532,19 +535,63 @@ async function handleApi(method, pathname, req, res) {
   if (method === "GET" && pathname === "/api/admin/users") {
     if (!requireAdmin(req, res)) return;
     try {
-      const r = await db.query("SELECT id, username, password, pin FROM public.users WHERE username != $1 ORDER BY id DESC", [ADMIN_USERNAME]);
+      const r = await db.query("SELECT id, username, password, pin, is_locked, expiry_date, created_at FROM public.users WHERE username != $1 ORDER BY id DESC", [ADMIN_USERNAME]);
       // Get schedule count for each user
       const schedCounts = await db.query("SELECT user_id, COUNT(*) as cnt FROM public.schedules GROUP BY user_id");
       const countMap = {};
       schedCounts.rows.forEach(s => { countMap[s.user_id] = parseInt(s.cnt); });
       const users = r.rows.map(u => ({
         id: u.id, username: u.username, password: u.password, pin: u.pin,
-        isLocked: false, registeredAt: null, expiryDate: null,
+        isLocked: u.is_locked || false, registeredAt: u.created_at || null, expiryDate: u.expiry_date || null,
         scheduleCount: countMap[u.username] || 0
       }));
       console.log("Admin users found:", users.length);
       return json(res, 200, { success: true, users });
     } catch (e) { console.error('Admin users DB error:', String(e)); return json(res, 500, { success: false, message: String(e) }); }
+  }
+
+    // DELETE /api/admin/users/:id
+  if (method === "DELETE" && pathname.match(/^\/api\/admin\/users\/\d+$/)) {
+    const id = parseInt(pathname.split("/")[4]);
+    try {
+      const r = await db.query("DELETE FROM public.users WHERE id = $1 AND username != $2 RETURNING id", [id, ADMIN_USERNAME]);
+      if (r.rows.length === 0) return json(res, 404, { success: false, message: "User not found or cannot delete admin" });
+      return json(res, 200, { success: true });
+    } catch (e) { return json(res, 500, { error: e.message }); }
+  }
+
+  // PATCH /api/admin/users/:id/password
+  if (method === "PATCH" && pathname.match(/^\/api\/admin\/users\/\d+\/password$/)) {
+    const id = parseInt(pathname.split("/")[4]);
+    const { newPassword } = body;
+    if (!newPassword) return json(res, 400, { success: false, message: "Missing newPassword" });
+    try {
+      const r = await db.query("UPDATE public.users SET password = $1 WHERE id = $2 AND username != $3 RETURNING id", [newPassword, id, ADMIN_USERNAME]);
+      if (r.rows.length === 0) return json(res, 404, { success: false, message: "User not found" });
+      return json(res, 200, { success: true });
+    } catch (e) { return json(res, 500, { error: e.message }); }
+  }
+
+  // PATCH /api/admin/users/:id/lock
+  if (method === "PATCH" && pathname.match(/^\/api\/admin\/users\/\d+\/lock$/)) {
+    const id = parseInt(pathname.split("/")[4]);
+    const { isLocked } = body;
+    try {
+      const r = await db.query("UPDATE public.users SET is_locked = $1 WHERE id = $2 RETURNING id, is_locked", [isLocked, id]);
+      if (r.rows.length === 0) return json(res, 404, { success: false, message: "User not found" });
+      return json(res, 200, { success: true, isLocked: r.rows[0].is_locked });
+    } catch (e) { return json(res, 500, { error: e.message }); }
+  }
+
+  // PATCH /api/admin/users/:id/expiry
+  if (method === "PATCH" && pathname.match(/^\/api\/admin\/users\/\d+\/expiry$/)) {
+    const id = parseInt(pathname.split("/")[4]);
+    const { expiryDate } = body;
+    try {
+      const r = await db.query("UPDATE public.users SET expiry_date = $1 WHERE id = $2 RETURNING id", [expiryDate || null, id]);
+      if (r.rows.length === 0) return json(res, 404, { success: false, message: "User not found" });
+      return json(res, 200, { success: true });
+    } catch (e) { return json(res, 500, { error: e.message }); }
   }
 
   // ========== SCHEDULES ROUTES ==========
@@ -1349,6 +1396,9 @@ async function fixSequences() {
 
   try {
     await db.query("ALTER TABLE public.users ADD COLUMN IF NOT EXISTS finance_pin TEXT DEFAULT ''");
+  await db.query("ALTER TABLE public.users ADD COLUMN IF NOT EXISTS is_locked BOOLEAN DEFAULT FALSE");
+  await db.query("ALTER TABLE public.users ADD COLUMN IF NOT EXISTS expiry_date TIMESTAMP DEFAULT NULL");
+  await db.query("ALTER TABLE public.users ADD COLUMN IF NOT EXISTS created_at TIMESTAMP DEFAULT NOW()");
     console.log("\u2713 finance_pin column ensured");
   } catch(e) { console.log("finance_pin warning:", e.message); }
 

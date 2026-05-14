@@ -57,7 +57,7 @@ export default function FacultyPortalScreen() {
   async function handleLogin() {
     if (!username.trim() || !password.trim()) {
       setLoginError("Enter username and password");
-      return;
+        return;
     }
     setLoginLoading(true);
     setLoginError("");

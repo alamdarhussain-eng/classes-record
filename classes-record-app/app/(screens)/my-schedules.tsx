@@ -623,6 +623,7 @@ export default function MySchedulesScreen() {
           <View style={s.sheet}>
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
             <Text style={s.sheetTitle}>New Schedule</Text>
+            <TouchableOpacity style={{flexDirection:"row",alignItems:"center",gap:8,backgroundColor:"#1565C0",borderRadius:10,paddingVertical:11,paddingHorizontal:16,marginBottom:10}} onPress={()=>{if(typeof document!=="undefined"){const csv=["Subject Code,Subjects,Department,Instructor Name with Sections,Regular/Elective,Class,Credit Hrs,Break Time","OTM455,Engineering Project Management,HU,Mr. Talha Aleem Khawja (ABCD),Regular,BEE-6,2+0,1300-1400","HU212,Technical & Business Writing,HU,Ms. Komal Malik (ABCD),Regular,BEE-6,2+0,1300-1400"].join("\n");const blob=new Blob([csv],{type:"text/csv"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="Draft_Schedule.csv";document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);}}}><Feather name="download" size={14} color="#fff"/><Text style={{color:"#fff",fontFamily:"Inter_600SemiBold",fontSize:13}}>Download Draft Schedule</Text></TouchableOpacity>
             <TextInput
               style={s.sheetInput}
               placeholder="Schedule name  e.g. Semester 1 – Fall 2026"

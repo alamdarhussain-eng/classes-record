@@ -86,6 +86,15 @@ export default function ScheduleDashboardScreen() {
       publicAllowed: true,
     },
     {
+      route: `/(screens)/schedule-generator?scheduleId=${scheduleId}&scheduleTitle=${encodeURIComponent(scheduleTitle ?? "")}&activeDays=${encodeURIComponent(activeDays ?? "Mon,Tue,Wed,Thu,Fri")}&startHour=${startHour ?? 9}&endHour=${endHour ?? 17}`,
+      icon: "cpu" as const,
+      title: "AI Generate Schedule",
+      subtitle: "Upload CSV → Auto timetable",
+      color: "#E65100",
+      bg: "#FFF3E0",
+      publicAllowed: false,
+    },
+    {
       route: `/(screens)/personnel?${q}`,
       icon: "briefcase" as const,
       title: "HR · Personnel",

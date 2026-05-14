@@ -67,6 +67,8 @@ export default function MySchedulesScreen() {
   const [recoverLoading, setRecoverLoading] = useState(false);
 
   const [showCreate, setShowCreate] = useState(false);
+  const [csvUploaded, setCsvUploaded] = useState(false);
+  const [uploadedFileName, setUploadedFileName] = useState("");
   const [showFinancePin, setShowFinancePin] = useState(false);
   const [fpPass, setFpPass] = useState("");
   const [fpPin, setFpPin] = useState("");
@@ -97,7 +99,7 @@ export default function MySchedulesScreen() {
       if (data.error) { setErrorMsg(data.error); return; }
       qc.invalidateQueries({ queryKey: ["userSchedules", user] });
       qc.invalidateQueries({ queryKey: ["publicSchedules"] });
-      setShowCreate(false);
+      setShowCreate(false); setCsvUploaded(false); setUploadedFileName('');
       setNewName("");
       setStartDate(null);
       setEndDate(null);
@@ -623,7 +625,24 @@ export default function MySchedulesScreen() {
           <View style={s.sheet}>
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
             <Text style={s.sheetTitle}>New Schedule</Text>
-            <TouchableOpacity style={{flexDirection:"row",alignItems:"center",gap:8,backgroundColor:"#1565C0",borderRadius:10,paddingVertical:11,paddingHorizontal:16,marginBottom:10}} onPress={()=>{if(typeof document!=="undefined"){const csv=["Subject Code,Subjects,Department,Instructor Name with Sections,Regular/Elective,Class,Credit Hrs,Break Time","OTM455,Engineering Project Management,HU,Mr. Talha Aleem Khawja (ABCD),Regular,BEE-6,2+0,1300-1400","HU212,Technical & Business Writing,HU,Ms. Komal Malik (ABCD),Regular,BEE-6,2+0,1300-1400"].join("\n");const blob=new Blob([csv],{type:"text/csv"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="Draft_Schedule.csv";document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);}}}><Feather name="download" size={14} color="#fff"/><Text style={{color:"#fff",fontFamily:"Inter_600SemiBold",fontSize:13}}>Download Draft Schedule</Text></TouchableOpacity>
+            <View style={{flexDirection:"row",gap:8,marginBottom:12}}>
+              <TouchableOpacity
+                style={{flex:1,flexDirection:"row",alignItems:"center",justifyContent:"center",gap:6,backgroundColor:"#1565C0",borderRadius:10,paddingVertical:11}}
+                onPress={()=>{if(typeof document!=="undefined"){const csv=["Subject Code,Subjects,Department,Instructor Name with Sections,Regular/Elective,Class,Credit Hrs,Break Time","OTM455,Engineering Project Management,HU,Mr. Talha Aleem Khawja (ABCD),Regular,BEE-6,2+0,1300-1400","HU212,Technical & Business Writing,HU,Ms. Komal Malik (ABCD),Regular,BEE-6,2+0,1300-1400","EE342,Microwave Engineering,EE,Mr. Ahsan Azhar (A),Regular,BEE-6,3+1,1300-1400"].join("\n");const blob=new Blob([csv],{type:"text/csv"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="Draft_Schedule.csv";document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);}}}
+              >
+                <Feather name="download" size={14} color="#fff"/>
+                <Text style={{color:"#fff",fontFamily:"Inter_600SemiBold",fontSize:12}}>Download Draft</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{flex:1,flexDirection:"row",alignItems:"center",justifyContent:"center",gap:6,backgroundColor:csvUploaded?"#2E7D32":"#43A047",borderRadius:10,paddingVertical:11}}
+                onPress={()=>{if(typeof document!=="undefined"){const input=document.createElement("input");input.type="file";input.accept=".csv,text/csv";input.onchange=(e)=>{const file=e.target.files?.[0];if(file){setCsvUploaded(true);setUploadedFileName(file.name);}};input.click();}}}
+              >
+                <Feather name="upload" size={14} color="#fff"/>
+                <Text style={{color:"#fff",fontFamily:"Inter_600SemiBold",fontSize:12}}>{csvUploaded?"✓ "+uploadedFileName.slice(0,14):"Upload Schedule"}</Text>
+              </TouchableOpacity>
+            </View>
+            {csvUploaded&&<View style={{backgroundColor:"#E8F5E9",borderRadius:8,padding:8,marginBottom:10,flexDirection:"row",alignItems:"center",gap:6}}><Feather name="check-circle" size={13} color="#2E7D32"/><Text style={{fontSize:12,fontFamily:"Inter_400Regular",color:"#2E7D32",flex:1}}>{uploadedFileName} — Fill details below then Create.</Text></View>}
+            
             <TextInput
               style={s.sheetInput}
               placeholder="Schedule name  e.g. Semester 1 – Fall 2026"
@@ -633,6 +652,7 @@ export default function MySchedulesScreen() {
               autoFocus
             />
 
+            <View style={{opacity:csvUploaded?1:0.4,pointerEvents:csvUploaded?"auto":"none"}}>
             <Text style={s.sheetLabel}>Start Date</Text>
             {Platform.OS === "web" ? (
               <View style={[s.datePill, { marginBottom: 16 }]}>
@@ -780,6 +800,7 @@ export default function MySchedulesScreen() {
                 : <Text style={s.sheetBtnTxt}>Create Schedule</Text>
               }
             </TouchableOpacity>
+            </View>
             <TouchableOpacity
               style={s.sheetCancel}
               onPress={() => { setShowCreate(false); setNewName(""); setStartDate(new Date()); setEndDate(new Date()); setStartHour(9); setEndHour(17); setActiveDays(["Mon","Tue","Wed","Thu","Fri"]); }}

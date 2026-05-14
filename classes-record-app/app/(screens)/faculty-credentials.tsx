@@ -271,9 +271,9 @@ export default function FacultyCredentialsScreen() {
                 {/* Card header */}
                 <TouchableOpacity style={s.cardHeader} onPress={() => setDetailAccount(acc)} activeOpacity={0.8}>
                   <Text style={s.facName}>{acc.facultyName}</Text>
-                  {acc.classes.length > 0 && (
+                  {(acc.classes ?? []).length > 0 && (
                     <Text style={s.facClasses} numberOfLines={2}>
-                      {acc.classes.slice(0, 3).join(" · ")}{acc.classes.length > 3 ? ` +${acc.classes.length - 3} more` : ""}
+                      {(acc.classes ?? []).slice(0, 3).join(" · ")}{(acc.classes ?? []).length > 3 ? ` +${(acc.classes ?? []).length - 3} more` : ""}
                     </Text>
                   )}
                 </TouchableOpacity>
@@ -382,11 +382,11 @@ export default function FacultyCredentialsScreen() {
                   <Text style={[s.detailVal, { fontSize: 13 }]}>{detailAccount.email}</Text>
                 </View>
               ) : null}
-              {detailAccount.classes.length > 0 && (
+              {(detailAccount.classes ?? []).length > 0 && (
                 <View style={s.detailRow}>
                   <Text style={s.detailLabel}>Classes</Text>
                   <Text style={[s.detailVal, { fontSize: 12, fontFamily: "Inter_400Regular" }]} numberOfLines={4}>
-                    {detailAccount.classes.join(", ")}
+                    {(detailAccount.classes ?? []).join(", ")}
                   </Text>
                 </View>
               )}

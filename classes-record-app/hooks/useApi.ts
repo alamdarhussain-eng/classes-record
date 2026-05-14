@@ -314,6 +314,9 @@ export interface FacultySession {
   id: number;
   scheduleId: number;
   scheduleName: string;
+  scheduleTitle?: string;
+  startDate?: string;
+  endDate?: string;
   facultyName: string;
   username: string;
 }
@@ -503,6 +506,7 @@ export interface FacultyAccount {
   password: string;
   email: string;
   createdAt: string;
+  classes?: string[];
 }
 
 export async function fetchFacultyAccounts(scheduleId: number): Promise<FacultyAccount[]> {

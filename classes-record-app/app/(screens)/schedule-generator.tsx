@@ -47,7 +47,7 @@ function generateSchedule(rows: any[], activeDays: string[], startHour: number, 
 
     // Extract section letters from brackets: "Mr. Talha (ABCD)" -> ["A","B","C","D"]
     // Instructor name is everything before the last "("
-    const bracketMatch = instrRaw.match(/\(([A-Z]+)\)\s*$/);
+    const bracketMatch = instrRaw.match(/\(([A-Za-z]+)\)\s*$/);
     if (bracketMatch) {
       const letters = bracketMatch[1].split(""); // ["A","B","C","D"]
       const instrName = instrRaw.slice(0, instrRaw.lastIndexOf("(")).trim(); // "Mr. Talha"

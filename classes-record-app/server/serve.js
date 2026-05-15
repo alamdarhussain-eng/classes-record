@@ -1222,7 +1222,26 @@ async function handleApi(method, pathname, req, res) {
 
 
   
-  // POST /api/import/schedule — JSON bulk import from AI schedule generator
+  
+  // POST /api/fix-null-schedule-ids — one-time fix to assign schedule_id to NULL rows
+  if (method === "POST" && pathname === "/api/fix-null-schedule-ids") {
+    try {
+      const chunks = [];
+      for await (const chunk of req) chunks.push(chunk);
+      const body = JSON.parse(Buffer.concat(chunks).toString());
+      const { scheduleId } = body;
+      if (!scheduleId) return json(res, 400, { error: "scheduleId required" });
+      const sidInt = parseInt(scheduleId);
+      if (isNaN(sidInt)) return json(res, 400, { error: "Invalid scheduleId" });
+      const r = await db.query(
+        "UPDATE public.weekly_schedule SET schedule_id=$1 WHERE schedule_id IS NULL",
+        [sidInt]
+      );
+      return json(res, 200, { success: true, updated: r.rowCount });
+    } catch(e) { return json(res, 500, { error: e.message }); }
+  }
+
+// POST /api/import/schedule — JSON bulk import from AI schedule generator
   if (method === "POST" && pathname === "/api/import/schedule") {
     try {
       const chunks = [];

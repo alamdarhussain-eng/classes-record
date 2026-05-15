@@ -33,10 +33,48 @@ function generateSchedule(rows: any[], activeDays: string[], startHour: number, 
     return { lec: parseInt(p[0])||2, lab: parseInt(p[1])||0 };
   }
 
-  // Group by section (Class column from CSV)
-  const sections: Record<string, any[]> = {};
+  // ============================================================
+  // PRE-PROCESS: Expand rows based on Class + Instructor sections
+  // Draft CSV: Column F = Class (e.g. BEE-6), Column D = Instructor Name with Sections (e.g. Mr. Talha (ABCD))
+  // Each letter in the bracket = one section: BEE-6A, BEE-6B, BEE-6C, BEE-6D
+  // Multiple instructors can share sections: Mr. X (AB) + Mr. Y (CD) for same class
+  // ============================================================
+  const expandedRows: any[] = [];
   for (const r of rows) {
-    const sec = String(r["Sections"]||r["Class"]||r["class"]||"").trim();
+    const baseClass = String(r["Class"]||r["Sections"]||r["class"]||"").trim();
+    const instrRaw  = String(r["Instructor Name with Sections"]||r["Instructor Name"]||r["Faculty"]||r["faculty"]||"").trim();
+    if (!baseClass) continue;
+
+    // Extract section letters from brackets: "Mr. Talha (ABCD)" -> ["A","B","C","D"]
+    // Instructor name is everything before the last "("
+    const bracketMatch = instrRaw.match(/\(([A-Z]+)\)\s*$/);
+    if (bracketMatch) {
+      const letters = bracketMatch[1].split(""); // ["A","B","C","D"]
+      const instrName = instrRaw.slice(0, instrRaw.lastIndexOf("(")).trim(); // "Mr. Talha"
+      for (const letter of letters) {
+        expandedRows.push({
+          ...r,
+          "Class": baseClass + letter,          // BEE-6A, BEE-6B, etc.
+          "Faculty": instrName,                  // clean instructor name
+          "Instructor Name": instrName,
+          "_sectionLetter": letter,
+          "_baseClass": baseClass,
+        });
+      }
+    } else {
+      // No bracket info — treat as-is (e.g. already "BEE-6A" or no section info)
+      expandedRows.push({
+        ...r,
+        "Faculty": instrRaw,
+        "Instructor Name": instrRaw,
+      });
+    }
+  }
+
+  // Group by expanded section (Class column)
+  const sections: Record<string, any[]> = {};
+  for (const r of expandedRows) {
+    const sec = String(r["Class"]||r["Sections"]||r["class"]||"").trim();
     if (!sec) continue;
     if (!sections[sec]) sections[sec] = [];
     sections[sec].push(r);
@@ -81,7 +119,7 @@ function generateSchedule(rows: any[], activeDays: string[], startHour: number, 
     const location = sectionLocation[secKey];
 
     for (const row of secRows) {
-      const fac = String(row["Instructor Name"]||row["Faculty"]||row["instructor"]||"").trim();
+      const fac = String(row["Faculty"]||row["Instructor Name"]||row["instructor"]||"").trim();
       const subj = String(row["Subjects"]||row["Subject"]||row["subject"]||"").trim();
       const dept = String(row["Department"]||row["Deptt"]||row["dept"]||"").trim();
       const credStr = String(row["Credit Hrs"]||row["credits"]||"2+0").trim();

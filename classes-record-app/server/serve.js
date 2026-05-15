@@ -1223,53 +1223,45 @@ async function handleApi(method, pathname, req, res) {
 
   
   
-  // POST /api/fix-null-schedule-ids — one-time fix to assign schedule_id to NULL rows
+    // POST /api/fix-null-schedule-ids — update NULL schedule_id rows
   if (method === "POST" && pathname === "/api/fix-null-schedule-ids") {
     try {
-      const chunks = [];
-      for await (const chunk of req) chunks.push(chunk);
+      const chunks = []; for await (const c of req) chunks.push(c);
       const body = JSON.parse(Buffer.concat(chunks).toString());
-      const { scheduleId } = body;
-      if (!scheduleId) return json(res, 400, { error: "scheduleId required" });
-      const sidInt = parseInt(scheduleId);
-      if (isNaN(sidInt)) return json(res, 400, { error: "Invalid scheduleId" });
-      const r = await db.query(
-        "UPDATE public.weekly_schedule SET schedule_id=$1 WHERE schedule_id IS NULL",
-        [sidInt]
-      );
+      const sid = parseInt(body.scheduleId);
+      if (!sid || isNaN(sid)) return json(res, 400, { error: "scheduleId required" });
+      const r = await db.query("UPDATE public.weekly_schedule SET schedule_id=$1 WHERE schedule_id IS NULL", [sid]);
       return json(res, 200, { success: true, updated: r.rowCount });
     } catch(e) { return json(res, 500, { error: e.message }); }
   }
 
-// POST /api/import/schedule — JSON bulk import from AI schedule generator
+  // POST /api/import/schedule — JSON bulk import (rows with camelCase or CSV column names)
   if (method === "POST" && pathname === "/api/import/schedule") {
     try {
-      const chunks = [];
-      for await (const chunk of req) chunks.push(chunk);
+      const chunks = []; for await (const c of req) chunks.push(c);
       const body = JSON.parse(Buffer.concat(chunks).toString());
       const { scheduleId, rows } = body;
-      if (!scheduleId || !Array.isArray(rows) || rows.length === 0)
+      if (!scheduleId || !Array.isArray(rows) || !rows.length)
         return json(res, 400, { error: "scheduleId and rows[] required" });
-      const sidInt = parseInt(scheduleId);
-      if (isNaN(sidInt)) return json(res, 400, { error: "Invalid scheduleId" });
+      const sid = parseInt(scheduleId);
+      if (isNaN(sid)) return json(res, 400, { error: "Invalid scheduleId" });
       let inserted = 0;
       for (const r of rows) {
-        const faculty   = r.faculty   || r.Faculty   || "";
-        const subject   = r.subject   || r.Subject   || "";
-        const className = r.className || r.Class     || r.class_name || "";
-        const dept      = r.dept      || r.Deptt     || "";
-        const day       = r.day       || r.Day       || "";
-        const location  = r.location  || r.Location  || "";
-        const timeStart = r.timeStart || r.Time      || r.time_start || "";
-        const timeEnd   = r.timeEnd   || r.EndTime   || r.time_end   || "";
-        const lecLab    = r.lecLab    || r.LecLab    || r.lec_lab    || "Lec";
-        const elective  = r.elective  || r.Elective  || "";
-        const userEmail = r.userEmail || r.UserEmail || r.user_email || "";
-        const sortKey   = r.sortKey   || r.SortKey   || r.sort_key   || 0;
+        const faculty   = r.Faculty   || r.faculty   || "";
+        const subject   = r.Subject   || r.subject   || "";
+        const className = r.Class     || r.className || r.class_name || "";
+        const dept      = r.Deptt     || r.dept      || r.Department  || "";
+        const day       = r.Day       || r.day       || "";
+        const location  = r.Location  || r.location  || "";
+        const timeStart = r.Time      || r.timeStart || r.time_start  || "";
+        const timeEnd   = r["End Time"] || r.EndTime || r.timeEnd || r.time_end || "";
+        const lecLab    = r["Lec/Lab"] || r.LecLab   || r.lec_lab    || "Lec";
+        const elective  = r.Elective  || r.elective  || "";
+        const userEmail = r["Email of User"] || r.UserEmail || r.user_email || "";
+        const sortKey   = r.SortKey   || r.sort_key  || 0;
         await db.query(
-          `INSERT INTO public.weekly_schedule (faculty, subject, class_name, dept, day, location, time_start, time_end, lec_lab, elective, user_email, sort_key, schedule_id)
-           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`,
-          [faculty, subject, className, dept, day, location, timeStart, timeEnd, lecLab, elective, userEmail, sortKey, sidInt]
+          `INSERT INTO public.weekly_schedule (faculty,subject,class_name,dept,day,location,time_start,time_end,lec_lab,elective,user_email,sort_key,schedule_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`,
+          [faculty, subject, className, dept, day, location, timeStart, timeEnd, lecLab, elective, userEmail, sortKey, sid]
         );
         inserted++;
       }
@@ -1277,7 +1269,7 @@ async function handleApi(method, pathname, req, res) {
     } catch(e) { return json(res, 500, { error: e.message }); }
   }
 
-// POST /api/import/schedule/xlsx
+  // POST /api/import/schedule/xlsx
   if (method === "POST" && pathname === "/api/import/schedule/xlsx") {
     const scheduleId = reqUrl.searchParams.get("scheduleId");
     const sidInt = scheduleId && !isNaN(parseInt(scheduleId)) ? parseInt(scheduleId) : null;

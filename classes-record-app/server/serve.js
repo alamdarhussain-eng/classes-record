@@ -716,7 +716,7 @@ async function handleApi(method, pathname, req, res) {
     try {
       const sidInt = scheduleId && scheduleId !== "undefined" && scheduleId !== "null" && !isNaN(parseInt(scheduleId)) ? parseInt(scheduleId) : null;
       const r = sidInt
-        ? await db.query("SELECT * FROM public.weekly_schedule WHERE (schedule_id = $1 OR schedule_id IS NULL) ORDER BY sort_key", [sidInt])
+        ? await db.query("SELECT * FROM public.weekly_schedule WHERE schedule_id = $1 ORDER BY sort_key", [sidInt])
         : await db.query("SELECT * FROM public.weekly_schedule WHERE schedule_id IS NULL ORDER BY sort_key");
       return json(res, 200, r.rows.map(row => ({
         // Capitalized (what UI components expect)
@@ -947,7 +947,7 @@ async function handleApi(method, pathname, req, res) {
         const sortKey = dayNum * 100 + hourNum;
         await db.query(
           "INSERT INTO public.weekly_schedule (faculty, subject, class_name, dept, day, location, time_start, time_end, lec_lab, elective, user_email, sort_key, schedule_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",
-          [faculty, subject, className, dept, day, location, timeStart, timeEnd, lecLab, elective, userEmail, sortKey, scheduleId ?? null]
+          [faculty, subject, className, dept, day, location, timeStart, timeEnd, lecLab, elective, userEmail, sortKey, (scheduleId ? parseInt(scheduleId) : null)]
         );
         imported++;
       }
@@ -1223,7 +1223,16 @@ async function handleApi(method, pathname, req, res) {
 
   
   
-    // POST /api/fix-null-schedule-ids — update NULL schedule_id rows
+    
+  // DELETE /api/cleanup-null-schedule — remove orphaned rows with no schedule_id
+  if (method === "DELETE" && pathname === "/api/cleanup-null-schedule") {
+    try {
+      const r = await db.query("DELETE FROM public.weekly_schedule WHERE schedule_id IS NULL");
+      return json(res, 200, { success: true, deleted: r.rowCount });
+    } catch (e) { return json(res, 500, { error: e.message }); }
+  }
+
+// POST /api/fix-null-schedule-ids — update NULL schedule_id rows
   if (method === "POST" && pathname === "/api/fix-null-schedule-ids") {
     try {
       const chunks = []; for await (const c of req) chunks.push(c);

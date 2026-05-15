@@ -716,7 +716,7 @@ async function handleApi(method, pathname, req, res) {
     try {
       const sidInt = scheduleId && scheduleId !== "undefined" && scheduleId !== "null" && !isNaN(parseInt(scheduleId)) ? parseInt(scheduleId) : null;
       const r = sidInt
-        ? await db.query("SELECT * FROM public.weekly_schedule WHERE schedule_id = $1 ORDER BY sort_key", [sidInt])
+        ? await db.query("SELECT * FROM public.weekly_schedule WHERE (schedule_id = $1 OR schedule_id IS NULL) ORDER BY sort_key", [sidInt])
         : await db.query("SELECT * FROM public.weekly_schedule WHERE schedule_id IS NULL ORDER BY sort_key");
       return json(res, 200, r.rows.map(row => ({
         // Capitalized (what UI components expect)

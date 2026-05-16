@@ -649,7 +649,7 @@ export default function MySchedulesScreen() {
                 <Text style={{color:"#fff",fontFamily:"Inter_600SemiBold",fontSize:12}}>{csvUploaded?"✓ "+uploadedFileName.slice(0,14):"Upload Schedule"}</Text>
               </TouchableOpacity>
             </View>
-            {csvUploaded&&<View style={{backgroundColor:"#E8F5E9",borderRadius:8,padding:8,marginBottom:10,flexDirection:"row",alignItems:"center",gap:6}}><Feather name="check-circle" size={13} color="#2E7D32"/><Text style={{fontSize:12,fontFamily:"Inter_400Regular",color:"#2E7D32",flex:1}}>{uploadedFileName} — Fill details below then Create.</Text></View>}
+            
             
             <TextInput
               style={s.sheetInput}

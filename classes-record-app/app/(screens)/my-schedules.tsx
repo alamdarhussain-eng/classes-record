@@ -97,7 +97,7 @@ export default function MySchedulesScreen() {
       if (data.error) { setErrorMsg(data.error); return; }
       qc.invalidateQueries({ queryKey: ["userSchedules", user] });
       qc.invalidateQueries({ queryKey: ["publicSchedules"] });
-      setShowCreate(false); setCsvUploaded(false); setUploadedFileName('');
+      setShowCreate(false); ; ;
       setNewName("");
       setStartDate(new Date());
       setEndDate(new Date());

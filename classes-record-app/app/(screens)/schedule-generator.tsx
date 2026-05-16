@@ -119,7 +119,8 @@ function generateSchedule(rows: any[], activeDays: string[], startHour: number, 
     const location = sectionLocation[secKey];
 
     for (const row of secRows) {
-      const fac = String(row["Faculty"]||row["Instructor Name"]||row["instructor"]||"").trim();
+      const facRaw = String(row["Faculty"]||row["Instructor Name"]||row["instructor"]||"").trim();
+      const fac = facRaw.replace(/\s*\([A-Za-z]+\)\s*$/, "").trim();
       const subj = String(row["Subjects"]||row["Subject"]||row["subject"]||"").trim();
       const dept = String(row["Department"]||row["Deptt"]||row["dept"]||"").trim();
       const credStr = String(row["Credit Hrs"]||row["credits"]||"2+0").trim();
@@ -263,8 +264,8 @@ export default function ScheduleGenerator() {
         })
       });
       const data = await res.json();
-      if (data.success || data.inserted) {
-        Alert.alert("Done", `${data.inserted || generated.length} entries imported.`);
+      if (data.success || data.imported || data.inserted) {
+        Alert.alert("Done", `${data.imported || data.inserted || generated.length} entries imported.`);
         router.back();
       } else {
         setError("Import failed: " + JSON.stringify(data));

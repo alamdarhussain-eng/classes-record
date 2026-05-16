@@ -67,8 +67,6 @@ export default function MySchedulesScreen() {
   const [recoverLoading, setRecoverLoading] = useState(false);
 
   const [showCreate, setShowCreate] = useState(false);
-  const [csvUploaded, setCsvUploaded] = useState(false);
-  const [uploadedFileName, setUploadedFileName] = useState("");
   const [showFinancePin, setShowFinancePin] = useState(false);
   const [fpPass, setFpPass] = useState("");
   const [fpPin, setFpPin] = useState("");
